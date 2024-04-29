@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Tomate Care</string>
+    <string name="start">Inicio</string>
+    <string name="identify">Identificar</string>
+    <string name="diseases">Enfermedades</string>
+    <string name="activity_logs">Registros de actividad</string>
+    <string name="test_performance">Pruebas de rendimiento</string>
+    <string name="app_improvement_description">Mejora la aplicación compartiendo tus imágenes</string>
 </resources>
