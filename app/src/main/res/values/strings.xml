@@ -6,6 +6,7 @@
     <string name="activity_logs">Registros de actividad</string>
     <string name="test_performance">Pruebas de rendimiento</string>
     <string name="app_improvement_description">Mejora la aplicación compartiendo tus imágenes</string>
+    <string name="info_version">Version %s</string>
     <string name="info_description">Descubre nuestra app de identificación de enfermedades del tomate. Simplemente apunta la cámara a la planta y deja que la inteligencia artificial detecte y diagnostique rápidamente tu planta. ¡La democratización del acceso a tecnologias IA para los agricultores!</string>
     <string name="author" tools:ignore="Typos">Autor</string>
     <string name="info_author_name">Luis H. Olazo Luján</string>
