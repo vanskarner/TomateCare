@@ -6,107 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_container"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/viewBottomNavBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/tomato_svgrepo_com"
-        app:title="@string/app_name">
+        app:layout_constraintVertical_bias="0.0"
+        app:navGraph="@navigation/graph_nav"
+        tools:layout="@layout/fragment_start" />
 
-        <ImageView
-            android:id="@+id/btnInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/info_svgrepo_com"
-            tools:ignore="ContentDescription" />
-    </androidx.appcompat.widget.Toolbar>
-
-    <LinearLayout
+    <View
+        android:id="@+id/viewBottomNavBackground"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/inclToolbar"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardViewActivity"
-            android:layout_width="match_parent"
-            android:layout_height="85dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            app:cardCornerRadius="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:drawablePadding="4dp"
-                android:gravity="center"
-                android:text="@string/activity_logs"
-                app:drawableLeftCompat="@drawable/report_svgrepo_com" />
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardViewTest"
-            android:layout_width="match_parent"
-            android:layout_height="85dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            app:cardCornerRadius="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:drawablePadding="4dp"
-                android:gravity="center"
-                android:text="@string/test_performance"
-                app:drawableLeftCompat="@drawable/web_workers_svgrepo_com" />
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardViewImprove"
-            android:layout_width="match_parent"
-            android:layout_height="85dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:cardCornerRadius="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:drawablePadding="4dp"
-                android:gravity="center"
-                android:text="@string/app_improvement_description"
-                app:drawableLeftCompat="@drawable/upload_svgrepo_com" />
-
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
-
+        app:layout_constraintStart_toStartOf="parent" />
 
     <include
-        android:id="@+id/inclToolbar"
-        layout="@layout/bottom_nav_menu"
+        android:id="@+id/inclBottomNav"
+        layout="@layout/bottomnav_main"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

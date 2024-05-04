@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent_background">#60000000</color>
+    <color name="leaf_sick">#F8532F</color>
+    <color name="leaf_healthy">#56C52D</color>
+    <color name="links">#75ACFF</color>
+    <color name="background_images">#282828</color>
 </resources>

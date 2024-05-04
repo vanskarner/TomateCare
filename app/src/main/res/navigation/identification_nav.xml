@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/identificationNav"
+    app:startDestination="@id/captureFragment">
+
+    <fragment
+        android:id="@+id/captureFragment"
+        android:name="com.vanskarner.tomatecare.capture.CaptureFragment"
+        tools:layout="@layout/fragment_capture"
+        android:label="CaptureFragment" >
+        <action
+            android:id="@+id/to_identificationFragment"
+            app:destination="@id/identificationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/identificationFragment"
+        android:name="com.vanskarner.tomatecare.identification.IdentificationFragment"
+        android:label="IdentificationFragment"
+        tools:layout="@layout/fragment_identification" />
+
+</navigation>

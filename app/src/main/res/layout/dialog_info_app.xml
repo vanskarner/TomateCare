@@ -1,155 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvAppName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:drawablePadding="4dp"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:drawableStartCompat="@drawable/tomato_svgrepo_com"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvAppVersion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#757575"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAppName"
-        tools:text="Version x.0" />
+        <TextView
+            android:id="@+id/tvAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/tomato_svgrepo_com"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvInfoApp"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/info_description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAppVersion"
-        tools:ignore="TextSizeCheck" />
+        <TextView
+            android:id="@+id/tvAppVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#757575"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAppName"
+            tools:text="Version x.0" />
 
-    <TextView
-        android:id="@+id/tvAuthor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/author"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/tvInfoApp"
-        app:layout_constraintTop_toBottomOf="@+id/tvInfoApp" />
+        <TextView
+            android:id="@+id/tvInfoApp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/info_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAppVersion"
+            tools:ignore="TextSizeCheck" />
 
-    <TextView
-        android:id="@+id/tvAuthorName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:drawablePadding="4dp"
-        android:gravity="center"
-        android:text="@string/info_author_name"
-        app:drawableStartCompat="@drawable/user_id_svgrepo_com"
-        app:layout_constraintStart_toStartOf="@+id/tvAuthor"
-        app:layout_constraintTop_toBottomOf="@+id/tvAuthor" />
+        <TextView
+            android:id="@+id/tvAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/author"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/tvInfoApp"
+            app:layout_constraintTop_toBottomOf="@+id/tvInfoApp" />
 
-    <TextView
-        android:id="@+id/tvAuthorEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:drawablePadding="4dp"
-        android:gravity="center"
-        android:text="@string/info_author_email"
-        app:drawableStartCompat="@drawable/email_svgrepo_com"
-        app:layout_constraintStart_toStartOf="@+id/tvAuthorName"
-        app:layout_constraintTop_toBottomOf="@+id/tvAuthorName" />
+        <TextView
+            android:id="@+id/tvAuthorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            android:text="@string/info_author_name"
+            app:drawableStartCompat="@drawable/user_id_svgrepo_com"
+            app:layout_constraintStart_toStartOf="@+id/tvAuthor"
+            app:layout_constraintTop_toBottomOf="@+id/tvAuthor" />
 
-    <TextView
-        android:id="@+id/tvAuthorPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:text="@string/info_author_phone"
-        app:drawableStartCompat="@drawable/cellphone_svgrepo_com"
-        app:layout_constraintStart_toStartOf="@+id/tvAuthorEmail"
-        app:layout_constraintTop_toBottomOf="@+id/tvAuthorEmail" />
+        <TextView
+            android:id="@+id/tvAuthorEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            android:text="@string/info_author_email"
+            app:drawableStartCompat="@drawable/email_svgrepo_com"
+            app:layout_constraintStart_toStartOf="@+id/tvAuthorName"
+            app:layout_constraintTop_toBottomOf="@+id/tvAuthorName" />
 
-    <TextView
-        android:id="@+id/tvAuthorKaggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:drawablePadding="4dp"
-        android:gravity="center"
-        android:text="@string/info_author_kaggle"
-        app:drawableStartCompat="@drawable/kaggle2_svgrepo_com"
-        app:layout_constraintStart_toStartOf="@+id/tvAuthorPhone"
-        app:layout_constraintTop_toBottomOf="@+id/tvAuthorPhone" />
+        <TextView
+            android:id="@+id/tvAuthorPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/info_author_phone"
+            app:drawableStartCompat="@drawable/cellphone_svgrepo_com"
+            app:layout_constraintStart_toStartOf="@+id/tvAuthorEmail"
+            app:layout_constraintTop_toBottomOf="@+id/tvAuthorEmail" />
 
-    <TextView
-        android:id="@+id/tvCompany"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/company"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/tvInfoApp"
-        app:layout_constraintTop_toBottomOf="@+id/tvAuthorKaggle" />
+        <TextView
+            android:id="@+id/tvAuthorKaggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            android:text="@string/info_author_kaggle"
+            app:drawableStartCompat="@drawable/kaggle2_svgrepo_com"
+            app:layout_constraintStart_toStartOf="@+id/tvAuthorPhone"
+            app:layout_constraintTop_toBottomOf="@+id/tvAuthorPhone" />
 
-    <TextView
-        android:id="@+id/tvCompanyName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:drawablePadding="4dp"
-        android:gravity="center"
-        android:text="@string/company_name"
-        app:drawableStartCompat="@drawable/logo_svg_vk"
-        app:layout_constraintStart_toStartOf="@+id/tvCompany"
-        app:layout_constraintTop_toBottomOf="@+id/tvCompany" />
+        <TextView
+            android:id="@+id/tvCompany"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/company"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/tvInfoApp"
+            app:layout_constraintTop_toBottomOf="@+id/tvAuthorKaggle" />
 
-    <TextView
-        android:id="@+id/tvCompanyWeb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:drawablePadding="4dp"
-        android:gravity="center"
-        android:text="@string/company_web"
-        app:drawableStartCompat="@drawable/web_webpage_svgrepo_com"
-        app:layout_constraintStart_toStartOf="@+id/tvCompanyName"
-        app:layout_constraintTop_toBottomOf="@+id/tvCompanyName" />
+        <TextView
+            android:id="@+id/tvCompanyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            android:text="@string/company_name"
+            app:drawableStartCompat="@drawable/logo_svg_vk"
+            app:layout_constraintStart_toStartOf="@+id/tvCompany"
+            app:layout_constraintTop_toBottomOf="@+id/tvCompany" />
 
-    <TextView
-        android:id="@+id/tvCompanyLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:drawablePadding="4dp"
-        android:gravity="center"
-        android:text="@string/company_location"
-        app:drawableStartCompat="@drawable/location_pin_svgrepo_com"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tvCompanyWeb"
-        app:layout_constraintTop_toBottomOf="@+id/tvCompanyWeb" />
+        <TextView
+            android:id="@+id/tvCompanyWeb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            android:text="@string/company_web"
+            app:drawableStartCompat="@drawable/web_webpage_svgrepo_com"
+            app:layout_constraintStart_toStartOf="@+id/tvCompanyName"
+            app:layout_constraintTop_toBottomOf="@+id/tvCompanyName" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvCompanyLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            android:text="@string/company_location"
+            app:drawableStartCompat="@drawable/location_pin_svgrepo_com"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvCompanyWeb"
+            app:layout_constraintTop_toBottomOf="@+id/tvCompanyWeb" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

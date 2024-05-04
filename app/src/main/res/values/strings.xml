@@ -17,4 +17,21 @@
     <string name="company_name">Vanskarner</string>
     <string name="company_web">vanskarner.com</string>
     <string name="company_location">Lima, Perú</string>
+    <string name="disease_agent">Agentes causantes</string>
+    <string name="disease_symptoms">Síntomas</string>
+    <string name="disease_develop">Condiciones de desarrollo</string>
+    <string name="disease_control">Control</string>
+    <string name="tips">Consejos</string>
+    <string name="photos">Fotos</string>
+    <string name="summary">Resumen</string>
+    <string name="add_note">Agregar Nota</string>
+    <string name="identification">Identificación</string>
+    <string name="healthy">Saludable</string>
+    <string name="sick">Enferma</string>
+    <string name="total_time_spent">Tiempo total empleado:</string>
+    <string name="total_sheets_analyzed">Total de hojas analizadas:</string>
+    <string name="identified">identificadas:</string>
+    <string name="recommendations">Recomendaciones</string>
+    <string name="note">Nota</string>
+    <string name="write_your_note_here">Escribe tu descripción aquí…</string>
 </resources>
