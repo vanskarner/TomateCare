@@ -6,29 +6,30 @@
     <data>
 
         <variable
-            name="diseaseModel"
+            name="model"
             type="com.vanskarner.tomatecare.diseases.DiseaseDetailModel" />
 
     </data>
 
-    <androidx.cardview.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:cardCornerRadius="25dp">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/imvDisease"
                 android:layout_width="0dp"
                 android:layout_height="250dp"
+                android:imageBitmap="@{model.image}"
                 android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
                 tools:ignore="ContentDescription,ImageContrastCheck"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
@@ -55,142 +56,128 @@
                     android:gravity="center"
                     android:maxLength="42"
                     android:maxLines="1"
-                    android:text="@{diseaseModel.name}"
-                    android:textColor="#F8532F"
+                    android:text="@{model.name}"
+                    android:textColor="@color/leaf_sick"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     tools:text="@tools:sample/lorem/random" />
             </com.google.android.material.card.MaterialCardView>
 
-            <ScrollView
+            <TextView
+                android:id="@+id/tvAgent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                android:maxLines="1"
+                android:text="@string/disease_agent"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imvDisease" />
+
+            <TextView
+                android:id="@+id/tvAgentDescription"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:maxLines="8"
+                android:text="@{model.causativeAgent}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tvAgent"
+                app:layout_constraintTop_toBottomOf="@+id/tvAgent"
+                tools:ignore="VisualLintLongText"
+                tools:text="@tools:sample/lorem/random" />
+
+            <TextView
+                android:id="@+id/tv_symptoms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:maxLength="45"
+                android:maxLines="1"
+                android:text="@string/disease_symptoms"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tvAgent"
+                app:layout_constraintTop_toBottomOf="@+id/tvAgentDescription" />
+
+            <TextView
+                android:id="@+id/tvSymptomsDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:maxLines="8"
+                android:text="@{model.symptoms}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_symptoms"
+                app:layout_constraintTop_toBottomOf="@+id/tv_symptoms"
+                tools:ignore="VisualLintLongText"
+                tools:text="@tools:sample/lorem/random" />
+
+            <TextView
+                android:id="@+id/tv_develop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:maxLength="45"
+                android:maxLines="1"
+                android:text="@string/disease_develop"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tv_symptoms"
+                app:layout_constraintTop_toBottomOf="@+id/tvSymptomsDescription" />
+
+            <TextView
+                android:id="@+id/tvDevelopDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:maxLines="8"
+                android:text="@{model.developmentConditions}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_develop"
+                app:layout_constraintTop_toBottomOf="@+id/tv_develop"
+                tools:ignore="VisualLintLongText"
+                tools:text="@tools:sample/lorem/random" />
+
+            <TextView
+                android:id="@+id/tv_control"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:maxLength="45"
+                android:maxLines="1"
+                android:text="@string/disease_control"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/tv_develop"
+                app:layout_constraintTop_toBottomOf="@+id/tvDevelopDescription" />
+
+            <TextView
+                android:id="@+id/tvControlDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="12dp"
+                android:ellipsize="end"
+                android:maxLines="8"
+                android:text="@{model.control}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imvDisease">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/tvAgent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="12dp"
-                        android:maxLines="1"
-                        android:text="@string/disease_agent"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvAgentDescription"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:ellipsize="end"
-                        android:maxLines="8"
-                        android:text="@{diseaseModel.causativeAgent}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/tvAgent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvAgent"
-                        tools:ignore="VisualLintLongText"
-                        tools:text="@tools:sample/lorem/random" />
-
-                    <TextView
-                        android:id="@+id/tv_symptoms"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:maxLength="45"
-                        android:maxLines="1"
-                        android:text="@string/disease_symptoms"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="@+id/tvAgent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvAgentDescription" />
-
-                    <TextView
-                        android:id="@+id/tvSymptomsDescription"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:ellipsize="end"
-                        android:maxLines="8"
-                        android:text="@{diseaseModel.symptoms}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/tv_symptoms"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_symptoms"
-                        tools:ignore="VisualLintLongText"
-                        tools:text="@tools:sample/lorem/random" />
-
-                    <TextView
-                        android:id="@+id/tv_develop"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:maxLength="45"
-                        android:maxLines="1"
-                        android:text="@string/disease_develop"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="@+id/tv_symptoms"
-                        app:layout_constraintTop_toBottomOf="@+id/tvSymptomsDescription" />
-
-                    <TextView
-                        android:id="@+id/tvDevelopDescription"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:ellipsize="end"
-                        android:maxLines="8"
-                        android:text="@{diseaseModel.developmentConditions}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/tv_develop"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_develop"
-                        tools:ignore="VisualLintLongText"
-                        tools:text="@tools:sample/lorem/random" />
-
-                    <TextView
-                        android:id="@+id/tv_control"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:maxLength="45"
-                        android:maxLines="1"
-                        android:text="@string/disease_control"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="@+id/tv_develop"
-                        app:layout_constraintTop_toBottomOf="@+id/tvDevelopDescription"/>
-
-                    <TextView
-                        android:id="@+id/tvControlDescription"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="12dp"
-                        android:ellipsize="end"
-                        android:maxLines="8"
-                        android:text="@{diseaseModel.control}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/tv_control"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_control"
-                        tools:ignore="VisualLintLongText"
-                        tools:text="@tools:sample/lorem/random" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </ScrollView>
+                app:layout_constraintStart_toStartOf="@+id/tv_control"
+                app:layout_constraintTop_toBottomOf="@+id/tv_control"
+                tools:ignore="VisualLintLongText"
+                tools:text="@tools:sample/lorem/random" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </androidx.cardview.widget.CardView>
+    </ScrollView>
 </layout>

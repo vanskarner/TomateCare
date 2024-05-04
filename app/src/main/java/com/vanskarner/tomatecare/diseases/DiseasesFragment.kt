@@ -6,15 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.RecyclerView
-import com.vanskarner.singleadapter.SingleAdapter
 import com.vanskarner.tomatecare.databinding.FragmentDiseasesBinding
 
 class DiseasesFragment : Fragment() {
     private lateinit var binding: FragmentDiseasesBinding
     private val diseaseDialog = DiseaseDialog()
-    private val singleAdapter = SingleAdapter()
-    private val bindAdapter = DiseaseBindAdapter()
+    private val diseaseAdapter = DiseaseAdapter()
     private val viewModel: DiseaseViewModel by viewModels()
 
     override fun onCreateView(
@@ -34,22 +31,17 @@ class DiseasesFragment : Fragment() {
     }
 
     private fun setupView() {
-        binding.rcvDiseases.adapter = singleAdapter
-        bindAdapter.setOnClickItem {
-            val viewHolder = it.tag as RecyclerView.ViewHolder
-            val diseaseDetailModel = singleAdapter.getItem<DiseaseModel>(viewHolder.adapterPosition)
-            viewModel.diseaseDetail(diseaseDetailModel.id)
-        }
-        singleAdapter.add(bindAdapter)
+        binding.rcvDiseases.adapter = diseaseAdapter
+        diseaseAdapter.setOnClickListener { viewModel.exampleDiseaseDetail() }
     }
 
     private fun setupViewModel() {
-        viewModel.diseasesList()
+        viewModel.exampleDiseases()
         viewModel.diseases.observe(viewLifecycleOwner) { showDiseases(it) }
         viewModel.diseaseDetail.observe(viewLifecycleOwner) { showDiseaseDetail(it) }
     }
 
-    private fun showDiseases(list: List<DiseaseModel>) = singleAdapter.set(list)
+    private fun showDiseases(list: List<DiseaseModel>) = diseaseAdapter.updateList(list)
 
     private fun showDiseaseDetail(item: DiseaseDetailModel) =
         diseaseDialog.show(childFragmentManager, item)

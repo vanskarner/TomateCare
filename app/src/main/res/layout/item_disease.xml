@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="diseaseModel"
+            name="model"
             type="com.vanskarner.tomatecare.diseases.DiseaseModel" />
 
     </data>
@@ -14,10 +14,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="6dp"
+        android:layout_margin="6dp"
         app:cardCornerRadius="20dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,6 +23,7 @@
 
             <ImageView
                 android:id="@+id/imvDisease"
+                android:imageBitmap="@{model.image}"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:scaleType="fitXY"
@@ -44,7 +42,7 @@
                 android:ellipsize="end"
                 android:maxLength="45"
                 android:maxLines="1"
-                android:text="@{diseaseModel.name}"
+                android:text="@{model.name}"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +58,7 @@
                 android:layout_marginEnd="8dp"
                 android:ellipsize="end"
                 android:maxLines="4"
-                android:text="@{diseaseModel.symptoms}"
+                android:text="@{model.symptoms}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imvDisease"

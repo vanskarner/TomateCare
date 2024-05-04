@@ -20,7 +20,7 @@ class DiseaseDialog : DialogFragment() {
         val contextDialog = requireContext()
         val binding = DialogDiseaseBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
-        binding.diseaseModel = model
+        binding.model = model
         return AlertDialog.Builder(contextDialog)
             .setView(binding.root)
             .create()
