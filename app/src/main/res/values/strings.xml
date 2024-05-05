@@ -60,4 +60,9 @@
     <string name="testing_models">Tiempo de inferencia del detector de hojas y el clasificador</string>
     <string name="description_test_models">Esta prueba utiliza una imagen de la planta del tomate para primero detectar las hojas presentes en la imagen (max. 10 hojas), luego se extrae cada hoja en una imagen separada para luego pasar cada imagen por el clasificador de enfermedades con la finalidad de medir el tiempo requerido que toma todo este proceso.</string>
     <string name="tests">Pruebas</string>
+    <string name="description_share_images">Puedes compartir las imágenes producto de tus registros de actividad para ayudarnos a mejorar el modelo de clasificación de enfermedades. \n\nRecuerda que al compartir tus imágenes de plantas con nosotros, nos cedes el derecho de utilizarlas libremente para mejorar modelos de clasificación o crear datasets. Para más información, revisa el “Terminos y condiciones”.</string>
+    <string name="agree">Estoy deacuerdo</string>
+    <string name="share">Compartir</string>
+    <string name="terms_conditions">TÉRMINOS Y CONDICIONES</string>
+    <string name="share_images">Compartir Imágenes</string>
 </resources>

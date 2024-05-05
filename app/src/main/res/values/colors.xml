@@ -9,4 +9,5 @@
     <color name="background_images">#282828</color>
     <color name="correct">#3A851E</color>
     <color name="error">#F8532F</color>
+    <color name="links_with_white_background">#0A6CFF</color>
 </resources>
