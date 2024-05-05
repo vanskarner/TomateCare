@@ -50,4 +50,14 @@
     <string name="very_close">Muy cerca</string>
     <string name="Blurred">Borroso</string>
     <string name="accumulated">Acumuladas</string>
+    <string name="processing">Procesamiento</string>
+    <string name="configuration">Configuración</string>
+    <string name="description_performance">Pruebe las capacidades de su teléfono móvil con respecto a los diferentes modelos de clasificación de imágenes basado en redes neuronales.</string>
+    <string name="launch">Iniciar</string>
+    <string name="results">Resultados</string>
+    <string name="disease_classifier_inference_time">Tiempo de inferencia del clasificador de enfermedades</string>
+    <string name="description_classifier_time">Esta prueba utiliza un dataset muy pequeño de 100 imágenes para testear el tiempo de inferencia que toma predecir todas esas imágenes.</string>
+    <string name="testing_models">Tiempo de inferencia del detector de hojas y el clasificador</string>
+    <string name="description_test_models">Esta prueba utiliza una imagen de la planta del tomate para primero detectar las hojas presentes en la imagen (max. 10 hojas), luego se extrae cada hoja en una imagen separada para luego pasar cada imagen por el clasificador de enfermedades con la finalidad de medir el tiempo requerido que toma todo este proceso.</string>
+    <string name="tests">Pruebas</string>
 </resources>
