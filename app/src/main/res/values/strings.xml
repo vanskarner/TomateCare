@@ -39,4 +39,9 @@
     <string name="select_all">Seleccionar \nTodo</string>
     <string name="search_by_logs">Busca por fecha, notas y estado</string>
     <string name="identifying">Identificando…</string>
+    <string name="threshold">Umbral</string>
+    <string name="max_results">Resultados \nMáximos</string>
+    <string name="number_threads">Numero de hilos</string>
+    <string name="delegate">Delegar</string>
+    <string name="model">Modelo</string>
 </resources>

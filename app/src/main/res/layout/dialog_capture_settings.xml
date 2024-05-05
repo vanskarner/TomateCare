@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:paddingStart="4dp"
+    android:paddingEnd="4dp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/lyThreshold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnMoreThreshold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/outline_add_32"
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
+
+        <TextView
+            android:id="@+id/tvThreshold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textSize="24sp"
+            tools:text="0.50" />
+
+        <ImageButton
+            android:id="@+id/btnLessThreshold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/outline_remove_32"
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lyMaxResults"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lyThreshold">
+
+        <ImageButton
+            android:id="@+id/btnMoreResults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/outline_add_32"
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
+
+        <TextView
+            android:id="@+id/tvMaxResults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textSize="24sp"
+            tools:text="3" />
+
+        <ImageButton
+            android:id="@+id/btnLessResults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/outline_remove_32"
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lyNumberThreads"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lyMaxResults">
+
+        <ImageButton
+            android:id="@+id/btnMoreThreads"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/outline_add_32"
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
+
+        <TextView
+            android:id="@+id/tvThreads"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:textSize="24sp"
+            tools:text="2" />
+
+        <ImageButton
+            android:id="@+id/btnLessThreads"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/outline_remove_32"
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/threshold"
+        app:layout_constraintBottom_toBottomOf="@+id/lyThreshold"
+        app:layout_constraintEnd_toStartOf="@+id/lyThreshold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/lyThreshold" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/max_results"
+        app:layout_constraintBottom_toBottomOf="@+id/lyMaxResults"
+        app:layout_constraintEnd_toStartOf="@+id/lyMaxResults"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/lyMaxResults" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/number_threads"
+        app:layout_constraintBottom_toBottomOf="@+id/lyNumberThreads"
+        app:layout_constraintEnd_toStartOf="@+id/lyNumberThreads"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/lyNumberThreads" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/delegate"
+        app:layout_constraintBottom_toBottomOf="@+id/spDelegate"
+        app:layout_constraintEnd_toStartOf="@+id/spDelegate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/spDelegate" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/model"
+        app:layout_constraintBottom_toBottomOf="@+id/spModel"
+        app:layout_constraintEnd_toStartOf="@+id/spModel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/spModel" />
+
+    <Spinner
+        android:id="@+id/spDelegate"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/lyNumberThreads"
+        app:layout_constraintTop_toBottomOf="@+id/lyNumberThreads" />
+
+    <Spinner
+        android:id="@+id/spModel"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/spDelegate"
+        app:layout_constraintTop_toBottomOf="@+id/spDelegate" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
