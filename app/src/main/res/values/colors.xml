@@ -7,4 +7,6 @@
     <color name="leaf_healthy">#56C52D</color>
     <color name="links">#75ACFF</color>
     <color name="background_images">#282828</color>
+    <color name="correct">#3A851E</color>
+    <color name="error">#F8532F</color>
 </resources>

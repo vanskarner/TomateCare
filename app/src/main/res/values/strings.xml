@@ -44,4 +44,10 @@
     <string name="number_threads">Numero de hilos</string>
     <string name="delegate">Delegar</string>
     <string name="model">Modelo</string>
+    <string name="how_capture">Como Capturar:</string>
+    <string name="how_no_capture">Como no capturar:</string>
+    <string name="far">Alejada</string>
+    <string name="very_close">Muy cerca</string>
+    <string name="Blurred">Borroso</string>
+    <string name="accumulated">Acumuladas</string>
 </resources>
