@@ -38,4 +38,5 @@
     <string name="delete">Eliminar</string>
     <string name="select_all">Seleccionar \nTodo</string>
     <string name="search_by_logs">Busca por fecha, notas y estado</string>
+    <string name="identifying">Identificando…</string>
 </resources>

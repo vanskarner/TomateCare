@@ -72,6 +72,35 @@
             app:srcCompat="@drawable/camera_capture"
             tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
 
+        <LinearLayout
+            android:id="@+id/clIdentification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/camera_capture"
+            tools:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/identifying"
+                android:textSize="16sp" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:layout_width="250dp"
+                android:layout_marginTop="4dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
