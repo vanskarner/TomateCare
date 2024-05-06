@@ -1,4 +1,4 @@
-package com.vanskarner.tomatecare.perfomance
+package com.vanskarner.tomatecare.performance
 
 import android.os.Bundle
 import android.view.LayoutInflater
