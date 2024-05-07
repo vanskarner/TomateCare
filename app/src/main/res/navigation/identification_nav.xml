@@ -19,5 +19,9 @@
         android:id="@+id/identificationFragment"
         android:name="com.vanskarner.tomatecare.identification.IdentificationFragment"
         android:label="fragment_identification"
-        tools:layout="@layout/fragment_identification" />
+        tools:layout="@layout/fragment_identification" >
+        <action
+            android:id="@+id/to_captureFragment"
+            app:destination="@id/captureFragment" />
+    </fragment>
 </navigation>

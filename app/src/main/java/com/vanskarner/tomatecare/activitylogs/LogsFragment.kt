@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import com.vanskarner.tomatecare.MainViewModel
 import com.vanskarner.tomatecare.databinding.FragmentLogsBinding
 
+
 class LogsFragment : Fragment() {
     private lateinit var binding: FragmentLogsBinding
     private val viewModelActivity: MainViewModel by activityViewModels()
@@ -31,6 +32,7 @@ class LogsFragment : Fragment() {
     }
 
     private fun setupView() {
+        binding.imvOnBack.setOnClickListener { viewModelActivity.setVisibilityBottomNav(true) }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             viewModelActivity.setVisibilityBottomNav(true)
         }

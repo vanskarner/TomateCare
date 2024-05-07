@@ -31,6 +31,7 @@ class ShareImagesFragment : Fragment() {
     }
 
     private fun setupView() {
+        binding.imvOnBack.setOnClickListener { viewModelActivity.setVisibilityBottomNav(true) }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             viewModelActivity.setVisibilityBottomNav(true)
         }

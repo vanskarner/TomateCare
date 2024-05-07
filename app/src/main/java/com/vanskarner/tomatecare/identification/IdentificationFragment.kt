@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.vanskarner.tomatecare.databinding.FragmentIdentificationBinding
 
 class IdentificationFragment : Fragment() {
@@ -30,10 +32,14 @@ class IdentificationFragment : Fragment() {
     }
 
     private fun setupView() {
+        binding.imvOnBack.setOnClickListener { goToCaptureFragment() }
         binding.rcvLeaves.adapter = leafAdapter
         binding.tvSummary.setOnClickListener { showSummary() }
         binding.tvAddNote.setOnClickListener { showAddNote() }
         leafAdapter.setOnClickListener { showLeafDialog(it) }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            goToCaptureFragment()
+        }
     }
 
     private fun setupViewModel() {
@@ -42,6 +48,11 @@ class IdentificationFragment : Fragment() {
             binding.model = it
             showLeaves(it.leavesImage)
         }
+    }
+
+    private fun goToCaptureFragment() {
+        val direction = IdentificationFragmentDirections.toCaptureFragment()
+        findNavController().navigate(direction)
     }
 
     private fun showLeaves(list: List<LeafModel>) = leafAdapter.updateList(list)
