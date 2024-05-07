@@ -6,12 +6,12 @@ import androidx.lifecycle.ViewModel
 
 class MainViewModel : ViewModel() {
 
-    private val _onBack = MutableLiveData<Unit>()
+    private val _bottomNavVisibility = MutableLiveData<Boolean>()
 
-    val onBack: LiveData<Unit> = _onBack
+    val bottomNavVisibility: LiveData<Boolean> = _bottomNavVisibility
 
-    fun onBackPressed() {
-        _onBack.value = Unit
+    fun setVisibilityBottomNav(isVisible: Boolean) {
+        _bottomNavVisibility.value = isVisible
     }
 
 }

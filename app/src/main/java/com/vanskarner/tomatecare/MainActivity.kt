@@ -25,25 +25,31 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupView() {
         val bottomNavMain = binding.inclBottomNav
-        val bottomNavBackground = binding.viewBottomNavBackground
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_container) as NavHostFragment
         val navController = navHostFragment.navController
-        CustomNavigationBottomNav.setupView(bottomNavMain, navController, bottomNavBackground)
+        CustomNavigationBottomNav.setupView(bottomNavMain, navController)
     }
 
     private fun setupViewModel() {
-        viewModel.onBack.observe(this) {
+        viewModel.bottomNavVisibility.observe(this) {
             val bindingBottomNav = binding.inclBottomNav
             val bindingBottomBackground = binding.viewBottomNavBackground
             val navHostFragment = supportFragmentManager
                 .findFragmentById(R.id.nav_host_container) as NavHostFragment
             val navController = navHostFragment.navController
-            CustomNavigationBottomNav.onBackPressed(
-                bindingBottomNav,
-                navController,
-                bindingBottomBackground
-            )
+            when (it) {
+                true -> CustomNavigationBottomNav.showBottomNav(
+                    bindingBottomNav,
+                    navController,
+                    bindingBottomBackground
+                )
+
+                false -> CustomNavigationBottomNav.hideBottomNav(
+                    bindingBottomNav,
+                    bindingBottomBackground
+                )
+            }
         }
     }
 

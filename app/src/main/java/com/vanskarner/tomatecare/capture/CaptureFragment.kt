@@ -35,13 +35,13 @@ class CaptureFragment : Fragment() {
 
     private fun setupView() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            viewModelActivity.onBackPressed()
+            viewModelActivity.setVisibilityBottomNav(true)
         }
         binding.btnCapture.setOnClickListener { goToIdentificationFragment() }
     }
 
     private fun setupViewModel() {
-
+        viewModelActivity.setVisibilityBottomNav(false)
     }
 
     private fun goToIdentificationFragment() {
