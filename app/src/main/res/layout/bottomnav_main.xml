@@ -17,11 +17,12 @@
     </View>
 
     <TextView
-        android:id="@+id/bottomNavStart"
+        android:id="@+id/tvBottomNavStart"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/start"
+        android:textStyle="bold"
         app:drawableTopCompat="@drawable/home_house_svgrepo_com"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,8 +36,9 @@
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/bottomNavDiseases"
-        app:layout_constraintStart_toEndOf="@+id/bottomNavStart">
+        app:layout_constraintEnd_toStartOf="@+id/tvBottomNavDiseases"
+        app:layout_constraintStart_toEndOf="@+id/tvBottomNavStart"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/bottomNavIdentify"
@@ -53,16 +55,16 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/tvIdentify"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/identify"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textSize="16sp" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/bottomNavDiseases"
+        android:id="@+id/tvBottomNavDiseases"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:gravity="bottom"

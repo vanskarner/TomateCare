@@ -8,16 +8,16 @@
     <fragment
         android:id="@+id/captureFragment"
         android:name="com.vanskarner.tomatecare.capture.CaptureFragment"
-        tools:layout="@layout/fragment_capture"
-        android:label="CaptureFragment" >
+        android:label="fragment_capture"
+        tools:layout="@layout/fragment_capture" >
         <action
             android:id="@+id/to_identificationFragment"
             app:destination="@id/identificationFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/identificationFragment"
         android:name="com.vanskarner.tomatecare.identification.IdentificationFragment"
-        android:label="IdentificationFragment"
+        android:label="fragment_identification"
         tools:layout="@layout/fragment_identification" />
-
 </navigation>

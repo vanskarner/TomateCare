@@ -1,72 +1,50 @@
 package com.vanskarner.tomatecare
 
 import android.os.Bundle
-import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.vanskarner.tomatecare.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(), MainActivityListener {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var currentSelection = Selection.Start
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setupView()
         setContentView(binding.root)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupViewModel()
+    }
+
+    private fun setupView() {
+        val bottomNavMain = binding.inclBottomNav
+        val bottomNavBackground = binding.viewBottomNavBackground
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_container) as NavHostFragment
         val navController = navHostFragment.navController
-        setupBottomNav(navController)
+        CustomNavigationBottomNav.setupView(bottomNavMain, navController, bottomNavBackground)
     }
 
-    private fun setupBottomNav(nav: NavController) {
-        binding.inclBottomNav.bottomNavStart.setOnClickListener {
-            if (currentSelection != Selection.Start) {
-                currentSelection = Selection.Start
-                setBottomNavVisibility(true)
-                nav.navigate(R.id.startNav)
-            }
-        }
-        binding.inclBottomNav.bottomNavIdentify.setOnClickListener {
-            if (currentSelection != Selection.Identification) {
-                currentSelection = Selection.Identification
-                setBottomNavVisibility(false)
-                nav.navigate(R.id.identificationNav)
-            }
-        }
-        binding.inclBottomNav.bottomNavDiseases.setOnClickListener {
-            if (currentSelection != Selection.Diseases) {
-                currentSelection = Selection.Diseases
-                setBottomNavVisibility(true)
-                nav.navigate(R.id.diseasesNav)
-            }
+    private fun setupViewModel() {
+        viewModel.onBack.observe(this) {
+            val bindingBottomNav = binding.inclBottomNav
+            val bindingBottomBackground = binding.viewBottomNavBackground
+            val navHostFragment = supportFragmentManager
+                .findFragmentById(R.id.nav_host_container) as NavHostFragment
+            val navController = navHostFragment.navController
+            CustomNavigationBottomNav.onBackPressed(
+                bindingBottomNav,
+                navController,
+                bindingBottomBackground
+            )
         }
     }
 
-    private fun setBottomNavVisibility(visible: Boolean) {
-        when (visible) {
-            true -> {
-                binding.viewBottomNavBackground.visibility = View.VISIBLE
-                binding.inclBottomNav.root.visibility = View.VISIBLE
-            }
-
-            false -> {
-                binding.viewBottomNavBackground.visibility = View.GONE
-                binding.inclBottomNav.root.visibility = View.GONE
-            }
-        }
-    }
-
-    override fun showBottomNav() {
-        binding.viewBottomNavBackground.visibility = View.VISIBLE
-        binding.inclBottomNav.root.visibility = View.VISIBLE
-    }
-
-}
-
-enum class Selection {
-    Start, Identification, Diseases
 }
