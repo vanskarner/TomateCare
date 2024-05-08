@@ -1,41 +1,33 @@
 package com.vanskarner.tomatecare.start
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.vanskarner.tomatecare.BaseBindingFragment
 import com.vanskarner.tomatecare.MainViewModel
+import com.vanskarner.tomatecare.R
 import com.vanskarner.tomatecare.Selection
+import com.vanskarner.tomatecare.databinding.DialogInfoAppBinding
 import com.vanskarner.tomatecare.databinding.FragmentStartBinding
 
-class StartFragment : Fragment() {
+class StartFragment : BaseBindingFragment<FragmentStartBinding>() {
 
-    private lateinit var binding: FragmentStartBinding
-    private val infoDialog = InfoDialog()
     private val viewModelActivity: MainViewModel by activityViewModels()
 
-    override fun onCreateView(
+    override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentStartBinding.inflate(layoutInflater)
-        return binding.root
-    }
+    ): FragmentStartBinding = FragmentStartBinding.inflate(layoutInflater)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = setupView()
-
-    override fun onResume() {
-        super.onResume()
-        setupViewModel()
-    }
-
-    private fun setupView() {
+    override fun setupView() {
         viewModelActivity.showBottomNavigation(Selection.Start)
-        binding.btnInfo.setOnClickListener { infoDialog.show(childFragmentManager) }
+        binding.btnInfo.setOnClickListener { showInfoDialog() }
         binding.cardViewActivity.setOnClickListener {
             viewModelActivity.hideBottomNavigation()
             goToLogsFragment()
@@ -50,8 +42,27 @@ class StartFragment : Fragment() {
         }
     }
 
-    private fun setupViewModel() {
+    override fun setupViewModel() {
 
+    }
+
+    private fun showInfoDialog() {
+        val bindingInfo = DialogInfoAppBinding.inflate(layoutInflater)
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setView(bindingInfo.root)
+        val alertDialog = builder.create()
+        val actualContext = requireContext()
+        var versionName = getString(R.string.unknown)
+        try {
+            val packageInfo =
+                actualContext.packageManager.getPackageInfo(actualContext.packageName, 0)
+            versionName = packageInfo.versionName
+        } catch (_: PackageManager.NameNotFoundException) {
+            val dialogMsg = getString(R.string.without_version)
+            Toast.makeText(actualContext, dialogMsg, Toast.LENGTH_SHORT).show()
+        }
+        bindingInfo.tvAppVersion.text = getString(R.string.info_version, versionName)
+        alertDialog.show()
     }
 
     private fun goToLogsFragment() {

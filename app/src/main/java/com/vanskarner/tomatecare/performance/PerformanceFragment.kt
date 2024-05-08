@@ -2,44 +2,31 @@ package com.vanskarner.tomatecare.performance
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.vanskarner.tomatecare.MainViewModel
+import com.vanskarner.tomatecare.BaseBindingFragment
 import com.vanskarner.tomatecare.databinding.FragmentPerformanceTestBinding
 
-class PerformanceFragment : Fragment() {
+class PerformanceFragment : BaseBindingFragment<FragmentPerformanceTestBinding>() {
 
-    private lateinit var binding: FragmentPerformanceTestBinding
-    private val viewModelActivity: MainViewModel by activityViewModels()
+    private val viewModel:PerformanceViewModel by viewModels()
 
-    override fun onCreateView(
+    override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentPerformanceTestBinding.inflate(layoutInflater)
-        return binding.root
-    }
+    ): FragmentPerformanceTestBinding = FragmentPerformanceTestBinding.inflate(layoutInflater)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = setupView()
-
-    override fun onResume() {
-        super.onResume()
-        setupViewModel()
-    }
-
-    private fun setupView() {
+    override fun setupView() {
         binding.imvOnBack.setOnClickListener { goToStartFragment() }
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             onBackPressed = { goToStartFragment() })
     }
 
-    private fun setupViewModel() {
+    override fun setupViewModel() {
 
     }
 
@@ -47,4 +34,5 @@ class PerformanceFragment : Fragment() {
         val direction = PerformanceFragmentDirections.toStartFragment()
         findNavController().navigate(direction)
     }
+
 }

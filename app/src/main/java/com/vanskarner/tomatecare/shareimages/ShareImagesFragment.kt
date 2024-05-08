@@ -2,44 +2,32 @@ package com.vanskarner.tomatecare.shareimages
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.vanskarner.tomatecare.MainViewModel
+import com.vanskarner.tomatecare.BaseBindingFragment
 import com.vanskarner.tomatecare.databinding.FragmentShareImagesBinding
 import com.vanskarner.tomatecare.performance.PerformanceFragmentDirections
 
-class ShareImagesFragment : Fragment() {
-    private lateinit var binding: FragmentShareImagesBinding
-    private val viewModelActivity: MainViewModel by activityViewModels()
+class ShareImagesFragment : BaseBindingFragment<FragmentShareImagesBinding>() {
 
-    override fun onCreateView(
+    private val viewModel: ShareImagesViewModel by viewModels()
+
+    override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentShareImagesBinding.inflate(layoutInflater)
-        return binding.root
-    }
+    ): FragmentShareImagesBinding = FragmentShareImagesBinding.inflate(layoutInflater)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = setupView()
-
-    override fun onResume() {
-        super.onResume()
-        setupViewModel()
-    }
-
-    private fun setupView() {
+    override fun setupView() {
         binding.imvOnBack.setOnClickListener { goToStartFragment() }
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             onBackPressed = { goToStartFragment() })
     }
 
-    private fun setupViewModel() {
+    override fun setupViewModel() {
 
     }
 

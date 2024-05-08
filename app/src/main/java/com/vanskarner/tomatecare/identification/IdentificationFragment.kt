@@ -6,11 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.vanskarner.tomatecare.MainViewModel
+import com.vanskarner.tomatecare.BaseBindingFragment
 import com.vanskarner.tomatecare.R
 import com.vanskarner.tomatecare.databinding.DialogIdentificationLeafBinding
 import com.vanskarner.tomatecare.databinding.DialogIdentificationNoteBinding
@@ -18,28 +16,17 @@ import com.vanskarner.tomatecare.databinding.DialogIdentificationRecommendationB
 import com.vanskarner.tomatecare.databinding.DialogIdentificationSummaryBinding
 import com.vanskarner.tomatecare.databinding.FragmentIdentificationBinding
 
-class IdentificationFragment : Fragment() {
-    private lateinit var binding: FragmentIdentificationBinding
+class IdentificationFragment : BaseBindingFragment<FragmentIdentificationBinding>() {
     private val recommendationsAdapter = LeafAdapter()
     private val viewModel: IdentificationViewModel by viewModels()
-    private val viewModelActivity: MainViewModel by activityViewModels()
-    override fun onCreateView(
+
+    override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentIdentificationBinding.inflate(layoutInflater)
-        return binding.root
-    }
+    ): FragmentIdentificationBinding = FragmentIdentificationBinding.inflate(layoutInflater)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) = setupView()
-
-    override fun onResume() {
-        super.onResume()
-        setupViewModel()
-    }
-
-    private fun setupView() {
+    override fun setupView() {
         binding.imvOnBack.setOnClickListener { goToCaptureFragment() }
         binding.rcvLeaves.adapter = recommendationsAdapter
         binding.tvSummary.setOnClickListener { viewModel.getSummary() }
@@ -50,7 +37,7 @@ class IdentificationFragment : Fragment() {
             onBackPressed = { goToCaptureFragment() })
     }
 
-    private fun setupViewModel() {
+    override fun setupViewModel() {
         viewModel.exampleData()
         viewModel.identification.observe(viewLifecycleOwner) {
             binding.model = it
