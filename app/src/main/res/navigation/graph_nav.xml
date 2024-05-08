@@ -42,17 +42,28 @@
         <action
             android:id="@+id/to_identificationFragment"
             app:destination="@id/identificationFragment" />
+        <action
+            android:id="@+id/to_startFragment"
+            app:destination="@id/startFragment" />
     </fragment>
     <fragment
         android:id="@+id/performanceFragment"
         android:name="com.vanskarner.tomatecare.performance.PerformanceFragment"
         android:label="fragment_performance_test"
-        tools:layout="@layout/fragment_performance_test" />
+        tools:layout="@layout/fragment_performance_test" >
+        <action
+            android:id="@+id/to_startFragment"
+            app:destination="@id/startFragment" />
+    </fragment>
     <fragment
         android:id="@+id/shareImagesFragment"
         android:name="com.vanskarner.tomatecare.shareimages.ShareImagesFragment"
         android:label="fragment_share_images"
-        tools:layout="@layout/fragment_share_images" />
+        tools:layout="@layout/fragment_share_images" >
+        <action
+            android:id="@+id/to_startFragment"
+            app:destination="@id/startFragment" />
+    </fragment>
     <fragment
         android:id="@+id/startFragment"
         android:name="com.vanskarner.tomatecare.start.StartFragment"

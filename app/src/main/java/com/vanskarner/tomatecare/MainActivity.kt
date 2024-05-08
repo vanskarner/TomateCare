@@ -9,6 +9,7 @@ import com.vanskarner.tomatecare.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val customNavBottom = CustomNavigationBottomNav()
     private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,38 +25,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupView() {
-        val bottomNavMain = binding.inclBottomNav
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_container) as NavHostFragment
         val navController = navHostFragment.navController
-        CustomNavigationBottomNav.setupView(bottomNavMain, navController)
+        customNavBottom.navController = navController
+        customNavBottom.viewBottomNavBackground = binding.viewBottomNavBackground
+        customNavBottom.binding = binding.inclBottomNav
+        customNavBottom.setupView()
     }
 
     private fun setupViewModel() {
         viewModel.bottomNavVisibility.observe(this) {
-            val bindingBottomNav = binding.inclBottomNav
-            val bindingBottomBackground = binding.viewBottomNavBackground
-            val navHostFragment = supportFragmentManager
-                .findFragmentById(R.id.nav_host_container) as NavHostFragment
-            val navController = navHostFragment.navController
             when (it) {
-                true -> CustomNavigationBottomNav.showBottomNav(
-                    bindingBottomNav,
-                    navController,
-                    bindingBottomBackground
-                )
+                true -> customNavBottom.showBottomNav()
 
-                false -> CustomNavigationBottomNav.hideBottomNav(
-                    bindingBottomNav,
-                    bindingBottomBackground
-                )
+                false -> customNavBottom.hideBottomNav()
             }
         }
-        viewModel.markerInDiseases.observe(this){
-            val bindingBottomNav = binding.inclBottomNav
-            val bindingBottomBackground = binding.viewBottomNavBackground
-            CustomNavigationBottomNav.showMarkerInDiseases(bindingBottomNav,bindingBottomBackground)
-        }
+        viewModel.markerInDiseases.observe(this) { customNavBottom.showMarkerInDiseases() }
     }
 
 }

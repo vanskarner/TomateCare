@@ -5,41 +5,33 @@ import android.view.View
 import androidx.navigation.NavController
 import com.vanskarner.tomatecare.databinding.BottomnavMainBinding
 
-object CustomNavigationBottomNav {
+class CustomNavigationBottomNav {
 
     private var currentSelection = Selection.Start
     private var previousSelection = Selection.Start
+    lateinit var binding: BottomnavMainBinding
+    lateinit var viewBottomNavBackground: View
+    lateinit var navController: NavController
 
-    @JvmStatic
-    fun setupView(
-        binding: BottomnavMainBinding,
-        nav: NavController
-    ) {
+    fun setupView() {
         if (currentSelection != Selection.Start) {
             previousSelection = Selection.Diseases
             currentSelection = Selection.Diseases
             binding.tvBottomNavStart.setTypeface(null, Typeface.NORMAL)
             binding.tvBottomNavDiseases.setTypeface(null, Typeface.BOLD)
-            nav.navigate(R.id.diseasesFragment)
+            navController.navigate(R.id.diseasesFragment)
         }
-        binding.tvBottomNavStart.setOnClickListener { selectStart(binding, nav) }
-        binding.bottomNavIdentify.setOnClickListener { selectIdentify(nav) }
-        binding.tvBottomNavDiseases.setOnClickListener { selectDiseases(binding, nav) }
+        binding.tvBottomNavStart.setOnClickListener { selectStart() }
+        binding.bottomNavIdentify.setOnClickListener { selectIdentify() }
+        binding.tvBottomNavDiseases.setOnClickListener { selectDiseases() }
     }
 
-    fun hideBottomNav(
-        binding: BottomnavMainBinding,
-        viewBottomNavBackground: View
-    ) {
+    fun hideBottomNav() {
         binding.root.visibility = View.GONE
         viewBottomNavBackground.visibility = View.GONE
     }
 
-    fun showBottomNav(
-        binding: BottomnavMainBinding,
-        nav: NavController,
-        viewBottomNavBackground: View
-    ) {
+    fun showBottomNav() {
         binding.root.visibility = View.VISIBLE
         viewBottomNavBackground.visibility = View.VISIBLE
         when (previousSelection) {
@@ -48,7 +40,7 @@ object CustomNavigationBottomNav {
                 currentSelection = Selection.Start
                 binding.tvBottomNavDiseases.setTypeface(null, Typeface.NORMAL)
                 binding.tvBottomNavStart.setTypeface(null, Typeface.BOLD)
-                nav.navigate(R.id.startFragment)
+                navController.navigate(R.id.startFragment)
             }
 
             Selection.Diseases -> {
@@ -56,14 +48,14 @@ object CustomNavigationBottomNav {
                 currentSelection = Selection.Diseases
                 binding.tvBottomNavStart.setTypeface(null, Typeface.NORMAL)
                 binding.tvBottomNavDiseases.setTypeface(null, Typeface.BOLD)
-                nav.navigate(R.id.diseasesFragment)
+                navController.navigate(R.id.diseasesFragment)
             }
 
             Selection.Identification -> return
         }
     }
 
-    fun showMarkerInDiseases(binding: BottomnavMainBinding, viewBottomNavBackground: View) {
+    fun showMarkerInDiseases() {
         binding.root.visibility = View.VISIBLE
         viewBottomNavBackground.visibility = View.VISIBLE
         previousSelection = Selection.Diseases
@@ -72,37 +64,29 @@ object CustomNavigationBottomNav {
         binding.tvBottomNavDiseases.setTypeface(null, Typeface.BOLD)
     }
 
-    private fun selectStart(
-        binding: BottomnavMainBinding,
-        nav: NavController
-    ) {
+    private fun selectStart() {
         if (currentSelection != Selection.Start) {
             previousSelection = Selection.Start
             currentSelection = Selection.Start
             binding.tvBottomNavDiseases.setTypeface(null, Typeface.NORMAL)
             binding.tvBottomNavStart.setTypeface(null, Typeface.BOLD)
-            nav.navigate(R.id.startFragment)
+            navController.navigate(R.id.startFragment)
         }
     }
 
-    private fun selectDiseases(
-        binding: BottomnavMainBinding,
-        nav: NavController
-    ) {
+    private fun selectDiseases() {
         if (currentSelection != Selection.Diseases) {
             previousSelection = Selection.Diseases
             currentSelection = Selection.Diseases
             binding.tvBottomNavStart.setTypeface(null, Typeface.NORMAL)
             binding.tvBottomNavDiseases.setTypeface(null, Typeface.BOLD)
-            nav.navigate(R.id.diseasesFragment)
+            navController.navigate(R.id.diseasesFragment)
         }
     }
 
-    private fun selectIdentify(
-        nav: NavController,
-    ) {
+    private fun selectIdentify() {
         currentSelection = Selection.Identification
-        nav.navigate(R.id.captureFragment)
+        navController.navigate(R.id.captureFragment)
     }
 
 }
