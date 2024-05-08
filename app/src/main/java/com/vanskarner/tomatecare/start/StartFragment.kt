@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.vanskarner.tomatecare.MainViewModel
+import com.vanskarner.tomatecare.Selection
 import com.vanskarner.tomatecare.databinding.FragmentStartBinding
 
 class StartFragment : Fragment() {
@@ -33,17 +34,18 @@ class StartFragment : Fragment() {
     }
 
     private fun setupView() {
+        viewModelActivity.showBottomNavigation(Selection.Start)
         binding.btnInfo.setOnClickListener { infoDialog.show(childFragmentManager) }
         binding.cardViewActivity.setOnClickListener {
-            viewModelActivity.setVisibilityBottomNav(false)
+            viewModelActivity.hideBottomNavigation()
             goToLogsFragment()
         }
         binding.cardViewTest.setOnClickListener {
-            viewModelActivity.setVisibilityBottomNav(false)
+            viewModelActivity.hideBottomNavigation()
             goToPerformanceFragment()
         }
         binding.cardViewImprove.setOnClickListener {
-            viewModelActivity.setVisibilityBottomNav(false)
+            viewModelActivity.hideBottomNavigation()
             goToShareImagesFragment()
         }
     }

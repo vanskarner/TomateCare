@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.vanskarner.tomatecare.MainViewModel
 import com.vanskarner.tomatecare.databinding.FragmentShareImagesBinding
+import com.vanskarner.tomatecare.performance.PerformanceFragmentDirections
 
 class ShareImagesFragment : Fragment() {
     private lateinit var binding: FragmentShareImagesBinding
@@ -31,13 +33,19 @@ class ShareImagesFragment : Fragment() {
     }
 
     private fun setupView() {
-        binding.imvOnBack.setOnClickListener { viewModelActivity.setVisibilityBottomNav(true) }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            viewModelActivity.setVisibilityBottomNav(true)
-        }
+        binding.imvOnBack.setOnClickListener { goToStartFragment() }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            onBackPressed = { goToStartFragment() })
     }
 
     private fun setupViewModel() {
 
     }
+
+    private fun goToStartFragment() {
+        val direction = PerformanceFragmentDirections.toStartFragment()
+        findNavController().navigate(direction)
+    }
+
 }

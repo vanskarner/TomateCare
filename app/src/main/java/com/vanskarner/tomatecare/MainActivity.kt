@@ -35,14 +35,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        viewModel.bottomNavVisibility.observe(this) {
-            when (it) {
-                true -> customNavBottom.showBottomNav()
-
-                false -> customNavBottom.hideBottomNav()
-            }
-        }
-        viewModel.markerInDiseases.observe(this) { customNavBottom.showMarkerInDiseases() }
+        viewModel.showBottomNav.observe(this) { customNavBottom.show(it) }
+        viewModel.hideBottomNav.observe(this) { customNavBottom.hide() }
     }
 
 }

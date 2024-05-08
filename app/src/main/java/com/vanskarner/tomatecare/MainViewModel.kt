@@ -5,19 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class MainViewModel : ViewModel() {
+    private val _hideBottomNav = MutableLiveData<Unit>()
+    private val _showBottomNav = MutableLiveData<Selection>()
 
-    private val _bottomNavVisibility = MutableLiveData<Boolean>()
-    private val _markerInDiseases = MutableLiveData<Unit>()
+    val hideBottomNav: LiveData<Unit> = _hideBottomNav
+    val showBottomNav: LiveData<Selection> = _showBottomNav
 
-    val bottomNavVisibility: LiveData<Boolean> = _bottomNavVisibility
-    val markerInDiseases: LiveData<Unit> = _markerInDiseases
-
-    fun setVisibilityBottomNav(isVisible: Boolean) {
-        _bottomNavVisibility.value = isVisible
+    fun hideBottomNavigation() {
+        _hideBottomNav.value = Unit
     }
 
-    fun showMarkerInDiseases() {
-        _markerInDiseases.value = Unit
+    fun showBottomNavigation(selection: Selection) {
+        _showBottomNav.value = selection
     }
 
 }

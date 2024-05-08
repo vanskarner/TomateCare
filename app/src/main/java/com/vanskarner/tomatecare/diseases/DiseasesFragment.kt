@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.vanskarner.tomatecare.MainViewModel
+import com.vanskarner.tomatecare.Selection
 import com.vanskarner.tomatecare.databinding.FragmentDiseasesBinding
 
 class DiseasesFragment : Fragment() {
@@ -13,6 +16,7 @@ class DiseasesFragment : Fragment() {
     private val diseaseDialog = DiseaseDialog()
     private val diseaseAdapter = DiseaseAdapter()
     private val viewModel: DiseaseViewModel by viewModels()
+    private val viewModelActivity:MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +35,7 @@ class DiseasesFragment : Fragment() {
     }
 
     private fun setupView() {
+        viewModelActivity.showBottomNavigation(Selection.Diseases)
         binding.rcvDiseases.adapter = diseaseAdapter
         diseaseAdapter.setOnClickListener { viewModel.exampleDiseaseDetail() }
     }

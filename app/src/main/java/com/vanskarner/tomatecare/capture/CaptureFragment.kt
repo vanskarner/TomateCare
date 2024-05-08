@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.vanskarner.tomatecare.MainViewModel
+import com.vanskarner.tomatecare.Selection
 import com.vanskarner.tomatecare.databinding.FragmentCaptureBinding
 
 class CaptureFragment : Fragment() {
@@ -34,14 +35,15 @@ class CaptureFragment : Fragment() {
     }
 
     private fun setupView() {
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            viewModelActivity.setVisibilityBottomNav(true)
-        }
+        viewModelActivity.hideBottomNavigation()
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            onBackPressed = { viewModelActivity.showBottomNavigation(Selection.Identification) })
         binding.btnCapture.setOnClickListener { goToIdentificationFragment() }
     }
 
     private fun setupViewModel() {
-        viewModelActivity.setVisibilityBottomNav(false)
+
     }
 
     private fun goToIdentificationFragment() {

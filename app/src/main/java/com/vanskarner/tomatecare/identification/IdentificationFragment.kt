@@ -18,7 +18,6 @@ import com.vanskarner.tomatecare.databinding.DialogIdentificationRecommendationB
 import com.vanskarner.tomatecare.databinding.DialogIdentificationSummaryBinding
 import com.vanskarner.tomatecare.databinding.FragmentIdentificationBinding
 
-
 class IdentificationFragment : Fragment() {
     private lateinit var binding: FragmentIdentificationBinding
     private val recommendationsAdapter = LeafAdapter()
@@ -46,9 +45,9 @@ class IdentificationFragment : Fragment() {
         binding.tvSummary.setOnClickListener { viewModel.getSummary() }
         binding.tvAddNote.setOnClickListener { viewModel.getNote() }
         recommendationsAdapter.setOnClickListener { viewModel.getLeafInfo() }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            goToCaptureFragment()
-        }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            onBackPressed = { goToCaptureFragment() })
     }
 
     private fun setupViewModel() {
@@ -91,7 +90,6 @@ class IdentificationFragment : Fragment() {
         bindingLeafInfo.tvDiseaseInfo.setOnClickListener {
             alertDialog.cancel()
             goToDiseasesFragment()
-            viewModelActivity.showMarkerInDiseases()
         }
         bindingLeafInfo.model = model
         alertDialog.show()
