@@ -16,3 +16,10 @@ data class LeafModel(
     val diseases: String,
     val probability: Float
 )
+
+data class LeafInfoModel(
+    val image: Bitmap,
+    val isHealthy: Boolean,
+    val prediction: String,
+    val shortDescriptionDisease: String,
+)

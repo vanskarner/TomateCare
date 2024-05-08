@@ -51,6 +51,11 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         }
+        viewModel.markerInDiseases.observe(this){
+            val bindingBottomNav = binding.inclBottomNav
+            val bindingBottomBackground = binding.viewBottomNavBackground
+            CustomNavigationBottomNav.showMarkerInDiseases(bindingBottomNav,bindingBottomBackground)
+        }
     }
 
 }

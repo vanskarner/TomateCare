@@ -1,10 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/graph_nav"
-    app:startDestination="@id/startNav">
+    app:startDestination="@id/startFragment">
 
-    <include app:graph="@navigation/start_nav" />
-    <include app:graph="@navigation/diseases_nav" />
-    <include app:graph="@navigation/identification_nav" />
+    <fragment
+        android:id="@+id/captureFragment"
+        android:name="com.vanskarner.tomatecare.capture.CaptureFragment"
+        android:label="fragment_capture"
+        tools:layout="@layout/fragment_capture" >
+        <action
+            android:id="@+id/to_identificationFragment"
+            app:destination="@id/identificationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/diseasesFragment"
+        android:name="com.vanskarner.tomatecare.diseases.DiseasesFragment"
+        android:label="fragment_diseases"
+        tools:layout="@layout/fragment_diseases" />
+    <fragment
+        android:id="@+id/identificationFragment"
+        android:name="com.vanskarner.tomatecare.identification.IdentificationFragment"
+        android:label="fragment_identification"
+        tools:layout="@layout/fragment_identification" >
+        <action
+            android:id="@+id/to_captureFragment"
+            app:destination="@id/captureFragment" />
+        <action
+            android:id="@+id/to_logsFragment"
+            app:destination="@id/logsFragment" />
+        <action
+            android:id="@+id/to_diseasesFragment"
+            app:destination="@id/diseasesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/logsFragment"
+        android:name="com.vanskarner.tomatecare.activitylogs.LogsFragment"
+        android:label="fragment_logs"
+        tools:layout="@layout/fragment_logs" >
+        <action
+            android:id="@+id/to_identificationFragment"
+            app:destination="@id/identificationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/performanceFragment"
+        android:name="com.vanskarner.tomatecare.performance.PerformanceFragment"
+        android:label="fragment_performance_test"
+        tools:layout="@layout/fragment_performance_test" />
+    <fragment
+        android:id="@+id/shareImagesFragment"
+        android:name="com.vanskarner.tomatecare.shareimages.ShareImagesFragment"
+        android:label="fragment_share_images"
+        tools:layout="@layout/fragment_share_images" />
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="com.vanskarner.tomatecare.start.StartFragment"
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_start" >
+        <action
+            android:id="@+id/to_logsFragment"
+            app:destination="@id/logsFragment" />
+        <action
+            android:id="@+id/to_performanceFragment"
+            app:destination="@id/performanceFragment" />
+        <action
+            android:id="@+id/to_shareImagesFragment"
+            app:destination="@id/shareImagesFragment" />
+    </fragment>
 </navigation>

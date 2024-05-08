@@ -20,7 +20,7 @@ object CustomNavigationBottomNav {
             currentSelection = Selection.Diseases
             binding.tvBottomNavStart.setTypeface(null, Typeface.NORMAL)
             binding.tvBottomNavDiseases.setTypeface(null, Typeface.BOLD)
-            nav.navigate(R.id.diseasesNav)
+            nav.navigate(R.id.diseasesFragment)
         }
         binding.tvBottomNavStart.setOnClickListener { selectStart(binding, nav) }
         binding.bottomNavIdentify.setOnClickListener { selectIdentify(nav) }
@@ -48,7 +48,7 @@ object CustomNavigationBottomNav {
                 currentSelection = Selection.Start
                 binding.tvBottomNavDiseases.setTypeface(null, Typeface.NORMAL)
                 binding.tvBottomNavStart.setTypeface(null, Typeface.BOLD)
-                nav.navigate(R.id.startNav)
+                nav.navigate(R.id.startFragment)
             }
 
             Selection.Diseases -> {
@@ -56,11 +56,20 @@ object CustomNavigationBottomNav {
                 currentSelection = Selection.Diseases
                 binding.tvBottomNavStart.setTypeface(null, Typeface.NORMAL)
                 binding.tvBottomNavDiseases.setTypeface(null, Typeface.BOLD)
-                nav.navigate(R.id.diseasesNav)
+                nav.navigate(R.id.diseasesFragment)
             }
 
             Selection.Identification -> return
         }
+    }
+
+    fun showMarkerInDiseases(binding: BottomnavMainBinding, viewBottomNavBackground: View) {
+        binding.root.visibility = View.VISIBLE
+        viewBottomNavBackground.visibility = View.VISIBLE
+        previousSelection = Selection.Diseases
+        currentSelection = Selection.Diseases
+        binding.tvBottomNavStart.setTypeface(null, Typeface.NORMAL)
+        binding.tvBottomNavDiseases.setTypeface(null, Typeface.BOLD)
     }
 
     private fun selectStart(
@@ -72,7 +81,7 @@ object CustomNavigationBottomNav {
             currentSelection = Selection.Start
             binding.tvBottomNavDiseases.setTypeface(null, Typeface.NORMAL)
             binding.tvBottomNavStart.setTypeface(null, Typeface.BOLD)
-            nav.navigate(R.id.startNav)
+            nav.navigate(R.id.startFragment)
         }
     }
 
@@ -85,7 +94,7 @@ object CustomNavigationBottomNav {
             currentSelection = Selection.Diseases
             binding.tvBottomNavStart.setTypeface(null, Typeface.NORMAL)
             binding.tvBottomNavDiseases.setTypeface(null, Typeface.BOLD)
-            nav.navigate(R.id.diseasesNav)
+            nav.navigate(R.id.diseasesFragment)
         }
     }
 
@@ -93,7 +102,7 @@ object CustomNavigationBottomNav {
         nav: NavController,
     ) {
         currentSelection = Selection.Identification
-        nav.navigate(R.id.identificationNav)
+        nav.navigate(R.id.captureFragment)
     }
 
 }

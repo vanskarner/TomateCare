@@ -10,8 +10,14 @@ import androidx.lifecycle.ViewModel
 
 class IdentificationViewModel : ViewModel() {
     private val _identification = MutableLiveData<IdentificationDetailModel>()
+    private val _note = MutableLiveData<String>()
+    private val _summary = MutableLiveData<SummaryModel>()
+    private val _leafInfo = MutableLiveData<LeafInfoModel>()
 
     val identification: LiveData<IdentificationDetailModel> = _identification
+    val note: LiveData<String> = _note
+    val summary: LiveData<SummaryModel> = _summary
+    val leafInfo: LiveData<LeafInfoModel> = _leafInfo
 
     //just to see how it looks, then delete
     fun exampleData() {
@@ -76,6 +82,59 @@ class IdentificationViewModel : ViewModel() {
         canvas.drawText(texto, textoX, centroY, paint)
 
         return bitmap
+    }
+
+    fun saveNote(text: String) {
+
+    }
+
+    fun getNote() {
+        _note.value = "Note of example"
+    }
+
+    fun getSummary() {
+        val recomendations = listOf(
+            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
+            RecommendationModel("Baterial Spot", "Otra descripcion"),
+            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
+            RecommendationModel("Baterial Spot", "Otra descripcion"),
+            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
+            RecommendationModel("Baterial Spot", "Otra descripcion"),
+            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
+            RecommendationModel("Baterial Spot", "Otra descripcion"),
+            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
+            RecommendationModel("Baterial Spot", "Otra descripcion"),
+            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
+            RecommendationModel("Baterial Spot", "Otra descripcion"),
+            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
+            RecommendationModel("Baterial Spot", "Otra descripcion"),
+            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
+            RecommendationModel("Baterial Spot", "Otra descripcion"),
+            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
+            RecommendationModel("Baterial Spot", "Otra descripcion"),
+            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
+            RecommendationModel("Baterial Spot", "Otra descripcion"),
+            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
+            RecommendationModel("Baterial Spot", "Otra descripcion"),
+            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
+            RecommendationModel("Baterial Spot", "Otra descripcion"),
+        )
+//        val recomendations = emptyList<RecommendationModel>()
+        val summaryModel =
+            SummaryModel("30 ms", 20, 2, "Mosaic Virus \nBaterial Spot", recomendations)
+        _summary.value = summaryModel
+    }
+
+    fun getLeafInfo() {
+        val model = LeafInfoModel(
+            exampleBitmap(),
+            false,
+            "Mosaic Virus(95%)",
+            "Typically, first symptoms appear as yellowing or bronzing of young leaflets as well\n" +
+                    "as necrosis of leaflet veins. Severely affected plants stop growing and leaflets curl\n" +
+                    "downward."
+        )
+        _leafInfo.value = model
     }
 
 
