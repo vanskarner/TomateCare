@@ -68,4 +68,8 @@
     <string name="more_information">Mas información.</string>
     <string name="without_version">No se pudo obtener la versión</string>
     <string name="unknown">Desconocido</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete_selected_items">¿Eliminar los elementos seleccionados?</string>
+    <string name="previus">Anterior</string>
+    <string name="next">Siguiente</string>
 </resources>

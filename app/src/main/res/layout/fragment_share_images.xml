@@ -58,13 +58,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView16">
 
-        <TextView
+        <Button
             android:id="@+id/tvTermsAndConditions"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="@string/terms_conditions"
-            android:textColor="@color/links_with_white_background"
             android:textSize="18sp"
             android:textStyle="bold" />
 
