@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
@@ -44,5 +45,9 @@ abstract class BaseBindingFragment<T : ViewBinding> : Fragment() {
     abstract fun setupView()
 
     abstract fun setupViewModel()
+
+    protected fun showToast(msg: String) {
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+    }
 
 }

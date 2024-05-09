@@ -73,4 +73,5 @@
     <string name="previus">Anterior</string>
     <string name="next">Siguiente</string>
     <string name="wait">Espere…</string>
+    <string name="apply">Aplicar</string>
 </resources>
