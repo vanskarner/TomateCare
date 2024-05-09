@@ -11,7 +11,7 @@ import com.vanskarner.tomatecare.databinding.FragmentPerformanceTestBinding
 
 class PerformanceFragment : BaseBindingFragment<FragmentPerformanceTestBinding>() {
 
-    private val viewModel:PerformanceViewModel by viewModels()
+    private val viewModel: PerformanceViewModel by viewModels()
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -24,6 +24,7 @@ class PerformanceFragment : BaseBindingFragment<FragmentPerformanceTestBinding>(
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             onBackPressed = { goToStartFragment() })
+        binding.btnStart.setOnClickListener { }
     }
 
     override fun setupViewModel() {
