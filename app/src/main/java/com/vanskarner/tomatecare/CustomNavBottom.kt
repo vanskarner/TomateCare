@@ -13,10 +13,6 @@ class CustomNavigationBottomNav {
     lateinit var navController: NavController
 
     fun setupView() {
-//        if (currentSelection != Selection.Start) {
-//            setSelection(Selection.Diseases)
-//            navController.navigate(R.id.diseasesFragment)
-//        }
         binding.tvBottomNavStart.setOnClickListener { selectStart() }
         binding.bottomNavIdentify.setOnClickListener { selectIdentify() }
         binding.tvBottomNavDiseases.setOnClickListener { selectDiseases() }

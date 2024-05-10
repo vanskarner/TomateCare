@@ -17,10 +17,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setupView()
         setContentView(binding.root)
-    }
-
-    override fun onResume() {
-        super.onResume()
         setupViewModel()
     }
 
