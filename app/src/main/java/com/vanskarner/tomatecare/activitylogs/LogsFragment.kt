@@ -11,10 +11,11 @@ import com.vanskarner.tomatecare.BaseBindingFragment
 import com.vanskarner.tomatecare.R
 import com.vanskarner.tomatecare.databinding.FragmentLogsBinding
 
-
 class LogsFragment : BaseBindingFragment<FragmentLogsBinding>() {
 
     private val viewModel: LogsViewModel by viewModels()
+    private val logsAdapter = LogsAdapter()
+    private var selectOptions = SelectionOptions.Select
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -23,6 +24,7 @@ class LogsFragment : BaseBindingFragment<FragmentLogsBinding>() {
     ): FragmentLogsBinding = FragmentLogsBinding.inflate(layoutInflater)
 
     override fun setupView() {
+        binding.rcvLogs.adapter = logsAdapter
         binding.imvOnBack.setOnClickListener {
             goToStartFragment()
         }
@@ -30,11 +32,33 @@ class LogsFragment : BaseBindingFragment<FragmentLogsBinding>() {
             viewLifecycleOwner,
             onBackPressed = { goToStartFragment() })
         binding.lyDelete.setOnClickListener { }
+        binding.btnSelect.setOnClickListener {
+            when(selectOptions){
+                SelectionOptions.Select -> {
+                    //show all checkbox
+                    binding.btnSelect.setText(R.string.select_all)
+                    selectOptions = SelectionOptions.SelectAll
+                }
+                SelectionOptions.SelectAll -> {
+                    //show all selected items
+                    binding.btnSelect.setText(R.string.cancel)
+                    selectOptions = SelectionOptions.Cancel
+                }
+                SelectionOptions.Cancel -> {
+                    //hide all selections
+                    binding.btnSelect.setText(R.string.select)
+                    selectOptions = SelectionOptions.Select
+                }
+            }
+        }
     }
 
     override fun setupViewModel() {
-
+        viewModel.exampleList()
+        viewModel.list.observe(viewLifecycleOwner) { showLogs(it) }
     }
+
+    private fun showLogs(list: List<LogModel>) = logsAdapter.updateList(list)
 
     private fun goToStartFragment() {
         val direction = LogsFragmentDirections.toStartFragment()
@@ -57,4 +81,8 @@ class LogsFragment : BaseBindingFragment<FragmentLogsBinding>() {
         dialog.show()
     }
 
+}
+
+enum class SelectionOptions {
+    Select, SelectAll, Cancel
 }

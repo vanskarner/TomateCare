@@ -9,12 +9,7 @@ import com.vanskarner.tomatecare.databinding.ItemLogBinding
 
 class LogsAdapter : RecyclerView.Adapter<LogViewHolder>() {
 
-    private var onClick: (item: LogModel) -> Unit = {}
     private var list: MutableList<LogModel> = ArrayList()
-
-    fun setOnClickListener(listener: (item: LogModel) -> Unit) {
-        onClick = listener
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogViewHolder {
         val binding = ItemLogBinding
@@ -26,7 +21,7 @@ class LogsAdapter : RecyclerView.Adapter<LogViewHolder>() {
 
     override fun onBindViewHolder(holder: LogViewHolder, position: Int) {
         val item = list[position]
-        holder.bindView(item, onClick)
+        holder.bindView(item)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -35,11 +30,14 @@ class LogsAdapter : RecyclerView.Adapter<LogViewHolder>() {
         this.list.addAll(list)
         notifyDataSetChanged()
     }
+
 }
 
 class LogViewHolder(val binding: ItemLogBinding) : ViewHolder(binding.root) {
-    fun bindView(item: LogModel, onClick: (item: LogModel) -> Unit) {
+    fun bindView(item: LogModel) {
         binding.model = item
-        binding.root.setOnClickListener { onClick.invoke(item) }
+        binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
+            item.checked = isChecked
+        }
     }
 }

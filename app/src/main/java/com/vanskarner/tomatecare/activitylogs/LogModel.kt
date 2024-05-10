@@ -8,5 +8,6 @@ data class LogModel(
     val image: Bitmap,
     val state: String,
     val note: String,
-    val date: String
+    val date: String,
+    var checked: Boolean
 )
