@@ -9,5 +9,7 @@ data class SettingModel(
     val thresholdLimit: Float,
     val resultsLimit: Int,
     val threadLimit: Int,
+    var selectedProcessorIndex: Int,
+    var selectedModelIndex: Int,
     val thresholdIncrease: Float = 0.1f
 )

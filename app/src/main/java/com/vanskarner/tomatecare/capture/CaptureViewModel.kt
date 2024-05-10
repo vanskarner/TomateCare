@@ -24,7 +24,9 @@ class CaptureViewModel : ViewModel() {
         ),
         0.8f,
         5,
-        5
+        5,
+        0,
+        1
     )
 
     fun getSetting() {
