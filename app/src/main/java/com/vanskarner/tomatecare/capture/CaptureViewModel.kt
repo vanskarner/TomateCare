@@ -13,10 +13,12 @@ class CaptureViewModel : ViewModel() {
     private val _settingModel = MutableLiveData<SettingModel>()
     private val _loading = MutableLiveData<Unit>()
     private val _error = MutableLiveData<Unit>()
+    private val _idLog = MutableLiveData<Int>()
 
     val settingModel: LiveData<SettingModel> = _settingModel
     val loading: LiveData<Unit> = _loading
     val error: LiveData<Unit> = _error
+    val idLog: LiveData<Int> = _idLog
 
     private var myModel = SettingModel(
         0.3f,

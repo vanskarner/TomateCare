@@ -56,7 +56,7 @@ class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             onBackPressed = { viewModelActivity.showBottomNavigation(Selection.Identification) })
-        binding.btnCapture.setOnClickListener { goToIdentificationFragment() }
+        binding.btnCapture.setOnClickListener { }
         binding.imvSettings.setOnClickListener { viewModel.getSetting() }
         binding.tvTips.setOnClickListener { advicesDialog.show(childFragmentManager) }
         binding.btnPhotos.setOnClickListener {
@@ -75,10 +75,11 @@ class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         }
         viewModel.loading.observe(viewLifecycleOwner) { showLoading() }
         viewModel.error.observe(viewLifecycleOwner) { showError() }
+        viewModel.idLog.observe(viewLifecycleOwner) { goToIdentificationFragment(it) }
     }
 
-    private fun goToIdentificationFragment() {
-        val navDirection = CaptureFragmentDirections.toIdentificationFragment()
+    private fun goToIdentificationFragment(idLog: Int) {
+        val navDirection = CaptureFragmentDirections.toIdentificationFragment(idLog)
         findNavController().navigate(navDirection)
     }
 

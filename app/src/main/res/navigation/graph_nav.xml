@@ -18,7 +18,12 @@
         android:id="@+id/diseasesFragment"
         android:name="com.vanskarner.tomatecare.diseases.DiseasesFragment"
         android:label="fragment_diseases"
-        tools:layout="@layout/fragment_diseases" />
+        tools:layout="@layout/fragment_diseases" >
+        <argument
+            android:name="IdSelected"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
     <fragment
         android:id="@+id/identificationFragment"
         android:name="com.vanskarner.tomatecare.identification.IdentificationFragment"
@@ -33,6 +38,9 @@
         <action
             android:id="@+id/to_diseasesFragment"
             app:destination="@id/diseasesFragment" />
+        <argument
+            android:name="idLog"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/logsFragment"
