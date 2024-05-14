@@ -26,6 +26,7 @@
         android:layout_marginEnd="16dp"
         android:gravity="top"
         android:hint="@string/write_your_note_here"
+        android:maxLines="10"
         android:inputType="textMultiLine"
         android:minLines="3"
         app:layout_constraintEnd_toEndOf="parent"

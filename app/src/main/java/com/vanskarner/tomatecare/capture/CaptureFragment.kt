@@ -56,7 +56,7 @@ class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             onBackPressed = { viewModelActivity.showBottomNavigation(Selection.Identification) })
-        binding.btnCapture.setOnClickListener { }
+        binding.btnCapture.setOnClickListener { goToIdentificationFragment(0) }
         binding.imvSettings.setOnClickListener { viewModel.getSetting() }
         binding.tvTips.setOnClickListener { advicesDialog.show(childFragmentManager) }
         binding.btnPhotos.setOnClickListener {

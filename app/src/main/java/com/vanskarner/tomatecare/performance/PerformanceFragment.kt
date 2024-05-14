@@ -20,15 +20,23 @@ class PerformanceFragment : BaseBindingFragment<FragmentPerformanceTestBinding>(
     ): FragmentPerformanceTestBinding = FragmentPerformanceTestBinding.inflate(layoutInflater)
 
     override fun setupView() {
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.imvOnBack.setOnClickListener { goToStartFragment() }
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             onBackPressed = { goToStartFragment() })
-        binding.btnStart.setOnClickListener { }
+        binding.btnStart.setOnClickListener {
+            val posProcessing = binding.spProcessing.selectedItemPosition
+            val posModels = binding.spModel.selectedItemPosition
+            viewModel.startTest(posProcessing, posModels)
+        }
+        binding.btnLessThreads.setOnClickListener { viewModel.decreaseThreads() }
+        binding.btnMoreThreads.setOnClickListener { viewModel.increaseThreads() }
     }
 
     override fun setupViewModel() {
-
+        viewModel.exampleData()
     }
 
     private fun goToStartFragment() {
