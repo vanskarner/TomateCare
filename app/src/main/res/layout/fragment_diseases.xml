@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/tomato_svgrepo_com"
+        app:navigationIcon="@drawable/logo_tomatecare"
         app:subtitle="@string/diseases"
         app:title="@string/app_name"/>
 

@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:subtitle="@string/start"
-        app:navigationIcon="@drawable/tomato_svgrepo_com"
+        app:navigationIcon="@drawable/logo_tomatecare"
         app:title="@string/app_name">
 
         <ImageView

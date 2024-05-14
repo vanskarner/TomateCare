@@ -19,7 +19,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imvOnBack"
             app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="@drawable/tomato_svgrepo_com"
+            app:navigationIcon="@drawable/logo_tomatecare"
             app:subtitle="@string/test_performance"
             app:title="@string/app_name" />
 
