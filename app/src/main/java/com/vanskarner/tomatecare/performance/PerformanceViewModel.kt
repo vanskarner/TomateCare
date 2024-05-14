@@ -36,7 +36,8 @@ class PerformanceViewModel : ViewModel() {
     }
 
     fun startTest(posProcessing: Int, posModels: Int) {
-
+        val selectedProcessing = _processing.value!!.list[posProcessing].id
+        val selectedModels = _models.value!!.list[posModels].id
     }
 
     fun decreaseThreads() {
