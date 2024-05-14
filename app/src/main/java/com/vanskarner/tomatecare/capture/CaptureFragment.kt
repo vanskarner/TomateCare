@@ -2,6 +2,7 @@ package com.vanskarner.tomatecare.capture
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
@@ -44,6 +45,16 @@ class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
                 } ?: showToast(R.string.image_not_loaded)
             }
         }
+    private val cameraRequest =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                val imageBitmap = data?.extras?.get("data") as Bitmap?
+                Glide.with(requireContext())
+                    .load(imageBitmap)
+                    .into(binding.imvPhotoToAnalyze)
+            }
+        }
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -56,7 +67,7 @@ class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             onBackPressed = { viewModelActivity.showBottomNavigation(Selection.Identification) })
-        binding.btnCapture.setOnClickListener { goToIdentificationFragment(0) }
+        binding.btnCapture.setOnClickListener { openCamera() }
         binding.imvSettings.setOnClickListener { viewModel.getSetting() }
         binding.tvTips.setOnClickListener { advicesDialog.show(childFragmentManager) }
         binding.btnPhotos.setOnClickListener {
@@ -97,6 +108,11 @@ class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         binding.clIdentification.visibility = View.GONE
         binding.imvPhotoToAnalyze.setImageBitmap(null)
         showToast(R.string.error_non_analyzable_image)
+    }
+
+    private fun openCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        cameraRequest.launch(intent)
     }
 
 }
