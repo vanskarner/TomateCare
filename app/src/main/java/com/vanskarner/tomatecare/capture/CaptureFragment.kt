@@ -2,15 +2,16 @@ package com.vanskarner.tomatecare.capture
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,6 +21,8 @@ import com.vanskarner.tomatecare.MainViewModel
 import com.vanskarner.tomatecare.R
 import com.vanskarner.tomatecare.Selection
 import com.vanskarner.tomatecare.databinding.FragmentCaptureBinding
+import java.io.File
+import java.io.IOException
 
 class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
 
@@ -45,11 +48,11 @@ class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
                 } ?: showToast(R.string.image_not_loaded)
             }
         }
+    private var currentPhotoPath: String? = null
     private val cameraRequest =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                val imageBitmap = data?.extras?.get("data") as Bitmap?
+                val imageBitmap = BitmapFactory.decodeFile(currentPhotoPath)
                 Glide.with(requireContext())
                     .load(imageBitmap)
                     .into(binding.imvPhotoToAnalyze)
@@ -111,8 +114,33 @@ class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
     }
 
     private fun openCamera() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        cameraRequest.launch(intent)
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        var photoFile: File? = null
+        try {
+            photoFile = createImageFile()
+        } catch (ex: IOException) {
+            // Maneja el error
+        }
+        // Continúa solo si se pudo crear el archivo
+        if (photoFile != null) {
+            val photoURI = FileProvider.getUriForFile(
+                requireContext(),
+                "com.vanskarner.tomatecare.fileprovider",
+                photoFile
+            )
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+            cameraRequest.launch(takePictureIntent)
+        }
+
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File? {
+        val imageFileName = "Plant_"
+        val storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val image = File.createTempFile(imageFileName, ".jpg", storageDir)
+        currentPhotoPath = image.absolutePath
+        return image
     }
 
 }
