@@ -17,9 +17,8 @@ fun loadImageBase64(imageView: ImageView, imageBase64: String) {
 }
 
 @BindingAdapter("android:imageBitmap")
-fun loadBitmap(imageView: ImageView, imgBitmap: Bitmap) {
-    imageView.setImageBitmap(imgBitmap)
-    Glide.with(imageView)
+fun loadBitmap(imageView: ImageView, imgBitmap: Bitmap?) {
+    Glide.with(imageView.context)
         .load(imgBitmap)
         .into(imageView)
 }

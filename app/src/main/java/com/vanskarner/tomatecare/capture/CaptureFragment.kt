@@ -2,7 +2,6 @@ package com.vanskarner.tomatecare.capture
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
@@ -17,7 +16,6 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
 import com.vanskarner.tomatecare.BaseBindingFragment
 import com.vanskarner.tomatecare.MainViewModel
 import com.vanskarner.tomatecare.R
@@ -88,7 +86,6 @@ class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         }
         viewModel.error.observe(viewLifecycleOwner) { showError() }
         viewModel.idLog.observe(viewLifecycleOwner) { goToIdentificationFragment(it) }
-        viewModel.imageToAnalyze.observe(viewLifecycleOwner) { showImageToAnalyze(it) }
     }
 
     private fun openCamera() {
@@ -139,12 +136,6 @@ class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         binding.clIdentification.visibility = View.GONE
         binding.imvPhotoToAnalyze.setImageBitmap(null)
         showToast(R.string.error_non_analyzable_image)
-    }
-
-    private fun showImageToAnalyze(bitmap: Bitmap) {
-        Glide.with(requireContext())
-            .load(bitmap)
-            .into(binding.imvPhotoToAnalyze)
     }
 
     private fun goToIdentificationFragment(idLog: Int) {

@@ -54,8 +54,8 @@ class CaptureViewModel : ViewModel() {
             _loading.value = true
             _imageToAnalyze.value = bitmap
             delay(3000)
-//            _error.value = Unit
-            _idLog.value = 12
+            _error.value = Unit
+//            _idLog.value = 12
         }
     }
 

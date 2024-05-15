@@ -22,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="#F3EDF7"
+            android:imageBitmap="@{viewModel.imageToAnalyze}"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -91,13 +92,13 @@
 
             <LinearLayout
                 android:id="@+id/clIdentification"
-                android:visibility="@{viewModel.loading? View.VISIBLE:View.GONE}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
                 android:gravity="center"
                 android:orientation="vertical"
+                android:visibility="@{viewModel.loading? View.VISIBLE:View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
