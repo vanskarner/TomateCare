@@ -2,7 +2,9 @@ package com.vanskarner.tomatecare.capture
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -34,13 +36,10 @@ class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.let { uri ->
-                    val contentResolver = requireContext().contentResolver
                     try {
-                        val bitmap =
-                            BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
-                        Glide.with(requireContext())
-                            .load(bitmap)
-                            .into(binding.imvPhotoToAnalyze)
+                        val contentResolver = requireContext().contentResolver
+                        val inputStream = contentResolver.openInputStream(uri)
+                        val bitmap = BitmapFactory.decodeStream(inputStream)
                         viewModel.analyzeImage(bitmap)
                     } catch (_: Exception) {
                         showToast(R.string.image_not_loaded)
@@ -48,15 +47,13 @@ class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
                 } ?: showToast(R.string.image_not_loaded)
             }
         }
-    private var currentPhotoPath: String? = null
+    private var currentPhotoPath: String = ""
     private val cameraRequest =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val imageBitmap = BitmapFactory.decodeFile(currentPhotoPath)
-                Glide.with(requireContext())
-                    .load(imageBitmap)
-                    .into(binding.imvPhotoToAnalyze)
-            }
+                viewModel.analyzeImage(imageBitmap)
+            } else deleteTempFile()
         }
 
     override fun inflateBinding(
@@ -90,17 +87,54 @@ class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         viewModel.loading.observe(viewLifecycleOwner) { showLoading() }
         viewModel.error.observe(viewLifecycleOwner) { showError() }
         viewModel.idLog.observe(viewLifecycleOwner) { goToIdentificationFragment(it) }
+        viewModel.imageToAnalyze.observe(viewLifecycleOwner) { showImageToAnalyze(it) }
     }
 
-    private fun goToIdentificationFragment(idLog: Int) {
-        val navDirection = CaptureFragmentDirections.toIdentificationFragment(idLog)
-        findNavController().navigate(navDirection)
+    private fun openCamera() {
+        val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        getUriCreatedTempFile()?.let {
+            takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, it)
+            cameraRequest.launch(takePhotoIntent)
+        }
+    }
+
+    private fun getUriCreatedTempFile(): Uri? {
+        return try {
+            val photoFile = createTempImageFile()
+            if (photoFile != null && photoFile.exists())
+                FileProvider.getUriForFile(
+                    requireContext(),
+                    getString(R.string.provider_authorities_camera),
+                    photoFile
+                )
+            else null
+        } catch (_: IOException) {
+            null
+        }
+    }
+
+    private fun createTempImageFile(prefix: String = "Plant"): File? {
+        val imageFileName = "${prefix}_"
+        val storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return try {
+            val image = File.createTempFile(imageFileName, ".jpg", storageDir)
+            currentPhotoPath = image.absolutePath
+            image
+        } catch (e: IOException) {
+            null
+        }
+    }
+
+    private fun deleteTempFile() {
+        val fileToDelete = File(currentPhotoPath)
+        if (fileToDelete.exists()) fileToDelete.delete()
     }
 
     private fun showLoading() {
         binding.btnPhotos.visibility = View.GONE
         binding.btnCapture.visibility = View.GONE
         binding.tvTips.visibility = View.GONE
+        binding.imvSettings.visibility = View.GONE
         binding.clIdentification.visibility = View.VISIBLE
     }
 
@@ -108,39 +142,21 @@ class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         binding.btnPhotos.visibility = View.VISIBLE
         binding.btnCapture.visibility = View.VISIBLE
         binding.tvTips.visibility = View.VISIBLE
+        binding.imvSettings.visibility = View.VISIBLE
         binding.clIdentification.visibility = View.GONE
         binding.imvPhotoToAnalyze.setImageBitmap(null)
         showToast(R.string.error_non_analyzable_image)
     }
 
-    private fun openCamera() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        var photoFile: File? = null
-        try {
-            photoFile = createImageFile()
-        } catch (ex: IOException) {
-            // Maneja el error
-        }
-        // Continúa solo si se pudo crear el archivo
-        if (photoFile != null) {
-            val photoURI = FileProvider.getUriForFile(
-                requireContext(),
-                "com.vanskarner.tomatecare.fileprovider",
-                photoFile
-            )
-            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-            cameraRequest.launch(takePictureIntent)
-        }
-
+    private fun showImageToAnalyze(bitmap: Bitmap) {
+        Glide.with(requireContext())
+            .load(bitmap)
+            .into(binding.imvPhotoToAnalyze)
     }
 
-    @Throws(IOException::class)
-    private fun createImageFile(): File? {
-        val imageFileName = "Plant_"
-        val storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        val image = File.createTempFile(imageFileName, ".jpg", storageDir)
-        currentPhotoPath = image.absolutePath
-        return image
+    private fun goToIdentificationFragment(idLog: Int) {
+        val navDirection = CaptureFragmentDirections.toIdentificationFragment(idLog)
+        findNavController().navigate(navDirection)
     }
 
 }

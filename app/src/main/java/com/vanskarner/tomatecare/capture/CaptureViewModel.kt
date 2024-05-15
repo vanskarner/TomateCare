@@ -14,11 +14,13 @@ class CaptureViewModel : ViewModel() {
     private val _loading = MutableLiveData<Unit>()
     private val _error = MutableLiveData<Unit>()
     private val _idLog = MutableLiveData<Int>()
+    private val _imageToAnalyze = MutableLiveData<Bitmap>()
 
     val settingModel: LiveData<SettingModel> = _settingModel
     val loading: LiveData<Unit> = _loading
     val error: LiveData<Unit> = _error
     val idLog: LiveData<Int> = _idLog
+    val imageToAnalyze: LiveData<Bitmap> = _imageToAnalyze
 
     private var myModel = SettingModel(
         0.3f,
@@ -50,8 +52,10 @@ class CaptureViewModel : ViewModel() {
     fun analyzeImage(bitmap: Bitmap) {
         viewModelScope.launch {
             _loading.value = Unit
+            _imageToAnalyze.value = bitmap
             delay(3000)
-            _error.value = Unit
+//            _error.value = Unit
+            _idLog.value = 12
         }
     }
 

@@ -18,7 +18,7 @@
         tools:targetApi="31">
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.vanskarner.tomatecare.fileprovider"
+            android:authorities="@string/provider_authorities_camera"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
