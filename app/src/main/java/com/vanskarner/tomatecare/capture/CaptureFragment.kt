@@ -63,6 +63,8 @@ class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
     ): FragmentCaptureBinding = FragmentCaptureBinding.inflate(layoutInflater)
 
     override fun setupView() {
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         viewModelActivity.hideBottomNavigation()
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
@@ -84,7 +86,6 @@ class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         viewModel.settingModel.observe(viewLifecycleOwner) {
             settingDialog.show(childFragmentManager, it)
         }
-        viewModel.loading.observe(viewLifecycleOwner) { showLoading() }
         viewModel.error.observe(viewLifecycleOwner) { showError() }
         viewModel.idLog.observe(viewLifecycleOwner) { goToIdentificationFragment(it) }
         viewModel.imageToAnalyze.observe(viewLifecycleOwner) { showImageToAnalyze(it) }
@@ -128,14 +129,6 @@ class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
     private fun deleteTempFile() {
         val fileToDelete = File(currentPhotoPath)
         if (fileToDelete.exists()) fileToDelete.delete()
-    }
-
-    private fun showLoading() {
-        binding.btnPhotos.visibility = View.GONE
-        binding.btnCapture.visibility = View.GONE
-        binding.tvTips.visibility = View.GONE
-        binding.imvSettings.visibility = View.GONE
-        binding.clIdentification.visibility = View.VISIBLE
     }
 
     private fun showError() {

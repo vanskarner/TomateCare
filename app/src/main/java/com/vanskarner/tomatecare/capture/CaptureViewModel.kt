@@ -11,13 +11,13 @@ import kotlinx.coroutines.launch
 class CaptureViewModel : ViewModel() {
 
     private val _settingModel = MutableLiveData<SettingModel>()
-    private val _loading = MutableLiveData<Unit>()
+    private val _loading = MutableLiveData<Boolean>()
     private val _error = MutableLiveData<Unit>()
     private val _idLog = MutableLiveData<Int>()
     private val _imageToAnalyze = MutableLiveData<Bitmap>()
 
     val settingModel: LiveData<SettingModel> = _settingModel
-    val loading: LiveData<Unit> = _loading
+    val loading: LiveData<Boolean> = _loading
     val error: LiveData<Unit> = _error
     val idLog: LiveData<Int> = _idLog
     val imageToAnalyze: LiveData<Bitmap> = _imageToAnalyze
@@ -51,7 +51,7 @@ class CaptureViewModel : ViewModel() {
 
     fun analyzeImage(bitmap: Bitmap) {
         viewModelScope.launch {
-            _loading.value = Unit
+            _loading.value = true
             _imageToAnalyze.value = bitmap
             delay(3000)
 //            _error.value = Unit
