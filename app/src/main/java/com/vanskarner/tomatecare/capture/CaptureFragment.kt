@@ -133,8 +133,10 @@ class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         binding.btnCapture.visibility = View.VISIBLE
         binding.tvTips.visibility = View.VISIBLE
         binding.imvSettings.visibility = View.VISIBLE
+        binding.imvPlantCover.visibility = View.VISIBLE
         binding.clIdentification.visibility = View.GONE
         binding.imvPhotoToAnalyze.setImageBitmap(null)
+        binding.imvPhotoToAnalyze.visibility = View.GONE
         showToast(R.string.error_non_analyzable_image)
     }
 

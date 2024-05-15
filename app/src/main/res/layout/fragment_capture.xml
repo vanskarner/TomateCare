@@ -24,6 +24,21 @@
             android:background="#F3EDF7"
             android:imageBitmap="@{viewModel.imageToAnalyze}"
             android:scaleType="fitXY"
+            android:visibility="@{viewModel.loading? View.VISIBLE:View.GONE}"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription,ImageContrastCheck" />
+
+        <ImageView
+            android:id="@+id/imvPlantCover"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#F3EDF7"
+            android:scaleType="fitXY"
+            android:src="@drawable/plant_96"
+            android:visibility="@{viewModel.loading? View.GONE:View.VISIBLE}"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
