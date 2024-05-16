@@ -136,6 +136,7 @@ internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificati
 
     private fun goToDiseasesFragment(){
         val direction = IdentificationFragmentDirections.toDiseasesFragment()
+        direction.idSelected = 1
         findNavController().navigate(direction)
     }
 

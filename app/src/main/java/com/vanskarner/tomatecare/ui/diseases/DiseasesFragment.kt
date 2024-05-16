@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.vanskarner.tomatecare.databinding.FragmentDiseasesBinding
 import com.vanskarner.tomatecare.ui.MainViewModel
 import com.vanskarner.tomatecare.ui.Selection
@@ -22,6 +23,7 @@ internal class DiseasesFragment : BaseBindingFragment<FragmentDiseasesBinding>()
     lateinit var diseaseAdapter: DiseaseAdapter
     private val viewModel: DiseaseViewModel by viewModels()
     private val viewModelActivity: MainViewModel by activityViewModels()
+    private val args: DiseasesFragmentArgs by navArgs()
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -46,9 +48,13 @@ internal class DiseasesFragment : BaseBindingFragment<FragmentDiseasesBinding>()
     }
 
     override fun setupViewModel() {
-        viewModel.getDiseases()
+        viewModel.startInfo(args.idSelected)
         viewModel.diseases.observe(viewLifecycleOwner) { showDiseases(it) }
         viewModel.diseaseDetail.observe(viewLifecycleOwner) { showDiseaseDetail(it) }
+        viewModel.moreInfo.observe(viewLifecycleOwner) {
+            binding.svDiseases.isIconified = false
+            binding.svDiseases.setQuery(it, true)
+        }
     }
 
     private fun showDiseases(list: List<DiseaseModel>) = diseaseAdapter.updateList(list)

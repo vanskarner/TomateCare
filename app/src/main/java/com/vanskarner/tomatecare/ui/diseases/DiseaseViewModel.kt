@@ -16,14 +16,20 @@ internal class DiseaseViewModel @Inject constructor(
 
     private val _diseases = MutableLiveData<List<DiseaseModel>>()
     private val _diseaseDetail = MutableLiveData<DiseaseDetailModel>()
+    private val _moreInfo = MutableLiveData<String>()
     private val filterList = mutableListOf<DiseaseModel>()
     private val fullList = mutableListOf<DiseaseModel>()
 
     val diseases: LiveData<List<DiseaseModel>> = _diseases
     val diseaseDetail: LiveData<DiseaseDetailModel> = _diseaseDetail
+    val moreInfo: LiveData<String> = _moreInfo
 
-    fun getDiseases() {
+    fun startInfo(idDisease: Int) {
         viewModelScope.launch {
+            if (idDisease != -1) {
+                diseasesComponent.find(idDisease)
+                    .onSuccess { _moreInfo.value = it.name }
+            }
             diseasesComponent.getList()
                 .onSuccess {
                     fullList.clear()
