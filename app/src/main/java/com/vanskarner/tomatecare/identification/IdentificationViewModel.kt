@@ -11,7 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class IdentificationViewModel @Inject constructor(): ViewModel() {
+internal class IdentificationViewModel @Inject constructor(): ViewModel() {
     private val _identification = MutableLiveData<IdentificationDetailModel>()
     private val _note = MutableLiveData<String>()
     private val _summary = MutableLiveData<SummaryModel>()

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.vanskarner.tomatecare.databinding.ItemDiseaseBinding
 
-class DiseaseAdapter : RecyclerView.Adapter<DiseaseViewHolder>() {
+internal class DiseaseAdapter : RecyclerView.Adapter<DiseaseViewHolder>() {
 
     private var onClick: (item: DiseaseModel) -> Unit = {}
     private var list: MutableList<DiseaseModel> = ArrayList()
@@ -37,7 +37,7 @@ class DiseaseAdapter : RecyclerView.Adapter<DiseaseViewHolder>() {
     }
 }
 
-class DiseaseViewHolder(val binding: ItemDiseaseBinding) : ViewHolder(binding.root) {
+internal class DiseaseViewHolder(val binding: ItemDiseaseBinding) : ViewHolder(binding.root) {
     fun bindView(item: DiseaseModel, onClick: (item: DiseaseModel) -> Unit) {
         binding.model = item
         binding.root.setOnClickListener { onClick.invoke(item) }

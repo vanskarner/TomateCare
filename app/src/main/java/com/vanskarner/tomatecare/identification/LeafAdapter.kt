@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.vanskarner.tomatecare.databinding.ItemLeafBinding
 
-class LeafAdapter : RecyclerView.Adapter<LeafViewHolder>() {
+internal class LeafAdapter : RecyclerView.Adapter<LeafViewHolder>() {
 
     private var onClick: (item: LeafModel) -> Unit = {}
     private var list: MutableList<LeafModel> = ArrayList()
@@ -36,7 +36,7 @@ class LeafAdapter : RecyclerView.Adapter<LeafViewHolder>() {
     }
 }
 
-class LeafViewHolder(val binding: ItemLeafBinding) : RecyclerView.ViewHolder(binding.root) {
+internal class LeafViewHolder(val binding: ItemLeafBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bindView(item: LeafModel, onClick: (item: LeafModel) -> Unit) {
         binding.model = item
         binding.root.setOnClickListener { onClick.invoke(item) }

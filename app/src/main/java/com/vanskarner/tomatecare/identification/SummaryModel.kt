@@ -1,6 +1,6 @@
 package com.vanskarner.tomatecare.identification
 
-data class SummaryModel(
+internal data class SummaryModel(
     val totalTimeSpent: String,
     val analyzedLeaves: Int,
     val identifiedDiseases: Int,

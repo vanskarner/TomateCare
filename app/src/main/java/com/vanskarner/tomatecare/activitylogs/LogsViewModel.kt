@@ -11,7 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class LogsViewModel @Inject constructor(): ViewModel() {
+internal class LogsViewModel @Inject constructor(): ViewModel() {
     private val _list = MutableLiveData<List<LogModel>>()
 
     val list: LiveData<List<LogModel>> = _list

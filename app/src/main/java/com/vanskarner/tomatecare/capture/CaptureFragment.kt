@@ -27,7 +27,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
+internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
 
     @Inject
     lateinit var settingDialog: SettingDialog

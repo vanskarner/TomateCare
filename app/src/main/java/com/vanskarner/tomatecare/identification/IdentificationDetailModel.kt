@@ -2,7 +2,7 @@ package com.vanskarner.tomatecare.identification
 
 import android.graphics.Bitmap
 
-data class IdentificationDetailModel(
+internal data class IdentificationDetailModel(
     val id: Int,
     val creationDate: String,
     val plantImage: Bitmap,
@@ -10,14 +10,14 @@ data class IdentificationDetailModel(
     val description: String
 )
 
-data class LeafModel(
+internal data class LeafModel(
     val image: Bitmap,
     val isHealthy: Boolean,
     val diseases: String,
     val probability: Float
 )
 
-data class LeafInfoModel(
+internal data class LeafInfoModel(
     val image: Bitmap,
     val isHealthy: Boolean,
     val prediction: String,

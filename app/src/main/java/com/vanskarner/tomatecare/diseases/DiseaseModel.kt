@@ -2,14 +2,14 @@ package com.vanskarner.tomatecare.diseases
 
 import android.graphics.Bitmap
 
-data class DiseaseModel(
+internal data class DiseaseModel(
     val id:Int,
     val image: Bitmap,
     val name: String,
     val symptoms: String
 )
 
-data class DiseaseDetailModel(
+internal data class DiseaseDetailModel(
     val id: Int,
     val image: Bitmap,
     val name: String,

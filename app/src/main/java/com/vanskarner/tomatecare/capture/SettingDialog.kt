@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentManager
 import com.vanskarner.tomatecare.databinding.DialogCaptureSettingsBinding
 import java.text.DecimalFormat
 
-class SettingDialog : DialogFragment() {
+internal class SettingDialog : DialogFragment() {
     private val tag = "SettingDialog"
     private lateinit var settingModel: SettingModel
     private lateinit var onClick: (setting: SettingModel) -> Unit

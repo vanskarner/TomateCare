@@ -7,7 +7,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.vanskarner.tomatecare.databinding.DialogDiseaseBinding
 
-class DiseaseDialog : DialogFragment() {
+internal class DiseaseDialog : DialogFragment() {
     private val tag = "DiseaseDialog"
     private lateinit var model: DiseaseDetailModel
 

@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CaptureViewModel @Inject constructor(): ViewModel() {
+internal class CaptureViewModel @Inject constructor(): ViewModel() {
 
     private val _settingModel = MutableLiveData<SettingModel>()
     private val _loading = MutableLiveData<Boolean>()

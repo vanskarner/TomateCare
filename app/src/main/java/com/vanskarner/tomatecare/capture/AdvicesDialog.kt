@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentManager
 import com.bumptech.glide.Glide
 import com.vanskarner.tomatecare.databinding.DialogCaptureAdviceBinding
 
-class AdvicesDialog : DialogFragment() {
+internal class AdvicesDialog : DialogFragment() {
     private val tag = "AdviceDialog"
 
     fun show(fragmentManager: FragmentManager) {

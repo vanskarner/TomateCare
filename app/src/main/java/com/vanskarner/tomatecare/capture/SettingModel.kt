@@ -1,6 +1,6 @@
 package com.vanskarner.tomatecare.capture
 
-data class SettingModel(
+internal data class SettingModel(
     var threshold: Float,
     var maxResults: Int,
     var threads: Int,

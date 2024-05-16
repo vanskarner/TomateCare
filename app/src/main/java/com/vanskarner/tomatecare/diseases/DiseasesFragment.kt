@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DiseasesFragment : BaseBindingFragment<FragmentDiseasesBinding>() {
+internal class DiseasesFragment : BaseBindingFragment<FragmentDiseasesBinding>() {
     @Inject
     lateinit var diseaseDialog : DiseaseDialog
     @Inject

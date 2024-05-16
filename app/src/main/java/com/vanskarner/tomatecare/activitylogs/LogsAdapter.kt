@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.vanskarner.tomatecare.databinding.ItemLogBinding
 
-class LogsAdapter : RecyclerView.Adapter<LogViewHolder>() {
+internal class LogsAdapter : RecyclerView.Adapter<LogViewHolder>() {
 
     private var list: MutableList<LogModel> = ArrayList()
 
@@ -33,7 +33,7 @@ class LogsAdapter : RecyclerView.Adapter<LogViewHolder>() {
 
 }
 
-class LogViewHolder(val binding: ItemLogBinding) : ViewHolder(binding.root) {
+internal class LogViewHolder(val binding: ItemLogBinding) : ViewHolder(binding.root) {
     fun bindView(item: LogModel) {
         binding.model = item
         binding.checkBox.setOnCheckedChangeListener { _, isChecked ->

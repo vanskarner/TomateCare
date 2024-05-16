@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.vanskarner.tomatecare.databinding.ItemDiseaseControlBinding
 
-class RecommendationsAdapter : RecyclerView.Adapter<RecommendationViewHolder>() {
+internal class RecommendationsAdapter : RecyclerView.Adapter<RecommendationViewHolder>() {
 
     private var list: MutableList<RecommendationModel> = ArrayList()
 
@@ -31,7 +31,7 @@ class RecommendationsAdapter : RecyclerView.Adapter<RecommendationViewHolder>() 
     }
 }
 
-class RecommendationViewHolder(val binding: ItemDiseaseControlBinding) : RecyclerView.ViewHolder(binding.root) {
+internal class RecommendationViewHolder(val binding: ItemDiseaseControlBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bindView(item: RecommendationModel) {
         binding.model = item
     }

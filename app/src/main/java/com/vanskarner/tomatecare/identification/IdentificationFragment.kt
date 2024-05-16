@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class IdentificationFragment : BaseBindingFragment<FragmentIdentificationBinding>() {
+internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificationBinding>() {
 
     @Inject
     lateinit var leafAdapter: LeafAdapter

@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class LogsFragment : BaseBindingFragment<FragmentLogsBinding>() {
+internal class LogsFragment : BaseBindingFragment<FragmentLogsBinding>() {
 
     private val viewModel: LogsViewModel by viewModels()
     @Inject
