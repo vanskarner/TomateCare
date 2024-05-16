@@ -15,9 +15,16 @@ import com.vanskarner.tomatecare.databinding.DialogIdentificationNoteBinding
 import com.vanskarner.tomatecare.databinding.DialogIdentificationRecommendationBinding
 import com.vanskarner.tomatecare.databinding.DialogIdentificationSummaryBinding
 import com.vanskarner.tomatecare.databinding.FragmentIdentificationBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class IdentificationFragment : BaseBindingFragment<FragmentIdentificationBinding>() {
-    private val recommendationsAdapter = LeafAdapter()
+
+    @Inject
+    lateinit var leafAdapter: LeafAdapter
+    @Inject
+    lateinit var recommendationsAdapter: RecommendationsAdapter
     private val viewModel: IdentificationViewModel by viewModels()
 
     override fun inflateBinding(
@@ -28,10 +35,10 @@ class IdentificationFragment : BaseBindingFragment<FragmentIdentificationBinding
 
     override fun setupView() {
         binding.imvOnBack.setOnClickListener { goToCaptureFragment() }
-        binding.rcvLeaves.adapter = recommendationsAdapter
+        binding.rcvLeaves.adapter = leafAdapter
         binding.tvSummary.setOnClickListener { viewModel.getSummary() }
         binding.tvAddNote.setOnClickListener { viewModel.getNote() }
-        recommendationsAdapter.setOnClickListener { viewModel.getLeafInfo() }
+        leafAdapter.setOnClickListener { viewModel.getLeafInfo() }
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             onBackPressed = { goToCaptureFragment() })
@@ -55,7 +62,7 @@ class IdentificationFragment : BaseBindingFragment<FragmentIdentificationBinding
         findNavController().navigate(direction)
     }
 
-    private fun showLeaves(list: List<LeafModel>) = recommendationsAdapter.updateList(list)
+    private fun showLeaves(list: List<LeafModel>) = leafAdapter.updateList(list)
 
     private fun showLeafInfoDialog(model: LeafInfoModel) {
         val bindingLeafInfo = DialogIdentificationLeafBinding.inflate(layoutInflater)
@@ -102,12 +109,11 @@ class IdentificationFragment : BaseBindingFragment<FragmentIdentificationBinding
     private fun showRecommendations(list: List<RecommendationModel>) {
         val bindingRecommendations =
             DialogIdentificationRecommendationBinding.inflate(layoutInflater)
-        val recommendationAdapter = RecommendationsAdapter()
         val builder = AlertDialog.Builder(requireContext())
         builder.setView(bindingRecommendations.root)
         val alertDialog = builder.create()
-        bindingRecommendations.rcvDiseasesControl.adapter = recommendationAdapter
-        recommendationAdapter.updateList(list)
+        bindingRecommendations.rcvDiseasesControl.adapter = recommendationsAdapter
+        recommendationsAdapter.updateList(list)
         alertDialog.show()
     }
 

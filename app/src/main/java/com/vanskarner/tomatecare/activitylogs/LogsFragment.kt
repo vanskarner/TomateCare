@@ -10,11 +10,15 @@ import androidx.navigation.fragment.findNavController
 import com.vanskarner.tomatecare.BaseBindingFragment
 import com.vanskarner.tomatecare.R
 import com.vanskarner.tomatecare.databinding.FragmentLogsBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LogsFragment : BaseBindingFragment<FragmentLogsBinding>() {
 
     private val viewModel: LogsViewModel by viewModels()
-    private val logsAdapter = LogsAdapter()
+    @Inject
+    lateinit var logsAdapter: LogsAdapter
     private var selectOptions = SelectionOptions.Select
 
     override fun inflateBinding(

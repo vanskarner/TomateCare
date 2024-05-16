@@ -5,10 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CaptureViewModel : ViewModel() {
+@HiltViewModel
+class CaptureViewModel @Inject constructor(): ViewModel() {
 
     private val _settingModel = MutableLiveData<SettingModel>()
     private val _loading = MutableLiveData<Boolean>()

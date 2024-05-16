@@ -7,8 +7,11 @@ import android.graphics.Paint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class LogsViewModel : ViewModel() {
+@HiltViewModel
+class LogsViewModel @Inject constructor(): ViewModel() {
     private val _list = MutableLiveData<List<LogModel>>()
 
     val list: LiveData<List<LogModel>> = _list

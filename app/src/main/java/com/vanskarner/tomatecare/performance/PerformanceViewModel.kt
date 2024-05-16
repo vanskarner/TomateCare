@@ -5,8 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.vanskarner.tomatecare.GenericItemModel
 import com.vanskarner.tomatecare.GenericListModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class PerformanceViewModel : ViewModel() {
+@HiltViewModel
+class PerformanceViewModel @Inject constructor(): ViewModel() {
     private val _threads = MutableLiveData<Int>()
     private val _processing = MutableLiveData<GenericListModel>()
     private val _models = MutableLiveData<GenericListModel>()

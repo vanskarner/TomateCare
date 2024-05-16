@@ -21,15 +21,20 @@ import com.vanskarner.tomatecare.MainViewModel
 import com.vanskarner.tomatecare.R
 import com.vanskarner.tomatecare.Selection
 import com.vanskarner.tomatecare.databinding.FragmentCaptureBinding
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.IOException
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
 
+    @Inject
+    lateinit var settingDialog: SettingDialog
+    @Inject
+    lateinit var advicesDialog: AdvicesDialog
     private val viewModel: CaptureViewModel by viewModels()
     private val viewModelActivity: MainViewModel by activityViewModels()
-    private val settingDialog = SettingDialog()
-    private val advicesDialog = AdvicesDialog()
     private val selectedImage =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {

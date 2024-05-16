@@ -14,7 +14,9 @@ import com.vanskarner.tomatecare.R
 import com.vanskarner.tomatecare.Selection
 import com.vanskarner.tomatecare.databinding.DialogInfoAppBinding
 import com.vanskarner.tomatecare.databinding.FragmentStartBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StartFragment : BaseBindingFragment<FragmentStartBinding>() {
 
     private val viewModelActivity: MainViewModel by activityViewModels()

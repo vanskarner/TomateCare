@@ -8,7 +8,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.vanskarner.tomatecare.BaseBindingFragment
 import com.vanskarner.tomatecare.databinding.FragmentPerformanceTestBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PerformanceFragment : BaseBindingFragment<FragmentPerformanceTestBinding>() {
 
     private val viewModel: PerformanceViewModel by viewModels()

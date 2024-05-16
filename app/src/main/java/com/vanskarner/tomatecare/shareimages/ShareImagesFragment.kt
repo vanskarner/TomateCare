@@ -9,7 +9,9 @@ import androidx.navigation.fragment.findNavController
 import com.vanskarner.tomatecare.BaseBindingFragment
 import com.vanskarner.tomatecare.databinding.FragmentShareImagesBinding
 import com.vanskarner.tomatecare.performance.PerformanceFragmentDirections
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ShareImagesFragment : BaseBindingFragment<FragmentShareImagesBinding>() {
 
     private val viewModel: ShareImagesViewModel by viewModels()

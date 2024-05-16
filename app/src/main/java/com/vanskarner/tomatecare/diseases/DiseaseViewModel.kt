@@ -7,8 +7,11 @@ import android.graphics.Paint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class DiseaseViewModel : ViewModel() {
+@HiltViewModel
+class DiseaseViewModel @Inject constructor(): ViewModel() {
     private val _diseases = MutableLiveData<List<DiseaseModel>>()
     private val _diseaseDetail = MutableLiveData<DiseaseDetailModel>()
 

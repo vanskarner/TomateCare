@@ -7,8 +7,11 @@ import android.graphics.Paint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class IdentificationViewModel : ViewModel() {
+@HiltViewModel
+class IdentificationViewModel @Inject constructor(): ViewModel() {
     private val _identification = MutableLiveData<IdentificationDetailModel>()
     private val _note = MutableLiveData<String>()
     private val _summary = MutableLiveData<SummaryModel>()

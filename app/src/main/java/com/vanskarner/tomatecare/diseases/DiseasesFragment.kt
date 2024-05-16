@@ -9,10 +9,15 @@ import com.vanskarner.tomatecare.BaseBindingFragment
 import com.vanskarner.tomatecare.MainViewModel
 import com.vanskarner.tomatecare.Selection
 import com.vanskarner.tomatecare.databinding.FragmentDiseasesBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class DiseasesFragment : BaseBindingFragment<FragmentDiseasesBinding>() {
-    private val diseaseDialog = DiseaseDialog()
-    private val diseaseAdapter = DiseaseAdapter()
+    @Inject
+    lateinit var diseaseDialog : DiseaseDialog
+    @Inject
+    lateinit var diseaseAdapter : DiseaseAdapter
     private val viewModel: DiseaseViewModel by viewModels()
     private val viewModelActivity:MainViewModel by activityViewModels()
 
