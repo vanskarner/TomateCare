@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 
 internal data class DiseaseModel(
     val id:Int,
-    val image: Bitmap,
+    val imageBase64: String,
     val name: String,
     val symptoms: String
 )

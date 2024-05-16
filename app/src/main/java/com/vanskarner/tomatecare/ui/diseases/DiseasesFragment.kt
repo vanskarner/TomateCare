@@ -34,7 +34,7 @@ internal class DiseasesFragment : BaseBindingFragment<FragmentDiseasesBinding>()
     }
 
     override fun setupViewModel() {
-        viewModel.exampleDiseases()
+        viewModel.getDiseases()
         viewModel.diseases.observe(viewLifecycleOwner) { showDiseases(it) }
         viewModel.diseaseDetail.observe(viewLifecycleOwner) { showDiseaseDetail(it) }
     }

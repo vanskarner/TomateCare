@@ -5,7 +5,6 @@ import com.vanskarner.diseases.bussineslogic.DiseaseDetailData
 import com.vanskarner.diseases.bussineslogic.DiseasesRepository
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import java.io.File
 
 internal class DefaultDiseasesRepository : DiseasesRepository {
 
@@ -23,9 +22,9 @@ internal class DefaultDiseasesRepository : DiseasesRepository {
 
     private fun loadDiseasesFromJsonFile(): DiseasesDTO {
         return try {
-            val jsonFilePath = "src/main/resources/diseases.json"
-            val jsonFile = File(jsonFilePath)
-            val jsonString = jsonFile.readText()
+            val jsonFilePath = "/diseases.json"
+            val fileUrl = this::class.java.getResource(jsonFilePath)
+            val jsonString = fileUrl?.readText() ?: ""
             Json.decodeFromString(jsonString)
         } catch (e: Exception) {
             DiseasesDTO(emptyList())

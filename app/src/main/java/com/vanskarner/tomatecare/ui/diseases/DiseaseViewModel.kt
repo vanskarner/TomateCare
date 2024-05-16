@@ -7,11 +7,16 @@ import android.graphics.Paint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.vanskarner.diseases.DiseasesComponent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class DiseaseViewModel @Inject constructor(): ViewModel() {
+internal class DiseaseViewModel @Inject constructor(
+    private val diseasesComponent: DiseasesComponent
+) : ViewModel() {
     private val _diseases = MutableLiveData<List<DiseaseModel>>()
     private val _diseaseDetail = MutableLiveData<DiseaseDetailModel>()
 
@@ -19,66 +24,18 @@ internal class DiseaseViewModel @Inject constructor(): ViewModel() {
     val diseases: LiveData<List<DiseaseModel>> = _diseases
     val diseaseDetail: LiveData<DiseaseDetailModel> = _diseaseDetail
 
-    //just to see how it looks, then delete
-    fun exampleDiseases() {
-        val bitmap = exampleBitmap()
-        val list = listOf(
-            DiseaseModel(
-                1,
-                bitmap,
-                "Bacterial Spot",
-                "1Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen."
-            ),
-            DiseaseModel(
-                2,
-                bitmap,
-                "Early Blight",
-                "2Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen."
-            ),
-            DiseaseModel(
-                3,
-                bitmap,
-                "Late Blight",
-                "3Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen."
-            ),
-            DiseaseModel(
-                4,
-                bitmap,
-                "Leaf Mold",
-                "4Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen."
-            ),
-            DiseaseModel(
-                5,
-                bitmap,
-                "Mosaic Virus",
-                "5Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen."
-            ),
-            DiseaseModel(
-                6,
-                bitmap,
-                "Septoria Leaf Spot",
-                "6Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen."
-            ),
-            DiseaseModel(
-                7,
-                bitmap,
-                "Target Spot",
-                "7Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen."
-            ),
-            DiseaseModel(
-                8,
-                bitmap,
-                "Two spotted Spider Mite",
-                "8Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen."
-            ),
-            DiseaseModel(
-                9,
-                bitmap,
-                "Yellow Leaf Curl Virus",
-                "8Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen."
-            ),
-        )
-        _diseases.value = list
+
+    fun getDiseases() {
+        viewModelScope.launch {
+            diseasesComponent.getList()
+                .onSuccess {
+                    println("Mensaje onSuccess"+it.size)
+                    _diseases.value = it.toListModel()
+                }
+                .onFailure {
+                    println("Mensaje onFailure"+it.message)
+                }
+        }
     }
 
     //just to see how it looks, then delete
