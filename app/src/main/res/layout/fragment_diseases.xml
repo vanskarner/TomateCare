@@ -20,6 +20,7 @@
     <androidx.appcompat.widget.SearchView
         android:id="@+id/svDiseases"
         android:layout_width="0dp"
+        app:queryHint="@string/search_by_diseases"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"

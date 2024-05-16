@@ -3,12 +3,13 @@ package com.vanskarner.tomatecare.ui.diseases
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.vanskarner.tomatecare.ui.common.BaseBindingFragment
+import com.vanskarner.tomatecare.databinding.FragmentDiseasesBinding
 import com.vanskarner.tomatecare.ui.MainViewModel
 import com.vanskarner.tomatecare.ui.Selection
-import com.vanskarner.tomatecare.databinding.FragmentDiseasesBinding
+import com.vanskarner.tomatecare.ui.common.BaseBindingFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -32,6 +33,16 @@ internal class DiseasesFragment : BaseBindingFragment<FragmentDiseasesBinding>()
         viewModelActivity.showBottomNavigation(Selection.Diseases)
         binding.rcvDiseases.adapter = diseaseAdapter
         diseaseAdapter.setOnClickListener { viewModel.findDisease(it.id) }
+        binding.svDiseases.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(s: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(text: String): Boolean {
+                viewModel.filterByName(text)
+                return false
+            }
+        })
     }
 
     override fun setupViewModel() {

@@ -13,18 +13,23 @@ import javax.inject.Inject
 internal class DiseaseViewModel @Inject constructor(
     private val diseasesComponent: DiseasesComponent
 ) : ViewModel() {
+
     private val _diseases = MutableLiveData<List<DiseaseModel>>()
     private val _diseaseDetail = MutableLiveData<DiseaseDetailModel>()
-
+    private val filterList = mutableListOf<DiseaseModel>()
+    private val fullList = mutableListOf<DiseaseModel>()
 
     val diseases: LiveData<List<DiseaseModel>> = _diseases
     val diseaseDetail: LiveData<DiseaseDetailModel> = _diseaseDetail
 
-
     fun getDiseases() {
         viewModelScope.launch {
             diseasesComponent.getList()
-                .onSuccess { _diseases.value = it.toListModel() }
+                .onSuccess {
+                    fullList.clear()
+                    fullList.addAll(it.toListModel())
+                    _diseases.value = fullList
+                }
         }
     }
 
@@ -33,6 +38,17 @@ internal class DiseaseViewModel @Inject constructor(
             diseasesComponent.find(diseaseId)
                 .onSuccess { _diseaseDetail.value = it.toModel() }
                 .onFailure {}
+        }
+    }
+
+    fun filterByName(name: String) {
+        viewModelScope.launch {
+            filterList.clear()
+            val query = name.lowercase().trim()
+            for (item in fullList)
+                if (item.name.lowercase().contains(query))
+                    filterList.add(item)
+            _diseases.value = filterList
         }
     }
 

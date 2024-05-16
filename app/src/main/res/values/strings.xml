@@ -38,6 +38,7 @@
     <string name="delete">Eliminar</string>
     <string name="select_all">Seleccionar \nTodo</string>
     <string name="search_by_logs">Busca por fecha, notas y estado</string>
+    <string name="search_by_diseases">Busca por nombre</string>
     <string name="identifying">Identificando…</string>
     <string name="threshold">Umbral</string>
     <string name="max_results">Resultados \nMáximos</string>
