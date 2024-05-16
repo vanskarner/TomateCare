@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.vanskarner.tomatecare.capture.CaptureViewModel" />
+            type="com.vanskarner.tomatecare.ui.capture.CaptureViewModel" />
 
         <import type="android.view.View" />
     </data>

@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.vanskarner.tomatecare.identification.LeafModel" />
+            type="com.vanskarner.tomatecare.ui.identification.LeafModel" />
 
         <import type="android.view.View" />
     </data>

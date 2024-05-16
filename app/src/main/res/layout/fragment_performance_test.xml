@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.vanskarner.tomatecare.performance.PerformanceViewModel" />
+            type="com.vanskarner.tomatecare.ui.performance.PerformanceViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

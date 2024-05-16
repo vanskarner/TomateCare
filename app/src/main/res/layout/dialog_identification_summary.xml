@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.vanskarner.tomatecare.identification.SummaryModel" />
+            type="com.vanskarner.tomatecare.ui.identification.SummaryModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.vanskarner.tomatecare.diseases.DiseaseDetailModel" />
+            type="com.vanskarner.tomatecare.ui.diseases.DiseaseDetailModel" />
 
     </data>
 
