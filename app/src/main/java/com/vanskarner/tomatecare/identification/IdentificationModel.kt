@@ -23,3 +23,13 @@ internal data class LeafInfoModel(
     val prediction: String,
     val shortDescriptionDisease: String,
 )
+
+internal data class SummaryModel(
+    val totalTimeSpent: String,
+    val analyzedLeaves: Int,
+    val identifiedDiseases: Int,
+    val diseases: String,
+    val recommendations: List<RecommendationModel>
+)
+
+internal data class RecommendationModel(val diseaseName: String, val diseaseControl: String)
