@@ -33,35 +33,31 @@
                 tools:ignore="ContentDescription,ImageContrastCheck"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                app:cardBackgroundColor="@color/transparent_background"
-                app:cardCornerRadius="10dp"
+                android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="@+id/imvDisease"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:text="@tools:sample/lorem/random">
+                app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
-                    android:id="@+id/tvDiseaseName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/rounded_background"
                     android:ellipsize="end"
                     android:gravity="center"
-                    android:maxLength="42"
-                    android:maxLines="1"
+                    android:maxLines="2"
+                    android:padding="8dp"
                     android:text="@{model.name}"
                     android:textColor="@color/leaf_sick"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    tools:text="@tools:sample/lorem/random" />
-            </com.google.android.material.card.MaterialCardView>
+                    tools:text="@tools:sample/lorem/random"/>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tvAgent"
