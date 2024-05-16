@@ -1,7 +1,5 @@
 package com.vanskarner.tomatecare.ui.diseases
 
-import android.graphics.Bitmap
-
 internal data class DiseaseModel(
     val id:Int,
     val imageBase64: String,
@@ -11,7 +9,7 @@ internal data class DiseaseModel(
 
 internal data class DiseaseDetailModel(
     val id: Int,
-    val image: Bitmap,
+    val imageBase64: String,
     val name: String,
     val causativeAgent: String,
     val symptoms: String,

@@ -15,9 +15,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 internal class DiseasesFragment : BaseBindingFragment<FragmentDiseasesBinding>() {
     @Inject
-    lateinit var diseaseDialog : DiseaseDialog
+    lateinit var diseaseDialog: DiseaseDialog
+
     @Inject
-    lateinit var diseaseAdapter : DiseaseAdapter
+    lateinit var diseaseAdapter: DiseaseAdapter
     private val viewModel: DiseaseViewModel by viewModels()
     private val viewModelActivity: MainViewModel by activityViewModels()
 
@@ -30,7 +31,7 @@ internal class DiseasesFragment : BaseBindingFragment<FragmentDiseasesBinding>()
     override fun setupView() {
         viewModelActivity.showBottomNavigation(Selection.Diseases)
         binding.rcvDiseases.adapter = diseaseAdapter
-        diseaseAdapter.setOnClickListener { viewModel.exampleDiseaseDetail() }
+        diseaseAdapter.setOnClickListener { viewModel.findDisease(it.id) }
     }
 
     override fun setupViewModel() {
