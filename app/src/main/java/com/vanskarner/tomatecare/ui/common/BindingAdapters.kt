@@ -23,3 +23,11 @@ fun loadBitmap(imageView: ImageView, imgBitmap: Bitmap?) {
         .load(imgBitmap)
         .into(imageView)
 }
+
+@BindingAdapter("android:imagePath")
+fun loadImagePath(imageView: ImageView, imgPath:String) {
+    Glide.with(imageView.context)
+        .load(imgPath)
+        .error(R.drawable.baseline_image_24)
+        .into(imageView)
+}

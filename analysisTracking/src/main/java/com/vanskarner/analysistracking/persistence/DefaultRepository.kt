@@ -8,74 +8,84 @@ internal class DefaultRepository :Repository{
     private var exampleData = mutableListOf(
         AnalysisData(
             1,
-            false,
+            true,
             "Ruta Imagen",
+            12,
             "Nota 1",
             "24 abril 2024"
         ),
         AnalysisData(
             2,
-            false,
+            true,
             "Ruta Imagen",
+            10,
             "Nota 2",
-            "24 abril 2024"
+            "25 abril 2024"
         ),
         AnalysisData(
             3,
             false,
             "Ruta Imagen",
+            5,
             "Nota 3",
-            "24 abril 2024"
+            "26 abril 2024"
         ),
         AnalysisData(
             4,
-            false,
+            true,
             "Ruta Imagen",
+            10,
             "Nota 4",
-            "24 abril 2024"
+            "27 abril 2024"
         ),
         AnalysisData(
             5,
-            false,
+            true,
             "Ruta Imagen",
+            10,
             "Nota 5",
-            "24 abril 2024"
+            "28 abril 2024"
         ),
         AnalysisData(
             6,
-            false,
+            true,
             "Ruta Imagen",
+            10,
             "Nota 6",
-            "24 abril 2024"
+            "29 abril 2024"
         ),
         AnalysisData(
             7,
-            false,
+            true,
             "Ruta Imagen",
+            10,
             "Nota 7",
-            "24 abril 2024"
+            "30 abril 2024"
         ),
         AnalysisData(
             8,
             false,
             "Ruta Imagen",
+            10,
             "Nota 8",
-            "24 abril 2024"
+            "31 abril 2024"
         ),
         AnalysisData(
             9,
             false,
             "Ruta Imagen",
+            2,
             "Nota 9",
-            "24 abril 2024"
+            "01 mayo 2024"
         ),
         AnalysisData(
             10,
             false,
             "Ruta Imagen",
+            1,
             "Nota 10",
-            "24 abril 2024"
-        )
+            "02 mayo 2024"
+        ),
     )
 
     override suspend fun list(): Result<List<AnalysisData>> {
