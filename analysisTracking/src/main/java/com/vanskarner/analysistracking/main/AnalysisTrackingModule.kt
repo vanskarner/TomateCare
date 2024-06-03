@@ -2,7 +2,7 @@ package com.vanskarner.analysistracking.main
 
 import com.vanskarner.analysistracking.AnalysisTrackingComponent
 import com.vanskarner.analysistracking.DefaultAnalysisTrackingComponent
-import com.vanskarner.analysistracking.bussineslogic.GetAnalysisTracking
+import com.vanskarner.analysistracking.bussineslogic.GetAnalysisTrackingUseCases
 import com.vanskarner.analysistracking.bussineslogic.Repository
 import com.vanskarner.analysistracking.persistence.DefaultRepository
 import dagger.Module
@@ -15,8 +15,9 @@ import dagger.hilt.components.SingletonComponent
 internal object AnalysisTrackingModule {
 
     @Provides
-    fun providesComponent(getAnalysisTracking: GetAnalysisTracking): AnalysisTrackingComponent {
-        return DefaultAnalysisTrackingComponent(getAnalysisTracking)
+    fun providesComponent(getAnalysisTrackingUseCases: GetAnalysisTrackingUseCases)
+            : AnalysisTrackingComponent {
+        return DefaultAnalysisTrackingComponent(getAnalysisTrackingUseCases)
     }
 
     @Provides
@@ -25,8 +26,8 @@ internal object AnalysisTrackingModule {
     }
 
     @Provides
-    fun provideUse(repository: Repository): GetAnalysisTracking {
-        return GetAnalysisTracking(repository)
+    fun provideGetAnalysisTracking(repository: Repository): GetAnalysisTrackingUseCases {
+        return GetAnalysisTrackingUseCases(repository)
     }
 
 }
