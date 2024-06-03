@@ -7,51 +7,65 @@ import android.graphics.Paint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class LogsViewModel @Inject constructor(): ViewModel() {
+internal class LogsViewModel @Inject constructor() : ViewModel() {
     private val _list = MutableLiveData<List<LogModel>>()
-
-    val list: LiveData<List<LogModel>> = _list
-
-    val bitmap = exampleBitmap()
-    private var exampleLogs = listOf(
+    private val _msgDelete = MutableLiveData<Unit>()
+    private val _msgNoItemSelected = MutableLiveData<Unit>()
+    private val _restart = MutableLiveData<Unit>()
+    private val bitmap = exampleBitmap()
+    private var fullList = mutableListOf(
         LogModel(
-            1, false, bitmap, "Enfermedad: 8", "Lorem ipsum es el texto que se usa habitualmente en diseño gráfico en demostraciones de tipografías o de borradores de diseño para probar el diseño visual antes de insertar el texto final.", "24 abril 2024", false
+            1,
+            false,
+            bitmap,
+            "Enfermedad 1",
+            "Nota 1",
+            "24 abril 2024",
+            false
         ),
         LogModel(
-            1, true, bitmap, "Saludable", "alguna nota", "25 abril 2024", false
+            2, true, bitmap, "Saludable 2", "Nota 2", "25 abril 2024", false
         ),
         LogModel(
-            1, false, bitmap, "Enfermedad:1", "alguna nota", "26 abril 2024", false
+            3, false, bitmap, "Enfermedad 3", "Nota 3", "26 abril 2024", false
         ),
         LogModel(
-            1, false, bitmap, "Enfermedad:2", "alguna nota", "27 abril 2024", false
+            4, false, bitmap, "Enfermedad 4", "Nota 4", "27 abril 2024", false
         ),
         LogModel(
-            1, false, bitmap, "Enfermedad:3", "alguna nota", "28 abril 2024", false
+            5, false, bitmap, "Enfermedad 5", "Nota 5", "28 abril 2024", false
         ),
         LogModel(
-            1, false, bitmap, "Enfermedad:4", "alguna nota", "2 abril 2024", false
+            6, false, bitmap, "Enfermedad 6", "Nota 6", "2 abril 2024", false
         ),
         LogModel(
-            1, true, bitmap, "Saludable", "alguna nota", "1 abril 2024", false
+            7, true, bitmap, "Saludable 7", "Nota 7", "1 abril 2024", false
         ),
         LogModel(
-            1, true, bitmap, "Saludable", "alguna nota", "2 abril 2024", false
+            8, true, bitmap, "Saludable 8", "Nota 8", "2 abril 2024", false
         ),
         LogModel(
-            1, false, bitmap, "Enfermedad: 5", "alguna nota", "3 abril 2024", false
+            9, false, bitmap, "Enfermedad 9", "Nota 9", "3 abril 2024", false
         ),
         LogModel(
-            1, false, bitmap, "Enfermedad: 6", "alguna nota", "4 abril 2024", false
+            10, false, bitmap, "Enfermedad 10", "Nota 10", "4 abril 2024", false
         ),
     )
+    private var filterList = mutableListOf<LogModel>()
 
-    fun exampleList() {
-        _list.value = exampleLogs
+    val list: LiveData<List<LogModel>> = _list
+    val msgDelete: LiveData<Unit> = _msgDelete
+    val noItemSelected: LiveData<Unit> = _msgNoItemSelected
+    val restart: LiveData<Unit> = _restart
+
+    fun getData() {
+        _list.value = fullList
     }
 
     private fun exampleBitmap(): Bitmap {
@@ -87,6 +101,29 @@ internal class LogsViewModel @Inject constructor(): ViewModel() {
         canvas.drawText(texto, textoX, centroY, paint)
 
         return bitmap
+    }
+
+    fun checkSelections() {
+        val hasSelectedItems = fullList.any { it.checked }
+        if (hasSelectedItems) _msgDelete.value = Unit
+        else _msgNoItemSelected.value = Unit
+    }
+
+    fun deleteSelectedItems() {
+        fullList.removeIf { it.checked }
+        _list.value = fullList
+        _restart.value = Unit
+    }
+
+    fun filterByNote(name: String) {
+        viewModelScope.launch {
+            filterList.clear()
+            val query = name.lowercase().trim()
+            for (item in fullList)
+                if (item.note.lowercase().contains(query))
+                    filterList.add(item)
+            _list.value = filterList
+        }
     }
 
 }

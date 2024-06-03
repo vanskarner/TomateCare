@@ -37,7 +37,7 @@
     <string name="select">Seleccionar</string>
     <string name="delete">Eliminar</string>
     <string name="select_all">Seleccionar \nTodo</string>
-    <string name="search_by_logs">Busca por fecha, notas y estado</string>
+    <string name="search_by_note">Busca por notas</string>
     <string name="search_by_diseases">Busca por nombre</string>
     <string name="identifying">Identificando…</string>
     <string name="threshold">Umbral</string>
@@ -78,6 +78,7 @@
     <string name="description_capture_error">No se encontró una planta</string>
     <string name="image_not_loaded">No se puede cargar la imagen</string>
     <string name="error_non_analyzable_image">La imagen no pudo ser analizada</string>
+    <string name="no_item_selected">No ha seleccionado ningun elemento</string>
 
     <string name="provider_authorities_camera">com.vanskarner.tomatecare.fileprovider</string>
 </resources>

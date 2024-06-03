@@ -13,6 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <androidx.appcompat.widget.Toolbar
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -44,7 +45,7 @@
         app:layout_constraintEnd_toStartOf="@+id/btnSelect"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:queryHint="@string/search_by_logs" />
+        app:queryHint="@string/search_by_note" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvLogs"
@@ -81,13 +82,13 @@
 
         <TextView
             android:id="@+id/tvDelete"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:gravity="center"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:text="@string/delete"
             app:drawableStartCompat="@drawable/delete_svgrepo_com"
             app:layout_constraintBottom_toBottomOf="parent"

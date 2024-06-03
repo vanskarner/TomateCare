@@ -9,6 +9,11 @@
             name="model"
             type="com.vanskarner.tomatecare.ui.activitylogs.LogModel" />
 
+        <variable
+            name="checkVisibility"
+            type="Boolean" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -35,10 +40,10 @@
 
             <CheckBox
                 android:id="@+id/checkBox"
-                android:checked="@{model.checked}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:checked="@{model.checked}"
+                android:visibility="@{checkVisibility? View.VISIBLE:View.GONE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:visibility="visible" />
@@ -70,7 +75,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:ellipsize="end"
-                android:lines="2"
+                android:lines="4"
                 android:maxLines="4"
                 android:minLines="4"
                 android:text="@{model.note}"
