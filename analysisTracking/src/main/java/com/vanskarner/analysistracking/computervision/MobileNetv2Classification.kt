@@ -62,10 +62,9 @@ fun useMobilenetV2WithInterpreter(context: Context, imgBitmap: Bitmap): Result<P
     } catch (exception: Exception) {
         return Result.failure(exception)
     }
-//    return softmax(outputTensor.floatArray)
 }
 
-fun useMobilenetV2WithInterpreter(context: Context, imgList: List<Bitmap>): FloatArray {
+fun useMobilenetV2WithInterpreter(context: Context, imgList: List<Bitmap>): List<Predictions> {
     val interpreter = Interpreter(loadModelFile(context))
     val batchSize = imgList.size
     val shape = intArrayOf(
@@ -82,7 +81,16 @@ fun useMobilenetV2WithInterpreter(context: Context, imgList: List<Bitmap>): Floa
     val outputTensor = TensorBufferFloat.createFixedSize(outputShape, DataType.FLOAT32)
     interpreter.run(inputTensor.buffer, outputTensor.buffer)
     interpreter.close()
-    return outputTensor.floatArray
+    val predictions = mutableListOf<Predictions>()
+    outputTensor.floatArray.toList().chunked(10).forEach {
+        val softmaxPredictions = softmax(it.toFloatArray())
+        val labeledPredictions = pairsLabelPrediction(softmaxPredictions)
+        val topPrediction = getTopPrediction(labeledPredictions)
+        if (topPrediction.first == CLASSIFICATION_CLASSES[2])
+            predictions.add(Predictions.healthy(topPrediction.second, labeledPredictions))
+        else predictions.add(Predictions.sick(topPrediction, labeledPredictions))
+    }
+    return predictions
 }
 
 private fun loadModelFile(context: Context): MappedByteBuffer {
