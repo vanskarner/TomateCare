@@ -320,7 +320,11 @@ class MobileNetV2ClassificationTest {
         )
         val classificationByBatch = useMobilenetV2WithInterpreter(appContext, imgList).getOrThrow()
         val predictionResults = classificationByBatch.classificationList
-        println("Inference Time: " + classificationByBatch.inferenceTimeMilliSeconds + "ms")
+
+        //Inference time depends on hardware,change it according to case
+        val inferenceTime = classificationByBatch.inferenceTimeMilliSeconds
+        assertTrue(inferenceTime in 100..10000)
+        println("Image batch inference time: $inferenceTime ms")
 
         //There should be the same number of predictions as the number of images entered
         assertEquals(imgList.size, predictionResults.size)

@@ -87,6 +87,7 @@
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="161" />
+                  <entry key="Pixel_4_API_31" value="120" />
                   <entry key="Pixel_XL_API_24" value="190" />
                   <entry key="Tests" value="440" />
                 </map>
@@ -204,6 +205,7 @@
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_API_31" value="120" />
                   <entry key="Pixel_XL_API_24" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
