@@ -25,11 +25,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8//VERSION_17
+        targetCompatibility = JavaVersion.VERSION_1_8//VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "1.8"//"17"
     }
     buildFeatures {
         mlModelBinding = true
@@ -46,9 +46,18 @@ dependencies {
     //Hilt
     implementation("com.google.dagger:hilt-android:2.44")
     //TFLite
-    implementation("org.tensorflow:tensorflow-lite-support:0.1.0")
+//    implementation("org.tensorflow:tensorflow-lite-support:0.1.0")
+//    implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
+//    implementation("org.tensorflow:tensorflow-lite-gpu:2.3.0")
+
+    //TFLite - other way
     implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
-    implementation("org.tensorflow:tensorflow-lite-gpu:2.3.0")
+    implementation("org.tensorflow:tensorflow-lite:2.16.1")
+    implementation("org.tensorflow:tensorflow-lite-support:0.4.4")
+    implementation("org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.4.4")
+    implementation("org.tensorflow:tensorflow-lite-gpu-api:2.16.1")
+    implementation("org.tensorflow:tensorflow-lite-api:2.16.1")
+    implementation("org.tensorflow:tensorflow-lite-gpu:2.16.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

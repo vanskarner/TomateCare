@@ -2,7 +2,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("com.android.application") version "8.1.0" apply false
+    id("com.android.application") version "8.5.0" apply false
     id("org.jetbrains.kotlin.android") version "1.8.0" apply false
     id("androidx.navigation.safeargs") version "2.5.0" apply false
     id("org.jetbrains.kotlin.jvm") version "1.8.0" apply false
@@ -11,8 +11,8 @@ plugins {
 
 subprojects {
     repositories {
-        google()
-        mavenCentral()
+//        google()
+//        mavenCentral()
     }
 }
 allprojects {

@@ -86,6 +86,7 @@
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
                 <map>
+                  <entry key="4_WVGA_Nexus_S_API_26" value="120" />
                   <entry key="Duration" value="161" />
                   <entry key="Pixel_4_API_31" value="120" />
                   <entry key="Pixel_XL_API_24" value="190" />
