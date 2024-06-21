@@ -84,7 +84,7 @@ private fun getInputTensor(imgList: List<Bitmap>): TensorBuffer {
 
 private fun getOutputTensor(batchSize: Int): TensorBuffer {
     val outputShape = intArrayOf(batchSize, CLASSIFICATION_NUM_CLASSES)
-    return TensorBufferFloat.createFixedSize(outputShape, CLASSIFICATION_INPUT_IMAGE_TYPE)
+    return TensorBufferFloat.createFixedSize(outputShape, CLASSIFICATION_OUTPUT_IMAGE_TYPE)
 }
 
 private fun createClassification(predictions: FloatArray): Classification {
