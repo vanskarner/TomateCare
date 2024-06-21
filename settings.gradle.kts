@@ -17,3 +17,4 @@ dependencyResolutionManagement {
 rootProject.name = "Tomate Care"
 include(":app")
 include(":diseases")
+include(":analysisTracking")
