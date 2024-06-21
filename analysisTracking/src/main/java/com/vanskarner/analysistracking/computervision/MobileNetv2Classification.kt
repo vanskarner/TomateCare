@@ -3,51 +3,29 @@ package com.vanskarner.analysistracking.computervision
 import android.content.Context
 import android.graphics.Bitmap
 import com.vanskarner.analysistracking.Classification
-import com.vanskarner.analysistracking.ClassificationByBatch
-import com.vanskarner.analysistracking.ClassificationItem
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.Interpreter
+import org.tensorflow.lite.support.common.FileUtil
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import org.tensorflow.lite.support.tensorbuffer.TensorBufferFloat
-import java.io.FileInputStream
 import java.nio.MappedByteBuffer
-import java.nio.channels.FileChannel
 import kotlin.system.measureTimeMillis
 
 internal fun useMobilenetV2WithInterpreter(
     context: Context,
     imgBitmap: Bitmap,
     options: Interpreter.Options
-): Result<Classification> {
+): Result<Pair<Long, Classification>> {
     try {
-        val outputTensor: TensorBuffer
+        val outputTensor = getOutputTensor(1)
         val timeInMillis = measureTimeMillis {
-            val interpreter = Interpreter(loadModelFile(context),options)
-            val shape = intArrayOf(
-                1,//batch size is equal to the number of images to be predicted
-                CLASSIFICATION_IMG_SIZE,
-                CLASSIFICATION_IMG_SIZE,
-                CLASSIFICATION_CHANNELS
-            )
-            val inputTensor = TensorBufferFloat.createFixedSize(shape, DataType.FLOAT32)
-            inputTensor.loadBuffer(bitmapToByteBuffer(imgBitmap))
-            val outputShape = intArrayOf(1, 10)
-            outputTensor = TensorBufferFloat.createFixedSize(outputShape, DataType.FLOAT32)
+            val interpreter = Interpreter(getModel(context), options)
+            val inputTensor = getInputTensor(imgBitmap)
             interpreter.run(inputTensor.buffer, outputTensor.buffer)
             interpreter.close()
         }
-        val softmaxPredictions = softmax(outputTensor.floatArray)
-        val labeledPredictions = pairsLabelPrediction(softmaxPredictions)
-        val topPrediction = getTopPrediction(labeledPredictions)
-        return if (topPrediction.first == CLASSIFICATION_CLASSES[2])
-            Result.success(
-                Classification.healthy(
-                    topPrediction.second,
-                    timeInMillis,
-                    labeledPredictions
-                )
-            )
-        else Result.success(Classification.sick(topPrediction, timeInMillis, labeledPredictions))
+        val result = Pair(timeInMillis, createClassification(outputTensor.floatArray))
+        return Result.success(result)
     } catch (exception: Exception) {
         return Result.failure(exception)
     }
@@ -57,52 +35,68 @@ internal fun useMobilenetV2WithInterpreter(
     context: Context,
     imgList: List<Bitmap>,
     options: Interpreter.Options
-): Result<ClassificationByBatch> {
+): Result<Pair<Long, List<Classification>>> {
     try {
-        val outputTensor: TensorBuffer
+        val outputTensor = getOutputTensor(imgList.size)
         val timeInMillis = measureTimeMillis {
-            val interpreter = Interpreter(loadModelFile(context),options)
-            val batchSize = imgList.size
-            val shape = intArrayOf(
-                batchSize,//batch size is equal to the number of images to be predicted
-                CLASSIFICATION_IMG_SIZE,
-                CLASSIFICATION_IMG_SIZE,
-                CLASSIFICATION_CHANNELS
-            )
-            val inputTensor = TensorBufferFloat.createFixedSize(shape, DataType.FLOAT32)
-            interpreter.resizeInput(0, shape)
+            val interpreter = Interpreter(getModel(context), options)
+            val inputTensor = getInputTensor(imgList)
+            interpreter.resizeInput(0, inputTensor.shape)
             interpreter.allocateTensors()
-            inputTensor.loadBuffer(bitmapListToByteBuffer(imgList))
-            val outputShape = intArrayOf(batchSize, CLASSIFICATION_NUM_CLASSES)
-            outputTensor = TensorBufferFloat.createFixedSize(outputShape, DataType.FLOAT32)
             interpreter.run(inputTensor.buffer, outputTensor.buffer)
             interpreter.close()
         }
-        val predictions = mutableListOf<ClassificationItem>()
-        outputTensor.floatArray.toList().chunked(10).forEach {
-            val softmaxPredictions = softmax(it.toFloatArray())
-            val labeledPredictions = pairsLabelPrediction(softmaxPredictions)
-            val topPrediction = getTopPrediction(labeledPredictions)
-            if (topPrediction.first == CLASSIFICATION_CLASSES[2])
-                predictions.add(
-                    ClassificationItem.healthy(
-                        topPrediction.second,
-                        labeledPredictions
-                    )
-                )
-            else predictions.add(ClassificationItem.sick(topPrediction, labeledPredictions))
-        }
-        return Result.success(ClassificationByBatch(timeInMillis, predictions))
+        val classifications = outputTensor.floatArray.toList()
+            .chunked(10)
+            .map { createClassification(it.toFloatArray()) }
+        val result = Pair(timeInMillis, classifications)
+        return Result.success(result)
     } catch (exception: Exception) {
         return Result.failure(exception)
     }
 }
 
-private fun loadModelFile(context: Context): MappedByteBuffer {
-    val modelPath = "Tomato_Disease-MobilenetV2.tflite"
-    val fileInputStream = FileInputStream(context.assets.openFd(modelPath).fileDescriptor)
-    val fileChannel = fileInputStream.channel
-    val startOffset = context.assets.openFd(modelPath).startOffset
-    val declaredLength = context.assets.openFd(modelPath).declaredLength
-    return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength)
+private fun getModel(context: Context): MappedByteBuffer =
+    FileUtil.loadMappedFile(context, "Tomato_Disease-MobilenetV2.tflite")
+
+private fun getInputTensor(imgBitmap: Bitmap): TensorBuffer {
+    val shape = intArrayOf(
+        1,//batch size is equal to the number of images to be predicted
+        CLASSIFICATION_IMG_SIZE,
+        CLASSIFICATION_IMG_SIZE,
+        CLASSIFICATION_CHANNELS
+    )
+    val inputTensor = TensorBufferFloat.createFixedSize(shape, DataType.FLOAT32)
+    inputTensor.loadBuffer(bitmapToByteBuffer(imgBitmap))
+    return inputTensor
+}
+
+private fun getInputTensor(imgList: List<Bitmap>): TensorBuffer {
+    val shape = intArrayOf(
+        imgList.size,//batch size is equal to the number of images to be predicted
+        CLASSIFICATION_IMG_SIZE,
+        CLASSIFICATION_IMG_SIZE,
+        CLASSIFICATION_CHANNELS
+    )
+    val inputTensor = TensorBufferFloat.createFixedSize(shape, DataType.FLOAT32)
+    inputTensor.loadBuffer(bitmapListToByteBuffer(imgList))
+    return inputTensor
+}
+
+private fun getOutputTensor(batchSize: Int): TensorBuffer {
+    val outputShape = intArrayOf(batchSize, CLASSIFICATION_NUM_CLASSES)
+    return TensorBufferFloat.createFixedSize(outputShape, DataType.FLOAT32)
+}
+
+private fun createClassification(predictions: FloatArray): Classification {
+    val softmaxPredictions = softmax(predictions)
+    val labeledPredictions = pairsLabelPrediction(softmaxPredictions)
+    val bestPrediction = getTopPrediction(labeledPredictions)
+    val isHealthy = bestPrediction.first == CLASSIFICATION_CLASSES[2]
+    return if (isHealthy)
+        Classification.healthy(
+            bestPrediction,
+            labeledPredictions
+        )
+    else Classification.sick(bestPrediction, labeledPredictions)
 }

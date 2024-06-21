@@ -38,16 +38,18 @@ class MobileNetV2ClassificationTest {
             interpreterOptions
         )
         val result = predictionResult.getOrThrow()
+        val inferenceTime = result.first
+        val classification = result.second
 
         //Inference time depends on hardware,change it according to case
         assertTrue(
-            "Inference was ${result.inferenceTimeMilliSeconds} ms",
-            result.inferenceTimeMilliSeconds in 100..2000
+            "Inference was $inferenceTime ms",
+            inferenceTime in 100..2000
         )
-        assertEquals(LeafState.Sick, result.leafState)
-        assertEquals("bacterial_spot", result.bestPrediction.first)
-        assertTrue(result.bestPrediction.second in 0.90f..0.99f)
-        assertEquals(10, result.predictions.size)
+        assertEquals(LeafState.Sick, classification.leafState)
+        assertEquals("bacterial_spot", classification.bestPrediction.first)
+        assertTrue(classification.bestPrediction.second in 0.90f..0.99f)
+        assertEquals(10, classification.predictions.size)
     }
 
     @Test
@@ -56,16 +58,18 @@ class MobileNetV2ClassificationTest {
         val predictionResult =
             useMobilenetV2WithInterpreter(appContext, bacterialSpotImage, interpreterOptions)
         val result = predictionResult.getOrThrow()
+        val inferenceTime = result.first
+        val classification = result.second
 
         //Inference time depends on hardware,change it according to case
         assertTrue(
-            "Inference was ${result.inferenceTimeMilliSeconds} ms",
-            result.inferenceTimeMilliSeconds in 100..2000
+            "Inference was $inferenceTime ms",
+            inferenceTime in 100..2000
         )
-        assertEquals(LeafState.Sick, result.leafState)
-        assertEquals("early_blight", result.bestPrediction.first)
-        assertTrue(result.bestPrediction.second in 0.90f..0.99f)
-        assertEquals(10, result.predictions.size)
+        assertEquals(LeafState.Sick, classification.leafState)
+        assertEquals("early_blight", classification.bestPrediction.first)
+        assertTrue(classification.bestPrediction.second in 0.90f..0.99f)
+        assertEquals(10, classification.predictions.size)
     }
 
     @Test
@@ -74,16 +78,18 @@ class MobileNetV2ClassificationTest {
         val predictionResult =
             useMobilenetV2WithInterpreter(appContext, bacterialSpotImage, interpreterOptions)
         val result = predictionResult.getOrThrow()
+        val inferenceTime = result.first
+        val classification = result.second
 
         //Inference time depends on hardware,change it according to case
         assertTrue(
-            "Inference was ${result.inferenceTimeMilliSeconds} ms",
-            result.inferenceTimeMilliSeconds in 100..2000
+            "Inference was $inferenceTime ms",
+            inferenceTime in 100..2000
         )
-        assertEquals(LeafState.Healthy, result.leafState)
-        assertEquals("Healthy", result.bestPrediction.first)
-        assertTrue(result.bestPrediction.second in 0.90f..0.99f)
-        assertEquals(10, result.predictions.size)
+        assertEquals(LeafState.Healthy, classification.leafState)
+        assertEquals("healthy", classification.bestPrediction.first)
+        assertTrue(classification.bestPrediction.second in 0.90f..0.99f)
+        assertEquals(10, classification.predictions.size)
     }
 
     @Test
@@ -92,16 +98,18 @@ class MobileNetV2ClassificationTest {
         val predictionResult =
             useMobilenetV2WithInterpreter(appContext, bacterialSpotImage, interpreterOptions)
         val result = predictionResult.getOrThrow()
+        val inferenceTime = result.first
+        val classification = result.second
 
         //Inference time depends on hardware,change it according to case
         assertTrue(
-            "Inference was ${result.inferenceTimeMilliSeconds} ms",
-            result.inferenceTimeMilliSeconds in 100..2000
+            "Inference was $inferenceTime ms",
+            inferenceTime in 100..2000
         )
-        assertEquals(LeafState.Sick, result.leafState)
-        assertEquals("late_blight", result.bestPrediction.first)
-        assertTrue(result.bestPrediction.second in 0.90f..0.99f)
-        assertEquals(10, result.predictions.size)
+        assertEquals(LeafState.Sick, classification.leafState)
+        assertEquals("late_blight", classification.bestPrediction.first)
+        assertTrue(classification.bestPrediction.second in 0.90f..0.99f)
+        assertEquals(10, classification.predictions.size)
     }
 
     @Test
@@ -110,16 +118,18 @@ class MobileNetV2ClassificationTest {
         val predictionResult =
             useMobilenetV2WithInterpreter(appContext, bacterialSpotImage, interpreterOptions)
         val result = predictionResult.getOrThrow()
+        val inferenceTime = result.first
+        val classification = result.second
 
         //Inference time depends on hardware,change it according to case
         assertTrue(
-            "Inference was ${result.inferenceTimeMilliSeconds} ms",
-            result.inferenceTimeMilliSeconds in 100..2000
+            "Inference was $inferenceTime ms",
+            inferenceTime in 100..2000
         )
-        assertEquals(LeafState.Sick, result.leafState)
-        assertEquals("leaf_mold", result.bestPrediction.first)
-        assertTrue(result.bestPrediction.second in 0.90f..0.99f)
-        assertEquals(10, result.predictions.size)
+        assertEquals(LeafState.Sick, classification.leafState)
+        assertEquals("leaf_mold", classification.bestPrediction.first)
+        assertTrue(classification.bestPrediction.second in 0.90f..0.99f)
+        assertEquals(10, classification.predictions.size)
     }
 
     @Test
@@ -128,16 +138,18 @@ class MobileNetV2ClassificationTest {
         val predictionResult =
             useMobilenetV2WithInterpreter(appContext, bacterialSpotImage, interpreterOptions)
         val result = predictionResult.getOrThrow()
+        val inferenceTime = result.first
+        val classification = result.second
 
         //Inference time depends on hardware,change it according to case
         assertTrue(
-            "Inference was ${result.inferenceTimeMilliSeconds} ms",
-            result.inferenceTimeMilliSeconds in 100..2000
+            "Inference was $inferenceTime ms",
+            inferenceTime in 100..2000
         )
-        assertEquals(LeafState.Sick, result.leafState)
-        assertEquals("mosaic_virus", result.bestPrediction.first)
-        assertTrue(result.bestPrediction.second in 0.90f..0.99f)
-        assertEquals(10, result.predictions.size)
+        assertEquals(LeafState.Sick, classification.leafState)
+        assertEquals("mosaic_virus", classification.bestPrediction.first)
+        assertTrue(classification.bestPrediction.second in 0.90f..0.99f)
+        assertEquals(10, classification.predictions.size)
     }
 
     @Test
@@ -146,16 +158,18 @@ class MobileNetV2ClassificationTest {
         val predictionResult =
             useMobilenetV2WithInterpreter(appContext, bacterialSpotImage, interpreterOptions)
         val result = predictionResult.getOrThrow()
+        val inferenceTime = result.first
+        val classification = result.second
 
         //Inference time depends on hardware,change it according to case
         assertTrue(
-            "Inference was ${result.inferenceTimeMilliSeconds} ms",
-            result.inferenceTimeMilliSeconds in 100..2000
+            "Inference was $inferenceTime ms",
+            inferenceTime in 100..2000
         )
-        assertEquals(LeafState.Sick, result.leafState)
-        assertEquals("septoria_leaf_spot", result.bestPrediction.first)
-        assertTrue(result.bestPrediction.second in 0.90f..0.99f)
-        assertEquals(10, result.predictions.size)
+        assertEquals(LeafState.Sick, classification.leafState)
+        assertEquals("septoria_leaf_spot", classification.bestPrediction.first)
+        assertTrue(classification.bestPrediction.second in 0.90f..0.99f)
+        assertEquals(10, classification.predictions.size)
     }
 
     @Test
@@ -164,16 +178,18 @@ class MobileNetV2ClassificationTest {
         val predictionResult =
             useMobilenetV2WithInterpreter(appContext, bacterialSpotImage, interpreterOptions)
         val result = predictionResult.getOrThrow()
+        val inferenceTime = result.first
+        val classification = result.second
 
         //Inference time depends on hardware,change it according to case
         assertTrue(
-            "Inference was ${result.inferenceTimeMilliSeconds} ms",
-            result.inferenceTimeMilliSeconds in 100..2000
+            "Inference was $inferenceTime ms",
+            inferenceTime in 100..2000
         )
-        assertEquals(LeafState.Sick, result.leafState)
-        assertEquals("target_spot", result.bestPrediction.first)
-        assertTrue(result.bestPrediction.second in 0.90f..0.99f)
-        assertEquals(10, result.predictions.size)
+        assertEquals(LeafState.Sick, classification.leafState)
+        assertEquals("target_spot", classification.bestPrediction.first)
+        assertTrue(classification.bestPrediction.second in 0.90f..0.99f)
+        assertEquals(10, classification.predictions.size)
     }
 
     @Test
@@ -182,16 +198,18 @@ class MobileNetV2ClassificationTest {
         val predictionResult =
             useMobilenetV2WithInterpreter(appContext, bacterialSpotImage, interpreterOptions)
         val result = predictionResult.getOrThrow()
+        val inferenceTime = result.first
+        val classification = result.second
 
         //Inference time depends on hardware,change it according to case
         assertTrue(
-            "Inference was ${result.inferenceTimeMilliSeconds} ms",
-            result.inferenceTimeMilliSeconds in 100..2000
+            "Inference was $inferenceTime ms",
+            inferenceTime in 100..2000
         )
-        assertEquals(LeafState.Sick, result.leafState)
-        assertEquals("twospotted_spider_mite", result.bestPrediction.first)
-        assertTrue(result.bestPrediction.second in 0.90f..0.99f)
-        assertEquals(10, result.predictions.size)
+        assertEquals(LeafState.Sick, classification.leafState)
+        assertEquals("twospotted_spider_mite", classification.bestPrediction.first)
+        assertTrue(classification.bestPrediction.second in 0.90f..0.99f)
+        assertEquals(10, classification.predictions.size)
     }
 
     @Test
@@ -200,16 +218,18 @@ class MobileNetV2ClassificationTest {
         val predictionResult =
             useMobilenetV2WithInterpreter(appContext, bacterialSpotImage, interpreterOptions)
         val result = predictionResult.getOrThrow()
+        val inferenceTime = result.first
+        val classification = result.second
 
         //Inference time depends on hardware,change it according to case
         assertTrue(
-            "Inference was ${result.inferenceTimeMilliSeconds} ms",
-            result.inferenceTimeMilliSeconds in 100..2000
+            "Inference was $inferenceTime ms",
+            inferenceTime in 100..2000
         )
-        assertEquals(LeafState.Sick, result.leafState)
-        assertEquals("yellow_leaf_curl_virus", result.bestPrediction.first)
-        assertTrue(result.bestPrediction.second in 0.90f..0.99f)
-        assertEquals(10, result.predictions.size)
+        assertEquals(LeafState.Sick, classification.leafState)
+        assertEquals("yellow_leaf_curl_virus", classification.bestPrediction.first)
+        assertTrue(classification.bestPrediction.second in 0.90f..0.99f)
+        assertEquals(10, classification.predictions.size)
     }
 
     @Test
@@ -226,12 +246,12 @@ class MobileNetV2ClassificationTest {
             loadImage("twospotted_spider_mite.jpg"),
             loadImage("yellow_leaf_curl_virus.jpg")
         )
-        val classificationByBatch =
+        val result =
             useMobilenetV2WithInterpreter(appContext, imgList, interpreterOptions).getOrThrow()
-        val predictionResults = classificationByBatch.classificationList
+        val inferenceTime = result.first
+        val predictionResults = result.second
 
         //Inference time depends on hardware,change it according to case
-        val inferenceTime = classificationByBatch.inferenceTimeMilliSeconds
         assertTrue("Inference was $inferenceTime ms", inferenceTime in 100..10000)
         println("Image batch inference time: $inferenceTime ms")
 
@@ -252,7 +272,7 @@ class MobileNetV2ClassificationTest {
 
         //For healthy
         assertEquals(LeafState.Healthy, predictionResults[2].leafState)
-        assertEquals("Healthy", predictionResults[2].bestPrediction.first)
+        assertEquals("healthy", predictionResults[2].bestPrediction.first)
         assertTrue(predictionResults[2].bestPrediction.second in 0.90f..0.99f)
         assertEquals(10, predictionResults[2].predictions.size)
 
