@@ -3,7 +3,6 @@ package com.vanskarner.analysistracking.computervision
 import android.content.Context
 import android.graphics.Bitmap
 import com.vanskarner.analysistracking.Classification
-import org.tensorflow.lite.DataType
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.support.common.FileUtil
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
@@ -66,7 +65,7 @@ private fun getInputTensor(imgBitmap: Bitmap): TensorBuffer {
         CLASSIFICATION_IMG_SIZE,
         CLASSIFICATION_CHANNELS
     )
-    val inputTensor = TensorBufferFloat.createFixedSize(shape, DataType.FLOAT32)
+    val inputTensor = TensorBufferFloat.createFixedSize(shape, CLASSIFICATION_INPUT_IMAGE_TYPE)
     inputTensor.loadBuffer(bitmapToByteBuffer(imgBitmap))
     return inputTensor
 }
@@ -78,14 +77,14 @@ private fun getInputTensor(imgList: List<Bitmap>): TensorBuffer {
         CLASSIFICATION_IMG_SIZE,
         CLASSIFICATION_CHANNELS
     )
-    val inputTensor = TensorBufferFloat.createFixedSize(shape, DataType.FLOAT32)
+    val inputTensor = TensorBufferFloat.createFixedSize(shape, CLASSIFICATION_INPUT_IMAGE_TYPE)
     inputTensor.loadBuffer(bitmapListToByteBuffer(imgList))
     return inputTensor
 }
 
 private fun getOutputTensor(batchSize: Int): TensorBuffer {
     val outputShape = intArrayOf(batchSize, CLASSIFICATION_NUM_CLASSES)
-    return TensorBufferFloat.createFixedSize(outputShape, DataType.FLOAT32)
+    return TensorBufferFloat.createFixedSize(outputShape, CLASSIFICATION_INPUT_IMAGE_TYPE)
 }
 
 private fun createClassification(predictions: FloatArray): Classification {
