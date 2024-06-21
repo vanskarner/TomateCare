@@ -1,6 +1,7 @@
 package com.vanskarner.analysistracking.computervision
 
 import android.graphics.Bitmap
+import com.vanskarner.analysistracking.BoundingBox
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import kotlin.math.exp
@@ -78,4 +79,89 @@ internal fun bitmapToByteBuffer(image: Bitmap): ByteBuffer {
     }
     /*byteBuffer.rewind()*/
     return byteBuffer
+}
+
+/**
+ * Function for object detection, extracts and returns a list of bounding boxes from an array
+ * of predictions. It filters the boxes by a confidence threshold and normalizes the coordinates
+ * of the boxes within the range [0, 1]. It then applies non-maximum suppression
+ * to eliminate redundant boxes.
+ */
+fun createBoundingBoxes(
+    array: FloatArray,
+    numElements: Int,
+    numChannel: Int,
+    confidenceThreshold: Float,
+    iouThreshold: Float,
+    classNames: List<String>
+): List<BoundingBox> {
+    val boundingBoxes = mutableListOf<BoundingBox>()
+    for (c in 0 until numElements) {
+        var maxConf = confidenceThreshold
+        var maxIdx = -1
+        for (j in 4 until numChannel) {
+            val conf = array[c + numElements * j]
+            if (conf > maxConf) {
+                maxConf = conf
+                maxIdx = j - 4
+            }
+        }
+        if (maxConf > confidenceThreshold) {
+            val cx = array[c]
+            val cy = array[c + numElements]
+            val w = array[c + numElements * 2]
+            val h = array[c + numElements * 3]
+            val x1 = cx - w / 2
+            val y1 = cy - h / 2
+            val x2 = cx + w / 2
+            val y2 = cy + h / 2
+            if (x1 in 0f..1f && y1 in 0f..1f && x2 in 0f..1f && y2 in 0f..1f) {
+                val item = BoundingBox(
+                    x1 = x1, y1 = y1, x2 = x2, y2 = y2,
+                    cx = cx, cy = cy, w = w, h = h,
+                    cnf = maxConf, cls = maxIdx, clsName = classNames[maxIdx]
+                )
+                boundingBoxes.add(item)
+            }
+        }
+    }
+    return if (boundingBoxes.isEmpty()) emptyList() else applyNMS(boundingBoxes,iouThreshold)
+}
+
+/**
+ * Function for object detection, this function filters out overlapping boxes
+ * to keep only the most reliable and non-redundant ones
+ */
+private fun applyNMS(boxes: List<BoundingBox>, iouThreshold: Float): List<BoundingBox> {
+    val sortedBoxes = boxes.sortedByDescending { it.cnf }.toMutableList()
+    val selectedBoxes = mutableListOf<BoundingBox>()
+    while (sortedBoxes.isNotEmpty()) {
+        val first = sortedBoxes.first()
+        selectedBoxes.add(first)
+        sortedBoxes.remove(first)
+        val iterator = sortedBoxes.iterator()
+        while (iterator.hasNext()) {
+            val nextBox = iterator.next()
+            val iou = calculateIoU(first, nextBox)
+            if (iou >= iouThreshold) {
+                iterator.remove()
+            }
+        }
+    }
+    return selectedBoxes
+}
+
+/**
+ * Function for object detection, calculate the Intersection over Union (IoU)
+ * between two bounding boxes
+ */
+private fun calculateIoU(box1: BoundingBox, box2: BoundingBox): Float {
+    val x1 = maxOf(box1.x1, box2.x1)
+    val y1 = maxOf(box1.y1, box2.y1)
+    val x2 = minOf(box1.x2, box2.x2)
+    val y2 = minOf(box1.y2, box2.y2)
+    val intersectionArea = maxOf(0F, x2 - x1) * maxOf(0F, y2 - y1)
+    val box1Area = box1.w * box1.h
+    val box2Area = box2.w * box2.h
+    return intersectionArea / (box1Area + box2Area - intersectionArea)
 }
