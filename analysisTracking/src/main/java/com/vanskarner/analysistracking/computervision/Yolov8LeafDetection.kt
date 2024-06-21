@@ -23,7 +23,7 @@ private val IMAGE_PROCESSOR = ImageProcessor.Builder()
     .add(CastOp(INPUT_IMAGE_TYPE))
     .build()
 
-fun useYoloV8LeafDetection(
+internal fun useYoloV8LeafDetection(
     context: Context,
     imgBitmap: Bitmap,
     options: Interpreter.Options

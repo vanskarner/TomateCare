@@ -87,7 +87,7 @@ internal fun bitmapToByteBuffer(image: Bitmap): ByteBuffer {
  * of the boxes within the range [0, 1]. It then applies non-maximum suppression
  * to eliminate redundant boxes.
  */
-fun createBoundingBoxes(
+internal fun createBoundingBoxes(
     array: FloatArray,
     numElements: Int,
     numChannel: Int,
