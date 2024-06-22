@@ -10,7 +10,7 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBufferFloat
 import java.nio.MappedByteBuffer
 import kotlin.system.measureTimeMillis
 
-internal fun useMobilenetV2(
+internal fun useSqueezeNetMish(
     context: Context,
     imgBitmap: Bitmap,
     options: Interpreter.Options
@@ -30,7 +30,7 @@ internal fun useMobilenetV2(
     }
 }
 
-internal fun useMobilenetV2(
+internal fun useSqueezeNetMish(
     context: Context,
     imgList: List<Bitmap>,
     options: Interpreter.Options
@@ -56,7 +56,7 @@ internal fun useMobilenetV2(
 }
 
 private fun getModel(context: Context): MappedByteBuffer =
-    FileUtil.loadMappedFile(context, "Tomato_Disease-MobilenetV2.tflite")
+    FileUtil.loadMappedFile(context, "Tomato_Disease-SqueezeNet_Mish.tflite")
 
 private fun getInputTensor(imgBitmap: Bitmap): TensorBuffer {
     val shape = intArrayOf(
@@ -88,8 +88,7 @@ private fun getOutputTensor(batchSize: Int): TensorBuffer {
 }
 
 private fun createClassification(predictions: FloatArray): Classification {
-    val softmaxPredictions = softmax(predictions)
-    val labeledPredictions = pairsLabelPrediction(softmaxPredictions)
+    val labeledPredictions = pairsLabelPrediction(predictions)
     val bestPrediction = getTopPrediction(labeledPredictions)
     val isHealthy = bestPrediction.first == CLASSIFICATION_CLASSES[2]
     return if (isHealthy)

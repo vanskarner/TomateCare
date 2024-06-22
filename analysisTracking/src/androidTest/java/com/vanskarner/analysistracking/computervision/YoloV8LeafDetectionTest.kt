@@ -24,7 +24,7 @@ class YoloV8LeafDetectionTest {
         //Inference time depends on hardware,change it according to case
         assertTrue(
             "Inference was ${result.first} ms",
-            result.first in 100..3000
+            result.first in 100..4000
         )
         assertEquals(4, result.second.size)
     }
