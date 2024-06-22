@@ -7,6 +7,11 @@ import java.nio.ByteOrder
 import kotlin.math.exp
 import kotlin.math.pow
 
+internal fun resizeImage(image: Bitmap) =
+    Bitmap.createScaledBitmap(image, CLASSIFICATION_IMG_SIZE, CLASSIFICATION_IMG_SIZE, false)
+
+internal fun resizeImage(images: List<Bitmap>) = images.map { resizeImage(it) }
+
 internal fun softmax(predictions: FloatArray): FloatArray {
     val max = predictions.maxOrNull() ?: 0.0f
     val expValues = predictions.map { exp((it - max)) }
@@ -125,7 +130,7 @@ internal fun createBoundingBoxes(
             }
         }
     }
-    return if (boundingBoxes.isEmpty()) emptyList() else applyNMS(boundingBoxes,iouThreshold)
+    return if (boundingBoxes.isEmpty()) emptyList() else applyNMS(boundingBoxes, iouThreshold)
 }
 
 /**
