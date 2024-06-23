@@ -41,23 +41,31 @@ dependencies {
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.12.0")
-    //Dependency injection
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
-    //Hilt
+    implementation("com.google.code.gson:gson:2.8.8")
+    //Hilt - Dependency injection
     implementation("com.google.dagger:hilt-android:2.44")
-    //TFLite
-//    implementation("org.tensorflow:tensorflow-lite-support:0.1.0")
-//    implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
-//    implementation("org.tensorflow:tensorflow-lite-gpu:2.3.0")
+    kapt("com.google.dagger:hilt-android-compiler:2.44")
 
-    //TFLite - other way
+    //TFLite
+    implementation("org.tensorflow:tensorflow-lite-support:0.4.4")//0.1.0
+    implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
+    implementation("org.tensorflow:tensorflow-lite-gpu:2.16.1")//2.3.0
+
+/*    //TFLite - other way
     implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
     implementation("org.tensorflow:tensorflow-lite:2.16.1")
     implementation("org.tensorflow:tensorflow-lite-support:0.4.4")
     implementation("org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.4.4")
     implementation("org.tensorflow:tensorflow-lite-gpu-api:2.16.1")
     implementation("org.tensorflow:tensorflow-lite-api:2.16.1")
-    implementation("org.tensorflow:tensorflow-lite-gpu:2.16.1")
+    implementation("org.tensorflow:tensorflow-lite-gpu:2.16.1")*/
+
+    //Room
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    androidTestImplementation("androidx.room:room-testing:2.6.1")
+    kaptAndroidTest("androidx.room:room-compiler:2.6.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
