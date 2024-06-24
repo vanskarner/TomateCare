@@ -9,6 +9,8 @@ class DiseasesUseCasesTest {
     private lateinit var repository: DiseasesRepository
     private lateinit var getDiseasesUseCase: GetDiseasesUseCase
     private lateinit var findDiseaseUseCase: FindDiseaseUseCase
+    private lateinit var getNameByKeyCodeUseCase: GetNameByKeyCodeUseCase
+    private lateinit var getNamesByKeyCodesUseCase: GetNamesByKeyCodesUseCase
     private val exampleList by lazy {
         listOf(
             DiseaseData(1, "Bacterial Spot", "Some Image", "Some Symptoms"),
@@ -27,12 +29,16 @@ class DiseasesUseCasesTest {
             "Some Source"
         )
     }
+    private val exampleName = "Bacterial Spot"
+    private val exampleNameList = listOf("Bacterial Spot", "Mosaic Virus")
 
     @Before
     fun setUp() {
-        repository = FakeDiseasesRepository(exampleList, exampleItem)
+        repository = FakeDiseasesRepository(exampleList, exampleItem, exampleName, exampleNameList)
         getDiseasesUseCase = GetDiseasesUseCase(repository)
         findDiseaseUseCase = FindDiseaseUseCase(repository)
+        getNameByKeyCodeUseCase = GetNameByKeyCodeUseCase(repository)
+        getNamesByKeyCodesUseCase = GetNamesByKeyCodesUseCase(repository)
     }
 
     @Test
@@ -54,6 +60,21 @@ class DiseasesUseCasesTest {
         assertEquals(exampleItem.developmentConditions, diseases.developmentConditions)
         assertEquals(exampleItem.control, diseases.control)
         assertEquals(exampleItem.source, diseases.source)
+    }
+
+    @Test
+    fun `execute getNameByKeyCodeUseCase return name`() = runTest {
+        val actualName = getNameByKeyCodeUseCase.execute("any_code").getOrThrow()
+
+        assertEquals(exampleName, actualName)
+    }
+
+    @Test
+    fun `execute getNamesByKeyCodeUseCase return nameList`() = runTest {
+        val keyCodes = listOf("any_code1", "any_code2")
+        val actualNameList = getNamesByKeyCodesUseCase.execute(keyCodes).getOrThrow()
+
+        assertEquals(exampleNameList.size, actualNameList.size)
     }
 
 }

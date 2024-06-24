@@ -9,6 +9,7 @@ class DiseasesMapperTest {
     fun `toData from DiseaseDTO`() {
         val expected = DiseaseDTO(
             id = 1,
+            keyCode = "bacterial_spot",
             name = "Bacterial Spot",
             imageBase64 = "any",
             causalAgent = "Some agent",
@@ -29,6 +30,7 @@ class DiseasesMapperTest {
     fun `toDetailData from DiseaseDTO`() {
         val expected = DiseaseDTO(
             id = 1,
+            keyCode = "bacterial_spot",
             name = "Bacterial Spot",
             imageBase64 = "any",
             causalAgent = "Some agent",
@@ -55,6 +57,7 @@ class DiseasesMapperTest {
             listOf(
                 DiseaseDTO(
                     id = 1,
+                    keyCode = "bacterial_spot",
                     name = "Bacterial Spot",
                     imageBase64 = "any",
                     causalAgent = "Some agent",

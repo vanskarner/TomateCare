@@ -12,6 +12,8 @@ internal data class DiseasesDTO(
 internal data class DiseaseDTO(
     @SerialName("id")
     val id: Int,
+    @SerialName("key_code")
+    val keyCode: String,
     @SerialName("name")
     val name: String,
     @SerialName("image_base64")

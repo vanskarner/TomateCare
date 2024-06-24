@@ -4,15 +4,25 @@ import com.vanskarner.diseases.bussineslogic.DiseaseData
 import com.vanskarner.diseases.bussineslogic.DiseaseDetailData
 import com.vanskarner.diseases.bussineslogic.FindDiseaseUseCase
 import com.vanskarner.diseases.bussineslogic.GetDiseasesUseCase
+import com.vanskarner.diseases.bussineslogic.GetNameByKeyCodeUseCase
+import com.vanskarner.diseases.bussineslogic.GetNamesByKeyCodesUseCase
 
-internal class DefaultDiseasesComponent constructor(
+internal class DefaultDiseasesComponent(
     private val getDiseasesUseCase: GetDiseasesUseCase,
-    private val findDiseaseUseCase: FindDiseaseUseCase
+    private val findDiseaseUseCase: FindDiseaseUseCase,
+    private val getNameByKeyCodeUseCase: GetNameByKeyCodeUseCase,
+    private val getNamesByKeyCodesUseCase: GetNamesByKeyCodesUseCase
 ) : DiseasesComponent {
 
     override suspend fun getList(): Result<List<DiseaseData>> = getDiseasesUseCase.execute()
 
     override suspend fun find(diseaseId: Int): Result<DiseaseDetailData> =
         findDiseaseUseCase.execute(diseaseId)
+
+    override suspend fun getNameByKeyCode(keyCode: String) =
+        getNameByKeyCodeUseCase.execute(keyCode)
+
+    override suspend fun getNamesByKeyCodes(keyCodes: List<String>) =
+        getNamesByKeyCodesUseCase.execute(keyCodes)
 
 }
