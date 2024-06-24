@@ -3,8 +3,8 @@ package com.vanskarner.analysistracking.persistence
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.vanskarner.analysistracking.BoundingBox
-import com.vanskarner.analysistracking.Classification
+import com.vanskarner.analysistracking.BoundingBoxData
+import com.vanskarner.analysistracking.ClassificationData
 import java.util.Date
 
 @Entity(tableName = "activity_log")
@@ -16,6 +16,6 @@ data class ActivityLogEntity(
     @ColumnInfo(name = "classification_inference_time") val classificationInferenceTimeMs: Long,
     @ColumnInfo(name = "note") val note: String,
     @ColumnInfo(name = "number_diseases_identified") val numberDiseasesIdentified: Int,
-    @ColumnInfo(name = "leaf_box_coordinates") val listLeafBoxCoordinates: List<BoundingBox>,
-    @ColumnInfo(name = "classifications") val classifications: List<Classification>,
+    @ColumnInfo(name = "leaf_box_coordinates") val listLeafBoxCoordinates: List<BoundingBoxData>,
+    @ColumnInfo(name = "classifications") val classificationData: List<ClassificationData>,
 )

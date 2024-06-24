@@ -8,7 +8,7 @@ import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.vanskarner.analysistracking.BoundingBox
+import com.vanskarner.analysistracking.BoundingBoxData
 import com.vanskarner.tomatecare.R
 
 /**
@@ -16,7 +16,7 @@ import com.vanskarner.tomatecare.R
  */
 class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
-    private var results = listOf<BoundingBox>()
+    private var results = listOf<BoundingBoxData>()
     private var boxPaint = Paint()
     private var textBackgroundPaint = Paint()
     private var textPaint = Paint()
@@ -77,8 +77,8 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
         }
     }
 
-    fun setResults(boundingBoxes: List<BoundingBox>) {
-        results = boundingBoxes
+    fun setResults(boundingBoxData: List<BoundingBoxData>) {
+        results = boundingBoxData
         invalidate()
     }
 

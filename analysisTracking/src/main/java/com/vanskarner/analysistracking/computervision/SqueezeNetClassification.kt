@@ -2,7 +2,7 @@ package com.vanskarner.analysistracking.computervision
 
 import android.content.Context
 import android.graphics.Bitmap
-import com.vanskarner.analysistracking.Classification
+import com.vanskarner.analysistracking.ClassificationData
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.support.common.FileUtil
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
@@ -14,7 +14,7 @@ internal fun useSqueezeNetMish(
     context: Context,
     imgBitmap: Bitmap,
     options: Interpreter.Options
-): Result<Pair<Long, Classification>> {
+): Result<Pair<Long, ClassificationData>> {
     try {
         val outputTensor = getOutputTensor(1)
         val timeInMillis = measureTimeMillis {
@@ -34,7 +34,7 @@ internal fun useSqueezeNetMish(
     context: Context,
     imgList: List<Bitmap>,
     options: Interpreter.Options
-): Result<Pair<Long, List<Classification>>> {
+): Result<Pair<Long, List<ClassificationData>>> {
     try {
         val outputTensor = getOutputTensor(imgList.size)
         val timeInMillis = measureTimeMillis {
@@ -87,14 +87,14 @@ private fun getOutputTensor(batchSize: Int): TensorBuffer {
     return TensorBufferFloat.createFixedSize(outputShape, CLASSIFICATION_OUTPUT_IMAGE_TYPE)
 }
 
-private fun createClassification(predictions: FloatArray): Classification {
+private fun createClassification(predictions: FloatArray): ClassificationData {
     val labeledPredictions = pairsLabelPrediction(predictions)
     val bestPrediction = getTopPrediction(labeledPredictions)
     val isHealthy = bestPrediction.first == CLASSIFICATION_CLASSES[2]
     return if (isHealthy)
-        Classification.healthy(
+        ClassificationData.healthy(
             bestPrediction,
             labeledPredictions
         )
-    else Classification.sick(bestPrediction, labeledPredictions)
+    else ClassificationData.sick(bestPrediction, labeledPredictions)
 }

@@ -13,7 +13,7 @@ import org.junit.Test
 import org.tensorflow.lite.Interpreter
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class MobileNetV3LargeClassificationTest {
+class MobileNetV3LargeClassificationDataTest {
 
     companion object {
         private lateinit var appContext: Context

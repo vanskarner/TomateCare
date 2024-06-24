@@ -2,7 +2,7 @@ package com.vanskarner.analysistracking.computervision
 
 import android.content.Context
 import android.graphics.Bitmap
-import com.vanskarner.analysistracking.BoundingBox
+import com.vanskarner.analysistracking.BoundingBoxData
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.support.common.FileUtil
@@ -27,7 +27,7 @@ internal fun useYoloV8LeafDetection(
     context: Context,
     imgBitmap: Bitmap,
     options: Interpreter.Options
-): Pair<Long, List<BoundingBox>> {
+): Pair<Long, List<BoundingBoxData>> {
     val model = FileUtil.loadMappedFile(context, "Leaf_Detection-YoloV8_float16.tflite")
     val interpreter = Interpreter(model, options)
     val outputTensor = getOutputTensor(interpreter)

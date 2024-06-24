@@ -1,7 +1,7 @@
 package com.vanskarner.analysistracking.computervision
 
 import android.graphics.Bitmap
-import com.vanskarner.analysistracking.BoundingBox
+import com.vanskarner.analysistracking.BoundingBoxData
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import kotlin.math.exp
@@ -99,8 +99,8 @@ internal fun createBoundingBoxes(
     confidenceThreshold: Float,
     iouThreshold: Float,
     classNames: List<String>
-): List<BoundingBox> {
-    val boundingBoxes = mutableListOf<BoundingBox>()
+): List<BoundingBoxData> {
+    val boundingBoxData = mutableListOf<BoundingBoxData>()
     for (c in 0 until numElements) {
         var maxConf = confidenceThreshold
         var maxIdx = -1
@@ -121,25 +121,25 @@ internal fun createBoundingBoxes(
             val x2 = cx + w / 2
             val y2 = cy + h / 2
             if (x1 in 0f..1f && y1 in 0f..1f && x2 in 0f..1f && y2 in 0f..1f) {
-                val item = BoundingBox(
+                val item = BoundingBoxData(
                     x1 = x1, y1 = y1, x2 = x2, y2 = y2,
                     cx = cx, cy = cy, w = w, h = h,
                     cnf = maxConf, cls = maxIdx, clsName = classNames[maxIdx]
                 )
-                boundingBoxes.add(item)
+                boundingBoxData.add(item)
             }
         }
     }
-    return if (boundingBoxes.isEmpty()) emptyList() else applyNMS(boundingBoxes, iouThreshold)
+    return if (boundingBoxData.isEmpty()) emptyList() else applyNMS(boundingBoxData, iouThreshold)
 }
 
 /**
  * Function for object detection, this function filters out overlapping boxes
  * to keep only the most reliable and non-redundant ones
  */
-private fun applyNMS(boxes: List<BoundingBox>, iouThreshold: Float): List<BoundingBox> {
+private fun applyNMS(boxes: List<BoundingBoxData>, iouThreshold: Float): List<BoundingBoxData> {
     val sortedBoxes = boxes.sortedByDescending { it.cnf }.toMutableList()
-    val selectedBoxes = mutableListOf<BoundingBox>()
+    val selectedBoxes = mutableListOf<BoundingBoxData>()
     while (sortedBoxes.isNotEmpty()) {
         val first = sortedBoxes.first()
         selectedBoxes.add(first)
@@ -160,7 +160,7 @@ private fun applyNMS(boxes: List<BoundingBox>, iouThreshold: Float): List<Boundi
  * Function for object detection, calculate the Intersection over Union (IoU)
  * between two bounding boxes
  */
-private fun calculateIoU(box1: BoundingBox, box2: BoundingBox): Float {
+private fun calculateIoU(box1: BoundingBoxData, box2: BoundingBoxData): Float {
     val x1 = maxOf(box1.x1, box2.x1)
     val y1 = maxOf(box1.y1, box2.y1)
     val x2 = minOf(box1.x2, box2.x2)

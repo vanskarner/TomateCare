@@ -10,7 +10,7 @@ internal fun AnalysisDetailData.toEntity() = ActivityLogEntity(
     note = note,
     numberDiseasesIdentified = numberDiseasesIdentified,
     listLeafBoxCoordinates = listLeafBoxCoordinates,
-    classifications = classifications
+    classificationData = classificationData
 )
 
 internal fun ActivityLogEntity.toData() = AnalysisDetailData(
@@ -22,5 +22,5 @@ internal fun ActivityLogEntity.toData() = AnalysisDetailData(
     note,
     numberDiseasesIdentified,
     listLeafBoxCoordinates,
-    classifications
+    classificationData
 )

@@ -4,8 +4,8 @@ import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.vanskarner.analysistracking.BoundingBox
-import com.vanskarner.analysistracking.Classification
+import com.vanskarner.analysistracking.BoundingBoxData
+import com.vanskarner.analysistracking.ClassificationData
 import com.vanskarner.analysistracking.LeafState
 import java.util.Date
 
@@ -24,16 +24,16 @@ class Converters {
 @ProvidedTypeConverter
 class BoundingBoxesConverter {
     @TypeConverter
-    fun fromBoundingBoxList(identifications: List<BoundingBox>): String {
+    fun fromBoundingBoxList(identifications: List<BoundingBoxData>): String {
         val gson = Gson()
-        val type = object : TypeToken<List<BoundingBox>>() {}.type
+        val type = object : TypeToken<List<BoundingBoxData>>() {}.type
         return gson.toJson(identifications, type)
     }
 
     @TypeConverter
-    fun toBoundingBoxList(data: String): List<BoundingBox> {
+    fun toBoundingBoxList(data: String): List<BoundingBoxData> {
         val gson = Gson()
-        val type = object : TypeToken<List<BoundingBox>>() {}.type
+        val type = object : TypeToken<List<BoundingBoxData>>() {}.type
         return gson.fromJson(data, type)
     }
 }
@@ -41,16 +41,16 @@ class BoundingBoxesConverter {
 @ProvidedTypeConverter
 class ClassificationsConverter {
     @TypeConverter
-    fun fromClassificationList(classifications: List<Classification>): String {
+    fun fromClassificationList(classificationData: List<ClassificationData>): String {
         val gson = Gson()
-        val type = object : TypeToken<List<Classification>>() {}.type
-        return gson.toJson(classifications, type)
+        val type = object : TypeToken<List<ClassificationData>>() {}.type
+        return gson.toJson(classificationData, type)
     }
 
     @TypeConverter
-    fun toClassificationList(data: String): List<Classification> {
+    fun toClassificationList(data: String): List<ClassificationData> {
         val gson = Gson()
-        val type = object : TypeToken<List<Classification>>() {}.type
+        val type = object : TypeToken<List<ClassificationData>>() {}.type
         return gson.fromJson(data, type)
     }
 

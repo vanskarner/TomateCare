@@ -6,8 +6,8 @@ import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.vanskarner.analysistracking.AnalysisDetailData
 import com.vanskarner.analysistracking.AnalysisError
-import com.vanskarner.analysistracking.BoundingBox
-import com.vanskarner.analysistracking.Classification
+import com.vanskarner.analysistracking.BoundingBoxData
+import com.vanskarner.analysistracking.ClassificationData
 import com.vanskarner.analysistracking.LeafState
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -59,8 +59,8 @@ class LocalRepositoryTest {
             actualItem.listLeafBoxCoordinates.size
         )
         assertEquals(expectedItem.listLeafBoxCoordinates[0], actualItem.listLeafBoxCoordinates[0])
-        assertEquals(expectedItem.classifications.size, actualItem.classifications.size)
-        assertEquals(expectedItem.classifications[0], actualItem.classifications[0])
+        assertEquals(expectedItem.classificationData.size, actualItem.classificationData.size)
+        assertEquals(expectedItem.classificationData[0], actualItem.classificationData[0])
     }
 
     @Test
@@ -147,7 +147,7 @@ class LocalRepositoryTest {
             2500,
             "A note",
             3, listOf(
-                BoundingBox(
+                BoundingBoxData(
                     0.00333f,
                     0.00333f,
                     0.00333f,
@@ -161,7 +161,7 @@ class LocalRepositoryTest {
                     "leaf"
                 )
             ), listOf(
-                Classification(
+                ClassificationData(
                     LeafState.Sick,
                     Pair("bacterial_spot", 0.95f),
                     listOf(

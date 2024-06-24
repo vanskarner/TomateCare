@@ -9,6 +9,7 @@ import com.vanskarner.tomatecare.ui.CustomNavigationBottomNav
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -28,7 +29,7 @@ object MainActivityModule {
 
     @Provides
     @Singleton
-    fun provideDB(context: Context): AppRoomDB {
+    fun provideDB(@ApplicationContext context: Context): AppRoomDB {
         return Room.databaseBuilder(context, AppRoomDB::class.java, "TomateCareDB")
             .addTypeConverter(BoundingBoxesConverter())
             .addTypeConverter(ClassificationsConverter())

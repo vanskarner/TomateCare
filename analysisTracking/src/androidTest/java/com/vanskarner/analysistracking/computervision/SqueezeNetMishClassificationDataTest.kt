@@ -13,7 +13,7 @@ import org.junit.Test
 import org.tensorflow.lite.Interpreter
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class MobileNetV3SmallClassificationTest {
+class SqueezeNetMishClassificationDataTest {
 
     companion object {
         private lateinit var appContext: Context
@@ -33,7 +33,7 @@ class MobileNetV3SmallClassificationTest {
     @Test
     fun predictionUsingInterpreterWithBacterialSpot() = runTest {
         val image = loadImage("bacterial_spot.jpg")
-        val predictionResult = useMobilenetV3Small(
+        val predictionResult = useSqueezeNetMish(
             appContext, image,
             interpreterOptions
         )
@@ -56,7 +56,7 @@ class MobileNetV3SmallClassificationTest {
     fun predictionUsingInterpreterWithEarlyBlight() = runTest {
         val image = loadImage("early_blight.jpg")
         val predictionResult =
-            useMobilenetV3Small(appContext, image, interpreterOptions)
+            useSqueezeNetMish(appContext, image, interpreterOptions)
         val result = predictionResult.getOrThrow()
         val inferenceTime = result.first
         val classification = result.second
@@ -76,7 +76,7 @@ class MobileNetV3SmallClassificationTest {
     fun predictionUsingInterpreterWithHealthy() = runTest {
         val image = loadImage("healthy.jpg")
         val predictionResult =
-            useMobilenetV3Small(appContext, image, interpreterOptions)
+            useSqueezeNetMish(appContext, image, interpreterOptions)
         val result = predictionResult.getOrThrow()
         val inferenceTime = result.first
         val classification = result.second
@@ -96,7 +96,7 @@ class MobileNetV3SmallClassificationTest {
     fun predictionUsingInterpreterWithLateBlight() = runTest {
         val image = loadImage("late_blight.jpg")
         val predictionResult =
-            useMobilenetV3Small(appContext, image, interpreterOptions)
+            useSqueezeNetMish(appContext, image, interpreterOptions)
         val result = predictionResult.getOrThrow()
         val inferenceTime = result.first
         val classification = result.second
@@ -116,7 +116,7 @@ class MobileNetV3SmallClassificationTest {
     fun predictionUsingInterpreterWithLeafMold() = runTest {
         val image = loadImage("leaf_mold.jpg")
         val predictionResult =
-            useMobilenetV3Small(appContext, image, interpreterOptions)
+            useSqueezeNetMish(appContext, image, interpreterOptions)
         val result = predictionResult.getOrThrow()
         val inferenceTime = result.first
         val classification = result.second
@@ -136,7 +136,7 @@ class MobileNetV3SmallClassificationTest {
     fun predictionUsingInterpreterWithMosaicVirus() = runTest {
         val image = loadImage("mosaic_virus.jpg")
         val predictionResult =
-            useMobilenetV3Small(appContext, image, interpreterOptions)
+            useSqueezeNetMish(appContext, image, interpreterOptions)
         val result = predictionResult.getOrThrow()
         val inferenceTime = result.first
         val classification = result.second
@@ -156,7 +156,7 @@ class MobileNetV3SmallClassificationTest {
     fun predictionUsingInterpreterWithSeptoriaLeafSpot() = runTest {
         val image = loadImage("septoria_leaf_spot.jpg")
         val predictionResult =
-            useMobilenetV3Small(appContext, image, interpreterOptions)
+            useSqueezeNetMish(appContext, image, interpreterOptions)
         val result = predictionResult.getOrThrow()
         val inferenceTime = result.first
         val classification = result.second
@@ -176,7 +176,7 @@ class MobileNetV3SmallClassificationTest {
     fun predictionUsingInterpreterWithTargetSpot() = runTest {
         val image = loadImage("target_spot.jpg")
         val predictionResult =
-            useMobilenetV3Small(appContext, image, interpreterOptions)
+            useSqueezeNetMish(appContext, image, interpreterOptions)
         val result = predictionResult.getOrThrow()
         val inferenceTime = result.first
         val classification = result.second
@@ -196,7 +196,7 @@ class MobileNetV3SmallClassificationTest {
     fun predictionUsingInterpreterWithTwoSpottedSpiderMite() = runTest {
         val image = loadImage("twospotted_spider_mite.jpg")
         val predictionResult =
-            useMobilenetV3Small(appContext, image, interpreterOptions)
+            useSqueezeNetMish(appContext, image, interpreterOptions)
         val result = predictionResult.getOrThrow()
         val inferenceTime = result.first
         val classification = result.second
@@ -216,7 +216,7 @@ class MobileNetV3SmallClassificationTest {
     fun predictionUsingInterpreterWithYellowLeafCurlVirus() = runTest {
         val image = loadImage("yellow_leaf_curl_virus.jpg")
         val predictionResult =
-            useMobilenetV3Small(appContext, image, interpreterOptions)
+            useSqueezeNetMish(appContext, image, interpreterOptions)
         val result = predictionResult.getOrThrow()
         val inferenceTime = result.first
         val classification = result.second
@@ -246,7 +246,7 @@ class MobileNetV3SmallClassificationTest {
             loadImage("twospotted_spider_mite.jpg"),
             loadImage("yellow_leaf_curl_virus.jpg")
         )
-        val result = useMobilenetV3Small(appContext, imgList, interpreterOptions).getOrThrow()
+        val result = useSqueezeNetMish(appContext, imgList, interpreterOptions).getOrThrow()
         val inferenceTime = result.first
         val predictionResults = result.second
 
