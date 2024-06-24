@@ -1,6 +1,8 @@
 package com.vanskarner.analysistracking.bussineslogic
 
+import com.vanskarner.analysistracking.AnalysisError
 import com.vanskarner.analysistracking.ConfigData
+import com.vanskarner.analysistracking.SetConfigData
 
 internal class GetAnalysisTrackingUseCases(private val repository: Repository) {
 
@@ -21,10 +23,28 @@ internal class GetConfigUseCase {
         )
     }
 
-    fun execute(): Result<ConfigData> {
+    fun execute(): ConfigData {
         val maxThreads = Runtime.getRuntime().availableProcessors()
-        val config = ConfigData(MAX_RESULTS, maxThreads, PROCESSING_LIST, MODEL_LIST)
-        return Result.success(config)
+        return ConfigData(MAX_RESULTS, maxThreads, PROCESSING_LIST, MODEL_LIST)
+    }
+
+}
+
+internal class ValidateConfigUseCase {
+
+    fun execute(setConfigData: SetConfigData): Result<SetConfigData> {
+        val configParams = GetConfigUseCase().execute()
+        val isValidNumberResults = setConfigData.numberResults in 1..configParams.maxResults
+        val isValidNumberThreads = setConfigData.numberThreads in 1..configParams.maxThreads
+        val isValidProcessing = configParams.processingList
+            .map { it.lowercase() }
+            .contains(setConfigData.processing.lowercase())
+        val isValidModel = configParams.modelList
+            .map { it.lowercase() }
+            .contains(setConfigData.model.lowercase())
+        return if (isValidNumberResults && isValidNumberThreads && isValidProcessing && isValidModel)
+            Result.success(setConfigData)
+        else Result.failure(AnalysisError.InvalidConfig)
     }
 
 }

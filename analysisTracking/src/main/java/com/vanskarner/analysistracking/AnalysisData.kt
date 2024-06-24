@@ -66,7 +66,7 @@ data class AnalysisDetailData(
 )
 
 data class SetConfigData(
-    val maximumResults: Int,
+    val numberResults: Int,
     val numberThreads: Int,
     val processing: String,
     val model: String
