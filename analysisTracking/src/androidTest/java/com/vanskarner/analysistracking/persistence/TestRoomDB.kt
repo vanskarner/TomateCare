@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 @Database(entities = [ActivityLogEntity::class], version = 1, exportSchema = false)
-@TypeConverters(Converters::class)
-abstract class TestRoomDB : RoomDatabase() {
+@TypeConverters(value = [Converters::class, BoundingBoxesConverter::class, ClassificationsConverter::class])
+internal abstract class TestRoomDB : RoomDatabase() {
     abstract fun activityLogDao(): ActivityLogDao
 }

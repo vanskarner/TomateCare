@@ -4,6 +4,7 @@ import com.vanskarner.analysistracking.AnalysisTrackingComponent
 import com.vanskarner.analysistracking.DefaultAnalysisTrackingComponent
 import com.vanskarner.analysistracking.bussineslogic.GetAnalysisTrackingUseCases
 import com.vanskarner.analysistracking.bussineslogic.Repository
+import com.vanskarner.analysistracking.persistence.ActivityLogDao
 import com.vanskarner.analysistracking.persistence.DefaultRepository
 import dagger.Module
 import dagger.Provides
@@ -21,8 +22,8 @@ internal object AnalysisTrackingModule {
     }
 
     @Provides
-    fun providesRepository(): Repository {
-        return DefaultRepository()
+    fun providesRepository(activityLogDao: ActivityLogDao): Repository {
+        return DefaultRepository(activityLogDao)
     }
 
     @Provides
