@@ -25,11 +25,12 @@ data class ClassificationData(
             ClassificationData(
                 LeafState.Sick,
                 bestPrediction,
-                predictions)
+                predictions
+            )
     }
 }
 
-data class BoundingBoxData (
+data class BoundingBoxData(
     val x1: Float,
     val y1: Float,
     val x2: Float,
@@ -62,6 +63,20 @@ data class AnalysisDetailData(
     val numberDiseasesIdentified: Int,
     val listLeafBoxCoordinates: List<BoundingBoxData>,
     val classificationData: List<ClassificationData>,
+)
+
+data class SetConfigData(
+    val maximumResults: Int,
+    val numberThreads: Int,
+    val processing: String,
+    val model: String
+)
+
+data class ConfigData(
+    val maxResults: Int,
+    val maxThreads: Int,
+    val processingList: List<String>,
+    val modelList: List<String>
 )
 
 enum class LeafState {
