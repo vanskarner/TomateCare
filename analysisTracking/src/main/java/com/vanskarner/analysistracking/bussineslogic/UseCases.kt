@@ -8,10 +8,9 @@ internal class GetAnalysisTrackingUseCases(private val repository: Repository) {
 
 }
 
-internal class GetConfigParams() {
+internal class GetConfigUseCase {
     companion object {
         private const val MAX_RESULTS = 8
-        private const val MAX_THREADS = 8
         private val PROCESSING_LIST = listOf("CPU", "GPU")
         private val MODEL_LIST = listOf(
             "MobileNetV3Small",
@@ -22,10 +21,10 @@ internal class GetConfigParams() {
         )
     }
 
-    fun execute() {
-        val config = ConfigData(
-            MAX_RESULTS, MAX_THREADS, listOf(), listOf()
-        )
+    fun execute(): Result<ConfigData> {
+        val maxThreads = Runtime.getRuntime().availableProcessors()
+        val config = ConfigData(MAX_RESULTS, maxThreads, PROCESSING_LIST, MODEL_LIST)
+        return Result.success(config)
     }
 
 }
