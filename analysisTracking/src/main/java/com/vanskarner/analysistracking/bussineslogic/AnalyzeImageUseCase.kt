@@ -4,6 +4,7 @@ import com.vanskarner.analysistracking.AnalysisDetailData
 import com.vanskarner.analysistracking.AnalysisError
 import com.vanskarner.analysistracking.BoundingBoxData
 import com.vanskarner.analysistracking.ClassificationData
+import com.vanskarner.analysistracking.LeafState
 import com.vanskarner.analysistracking.SetConfigData
 import java.util.Date
 
@@ -23,9 +24,13 @@ internal class AnalyzeImageUseCase(
                 getClassifications(imgPath, boundingBoxes, configData).getOrThrow()
             val classificationInferenceTime = classificationResults.first
             val classifications = classificationResults.second
-            val numberDiseasesIdentified = classifications
-                .map { it.bestPrediction.first }
-                .distinct().size
+            val haveAnyDisease = classifications.any { it.leafState == LeafState.Sick }
+            var numberDiseasesIdentified = 0
+            if (haveAnyDisease) {
+                numberDiseasesIdentified = classifications
+                    .map { it.bestPrediction.first }
+                    .distinct().size
+            }
             val analysisData = AnalysisDetailData(
                 imagePath = imgPath,
                 date = Date(),

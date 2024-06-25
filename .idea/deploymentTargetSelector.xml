@@ -8,9 +8,6 @@
       <SelectionState runConfigName="Tests in 'com.vanskarner.analysistracking'">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="Tests in 'com.vanskarner.analysistracking.persistence'">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="LocalRepositoryTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>

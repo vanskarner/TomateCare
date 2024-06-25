@@ -19,14 +19,16 @@ class AnalyzeImageUseCaseTest {
     private val expectedPredictions = createPredictions()
     private val expectedClassifications = createClassifications(expectedPredictions)
     private val expectedDetections = createDetections()
-    private val expectedAnalysis = createAnalysisData(expectedPredictions)
 
     @Before
     fun setup() {
         fakeDiseaseClassification =
             FakeDiseaseClassification(expectedDetections, expectedClassifications)
         fakeRepository =
-            FakeRepository(expectedAnalysis, listOf(expectedAnalysis))
+            FakeRepository(
+                createAnalysisData(expectedPredictions),
+                listOf(createAnalysisData(expectedPredictions))
+            )
     }
 
     @Test
@@ -112,13 +114,73 @@ class AnalyzeImageUseCaseTest {
             expectedPredictions,
             analysisDetailData.classificationData[1].predictions
         )
-        assertEquals(expectedAnalysis.leafDetectionModel, analysisDetailData.leafDetectionModel)
+        assertEquals("YoloV8", analysisDetailData.leafDetectionModel)
         assertEquals(
-            expectedAnalysis.leafClassificationModel,
+            validConfigData.model,
             analysisDetailData.leafClassificationModel
         )
-        assertEquals(expectedAnalysis.threadsUsed, analysisDetailData.threadsUsed)
-        assertEquals(expectedAnalysis.processing, analysisDetailData.processing)
+        assertEquals(validConfigData.numberThreads.toString(), analysisDetailData.threadsUsed)
+        assertEquals(validConfigData.processing, analysisDetailData.processing)
+    }
+
+    @Test
+    fun `AnalyzeImageUseCase all healthy savedAnalysis`() = runTest {
+        val validConfigData = SetConfigData(
+            numberResults = 4,
+            numberThreads = 4,
+            processing = "CPU",
+            model = "MobileNetV2",
+        )
+        val inferenceTime = 2000L
+        val bestPrediction = Pair("healthy", 0.95f)
+        val classifications = listOf(
+            ClassificationData(LeafState.Healthy, bestPrediction, expectedPredictions),
+            ClassificationData(LeafState.Healthy, bestPrediction, expectedPredictions)
+        )
+        val expectedClassifications = Pair(inferenceTime, classifications)
+        val fakeDiseaseClassification = FakeDiseaseClassification(expectedDetections, expectedClassifications)
+        val useCase =
+            AnalyzeImageUseCase(fakeDiseaseClassification, fakeRepository)
+        val expectedPath =
+            "/Android/data/com.vanskarner.tomatecare/files/Pictures/Plant_7809504466231131920.jpg"
+        val analysisDetailData = useCase.execute(expectedPath, validConfigData).getOrThrow()
+
+        assertEquals(1, analysisDetailData.id)
+        assertEquals(expectedPath, analysisDetailData.imagePath)
+        assertEquals(expectedDetections.first, analysisDetailData.detectionInferenceTimeMs)
+        assertEquals(
+            expectedClassifications.first,
+            analysisDetailData.classificationInferenceTimeMs
+        )
+        assertEquals("", analysisDetailData.note)
+        assertEquals(
+            0,
+            analysisDetailData.numberDiseasesIdentified
+        )
+        assertEquals(expectedDetections.second.size, analysisDetailData.listLeafBoxCoordinates.size)
+        assertEquals(
+            expectedClassifications.second.size,
+            analysisDetailData.classificationData.size
+        )
+        assertEquals(
+            expectedClassifications.second,
+            analysisDetailData.classificationData
+        )
+        assertEquals(
+            expectedPredictions,
+            analysisDetailData.classificationData[0].predictions
+        )
+        assertEquals(
+            expectedPredictions,
+            analysisDetailData.classificationData[1].predictions
+        )
+        assertEquals("YoloV8", analysisDetailData.leafDetectionModel)
+        assertEquals(
+            validConfigData.model,
+            analysisDetailData.leafClassificationModel
+        )
+        assertEquals(validConfigData.numberThreads.toString(), analysisDetailData.threadsUsed)
+        assertEquals(validConfigData.processing, analysisDetailData.processing)
     }
 
     private fun createDetections(): Pair<Long, List<BoundingBoxData>> {
