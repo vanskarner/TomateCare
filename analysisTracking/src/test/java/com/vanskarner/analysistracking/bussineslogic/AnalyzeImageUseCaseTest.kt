@@ -14,7 +14,7 @@ import org.junit.Test
 import java.util.Date
 
 class AnalyzeImageUseCaseTest {
-    private lateinit var fakeDiseaseClassification: DiseaseClassification
+    private lateinit var fakeComputerVision: ComputerVision
     private lateinit var fakeRepository: Repository
     private val expectedPredictions = createPredictions()
     private val expectedClassifications = createClassifications(expectedPredictions)
@@ -22,8 +22,8 @@ class AnalyzeImageUseCaseTest {
 
     @Before
     fun setup() {
-        fakeDiseaseClassification =
-            FakeDiseaseClassification(expectedDetections, expectedClassifications)
+        fakeComputerVision =
+            FakeComputerVision(expectedDetections, expectedClassifications)
         fakeRepository =
             FakeRepository(
                 createAnalysisData(expectedPredictions),
@@ -34,7 +34,7 @@ class AnalyzeImageUseCaseTest {
     @Test
     fun `AnalyzeImageUseCase with invalidConfig return InvalidConfigError`() = runTest {
         val useCase =
-            AnalyzeImageUseCase(fakeDiseaseClassification, fakeRepository)
+            AnalyzeImageUseCase(fakeComputerVision, fakeRepository)
         val invalidConfigData = SetConfigData(
             numberResults = 0,
             numberThreads = 0,
@@ -54,7 +54,7 @@ class AnalyzeImageUseCaseTest {
         val emptyDetections = Pair(2000L, emptyList<BoundingBoxData>())
         val emptyClassifications = Pair(2000L, emptyList<ClassificationData>())
         val emptyDiseaseClassification =
-            FakeDiseaseClassification(emptyDetections, emptyClassifications)
+            FakeComputerVision(emptyDetections, emptyClassifications)
         val useCase =
             AnalyzeImageUseCase(emptyDiseaseClassification, fakeRepository)
         val invalidConfigData = SetConfigData(
@@ -80,7 +80,7 @@ class AnalyzeImageUseCaseTest {
             model = "MobileNetV2",
         )
         val useCase =
-            AnalyzeImageUseCase(fakeDiseaseClassification, fakeRepository)
+            AnalyzeImageUseCase(fakeComputerVision, fakeRepository)
         val expectedPath =
             "/Android/data/com.vanskarner.tomatecare/files/Pictures/Plant_7809504466231131920.jpg"
         val analysisDetailData = useCase.execute(expectedPath, validConfigData).getOrThrow()
@@ -138,7 +138,7 @@ class AnalyzeImageUseCaseTest {
             ClassificationData(LeafState.Healthy, bestPrediction, expectedPredictions)
         )
         val expectedClassifications = Pair(inferenceTime, classifications)
-        val fakeDiseaseClassification = FakeDiseaseClassification(expectedDetections, expectedClassifications)
+        val fakeDiseaseClassification = FakeComputerVision(expectedDetections, expectedClassifications)
         val useCase =
             AnalyzeImageUseCase(fakeDiseaseClassification, fakeRepository)
         val expectedPath =

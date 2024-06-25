@@ -2,16 +2,11 @@ package com.vanskarner.analysistracking.bussineslogic
 
 import com.vanskarner.analysistracking.BoundingBoxData
 import com.vanskarner.analysistracking.ClassificationData
-import java.nio.ByteBuffer
 
-class FakeDiseaseClassification(
+class FakeComputerVision(
     private val detections: Pair<Long, List<BoundingBoxData>>,
     private val classification: Pair<Long, List<ClassificationData>>,
-) : DiseaseClassification {
-
-    override suspend fun predict(byteBuffer: ByteBuffer): Result<ClassificationData> {
-        TODO("Not yet implemented")
-    }
+) : ComputerVision {
 
     override suspend fun detectLeaves(imgPath: String): Pair<Long, List<BoundingBoxData>> {
         return detections

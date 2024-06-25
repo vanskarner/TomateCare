@@ -9,14 +9,14 @@ import com.vanskarner.analysistracking.SetConfigData
 import java.util.Date
 
 internal class AnalyzeImageUseCase(
-    private val diseaseClassification: DiseaseClassification,
+    private val computerVision: ComputerVision,
     private val repository: Repository
 ) {
 
     suspend fun execute(imgPath: String, configData: SetConfigData): Result<AnalysisDetailData> =
         runCatching {
             ValidateConfigUseCase().execute(configData).getOrThrow()
-            val leafDetections = diseaseClassification.detectLeaves(imgPath)
+            val leafDetections = computerVision.detectLeaves(imgPath)
             val detectionInferenceTime = leafDetections.first
             val boundingBoxes = leafDetections.second
             if (boundingBoxes.isEmpty()) return Result.failure(AnalysisError.NoLeaves)
@@ -56,7 +56,7 @@ internal class AnalyzeImageUseCase(
         val useGPU = config.processing == "GPU"
         return when (config.model) {
             "MobileNetV3Small" -> {
-                diseaseClassification.classifyLeavesWithMobileNetV3Small(
+                computerVision.classifyLeavesWithMobileNetV3Small(
                     imgPath,
                     boundingBoxes,
                     useGPU,
@@ -65,7 +65,7 @@ internal class AnalyzeImageUseCase(
             }
 
             "MobileNetV3Large" -> {
-                diseaseClassification.classifyLeavesWithMobileNetV3Large(
+                computerVision.classifyLeavesWithMobileNetV3Large(
                     imgPath,
                     boundingBoxes,
                     useGPU,
@@ -74,7 +74,7 @@ internal class AnalyzeImageUseCase(
             }
 
             "MobileNetV2" -> {
-                diseaseClassification.classifyLeavesWithMobileNetV2(
+                computerVision.classifyLeavesWithMobileNetV2(
                     imgPath,
                     boundingBoxes,
                     useGPU,
@@ -83,7 +83,7 @@ internal class AnalyzeImageUseCase(
             }
 
             "SqueezeNetMish" -> {
-                diseaseClassification.classifyLeavesWithSqueezeNetMish(
+                computerVision.classifyLeavesWithSqueezeNetMish(
                     imgPath,
                     boundingBoxes,
                     useGPU,
@@ -92,7 +92,7 @@ internal class AnalyzeImageUseCase(
             }
 
             "NASNetMobile" -> {
-                diseaseClassification.classifyLeavesWithNASNetMobile(
+                computerVision.classifyLeavesWithNASNetMobile(
                     imgPath,
                     boundingBoxes,
                     useGPU,
@@ -101,7 +101,7 @@ internal class AnalyzeImageUseCase(
             }
 
             else -> {
-                diseaseClassification.classifyLeavesWithMobileNetV3Small(
+                computerVision.classifyLeavesWithMobileNetV3Small(
                     imgPath,
                     boundingBoxes,
                     useGPU,

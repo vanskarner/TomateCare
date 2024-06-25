@@ -8,15 +8,10 @@ import android.graphics.Canvas
 import android.graphics.Rect
 import com.vanskarner.analysistracking.BoundingBoxData
 import com.vanskarner.analysistracking.ClassificationData
-import com.vanskarner.analysistracking.bussineslogic.DiseaseClassification
+import com.vanskarner.analysistracking.bussineslogic.ComputerVision
 import org.tensorflow.lite.Interpreter
-import java.nio.ByteBuffer
 
-class DefaultDiseaseClassification(private val context: Context) : DiseaseClassification {
-
-    override suspend fun predict(byteBuffer: ByteBuffer): Result<ClassificationData> {
-        TODO()
-    }
+class DefaultComputerVision(private val context: Context) : ComputerVision {
 
     override suspend fun detectLeaves(imgPath: String): Pair<Long, List<BoundingBoxData>> {
         val imgBitmap = BitmapFactory.decodeFile(imgPath)
