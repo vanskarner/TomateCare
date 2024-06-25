@@ -18,12 +18,57 @@ class DefaultDiseaseClassification(private val context: Context) : DiseaseClassi
         TODO()
     }
 
-    override suspend fun analyze(imgPath: String): Pair<Long, List<BoundingBoxData>> {
+    override suspend fun detectLeaves(imgPath: String): Pair<Long, List<BoundingBoxData>> {
         val imgBitmap = BitmapFactory.decodeFile(imgPath)
         val options = Interpreter
             .Options()
             .setNumThreads(4)
         return useYoloV8LeafDetection(context, imgBitmap, options)
+    }
+
+    override suspend fun classifyLeavesWithMobileNetV3Small(
+        imgPath: String,
+        list: List<BoundingBoxData>,
+        useGPU: Boolean,
+        numberThreads: Int
+    ): Result<Pair<Long, List<ClassificationData>>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun classifyLeavesWithMobileNetV3Large(
+        imgPath: String,
+        list: List<BoundingBoxData>,
+        useGPU: Boolean,
+        numberThreads: Int
+    ): Result<Pair<Long, List<ClassificationData>>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun classifyLeavesWithMobileNetV2(
+        imgPath: String,
+        list: List<BoundingBoxData>,
+        useGPU: Boolean,
+        numberThreads: Int
+    ): Result<Pair<Long, List<ClassificationData>>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun classifyLeavesWithSqueezeNetMish(
+        imgPath: String,
+        list: List<BoundingBoxData>,
+        useGPU: Boolean,
+        numberThreads: Int
+    ): Result<Pair<Long, List<ClassificationData>>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun classifyLeavesWithNASNetMobile(
+        imgPath: String,
+        list: List<BoundingBoxData>,
+        useGPU: Boolean,
+        numberThreads: Int
+    ): Result<Pair<Long, List<ClassificationData>>> {
+        TODO("Not yet implemented")
     }
 
     fun classifyLeaf(

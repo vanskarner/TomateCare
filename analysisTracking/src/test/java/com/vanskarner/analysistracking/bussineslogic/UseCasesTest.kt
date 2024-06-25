@@ -2,6 +2,7 @@ package com.vanskarner.analysistracking.bussineslogic
 
 import com.vanskarner.analysistracking.AnalysisError
 import com.vanskarner.analysistracking.SetConfigData
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -22,15 +23,39 @@ class UseCasesTest {
     @Test
     fun `ValidateConfigUseCase with invalidConfig return InvalidConfigError`() {
         val useCase = ValidateConfigUseCase()
-        val invalidConfigData = SetConfigData(
+        val invalidNumberResults = SetConfigData(
             numberResults = 0,
+            numberThreads = 4,
+            processing = "gpu",
+            model = "mobileNetV2",
+        )
+        val invalidNumberThreads = SetConfigData(
+            numberResults = 4,
             numberThreads = 0,
+            processing = "gpu",
+            model = "mobileNetV2",
+        )
+        val invalidProcessing = SetConfigData(
+            numberResults = 4,
+            numberThreads = 4,
             processing = "unknown",
+            model = "mobileNetV2",
+        )
+        val invalidModel = SetConfigData(
+            numberResults = 4,
+            numberThreads = 4,
+            processing = "gpu",
             model = "unknown",
         )
-        val actualConfig = useCase.execute(invalidConfigData).exceptionOrNull()
+        val exception1 = useCase.execute(invalidNumberResults).exceptionOrNull()
+        val exception2 = useCase.execute(invalidNumberThreads).exceptionOrNull()
+        val exception3 = useCase.execute(invalidProcessing).exceptionOrNull()
+        val exception4 = useCase.execute(invalidModel).exceptionOrNull()
 
-        assertTrue(actualConfig is AnalysisError.InvalidConfig)
+        assertTrue(exception1 is AnalysisError.InvalidConfig)
+        assertTrue(exception2 is AnalysisError.InvalidConfig)
+        assertTrue(exception3 is AnalysisError.InvalidConfig)
+        assertTrue(exception4 is AnalysisError.InvalidConfig)
     }
 
     @Test

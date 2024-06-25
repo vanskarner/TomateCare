@@ -6,7 +6,11 @@ sealed class AnalysisError : Exception() {
         private fun readResolve(): Any = NotFound
     }
 
-    object InvalidConfig : AnalysisError(){
+    object InvalidConfig : AnalysisError() {
+        private fun readResolve(): Any = InvalidConfig
+    }
+
+    object NoLeaves : AnalysisError() {
         private fun readResolve(): Any = InvalidConfig
     }
 
