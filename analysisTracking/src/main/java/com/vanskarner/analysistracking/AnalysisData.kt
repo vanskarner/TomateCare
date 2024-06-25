@@ -50,7 +50,7 @@ data class AnalysisData(
     val imagePath: String,
     val numberDiseases: Int,
     val note: String,
-    val date: String,
+    val date: Date,
 )
 
 data class AnalysisDetailData(
