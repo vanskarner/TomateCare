@@ -61,6 +61,10 @@ class LocalRepositoryTest {
         assertEquals(expectedItem.listLeafBoxCoordinates[0], actualItem.listLeafBoxCoordinates[0])
         assertEquals(expectedItem.classificationData.size, actualItem.classificationData.size)
         assertEquals(expectedItem.classificationData[0], actualItem.classificationData[0])
+        assertEquals(expectedItem.leafDetectionModel, actualItem.leafDetectionModel)
+        assertEquals(expectedItem.leafClassificationModel, actualItem.leafClassificationModel)
+        assertEquals(expectedItem.threadsUsed, actualItem.threadsUsed)
+        assertEquals(expectedItem.processing, actualItem.processing)
     }
 
     @Test
@@ -140,13 +144,14 @@ class LocalRepositoryTest {
 
     private fun exampleData(): AnalysisDetailData {
         return AnalysisDetailData(
-            0,
-            "/Android/data/com.vanskarner.tomatecare/files/Pictures/Plant_7809504466231131920.jpg",
-            Date(),
-            2500,
-            2500,
-            "A note",
-            3, listOf(
+            id = 0,
+            imagePath = "/Android/data/com.vanskarner.tomatecare/files/Pictures/Plant_7809504466231131920.jpg",
+            date = Date(),
+            detectionInferenceTimeMs = 2500,
+            classificationInferenceTimeMs = 2500,
+            note = "A note",
+            numberDiseasesIdentified = 3,
+            listLeafBoxCoordinates = listOf(
                 BoundingBoxData(
                     0.00333f,
                     0.00333f,
@@ -160,7 +165,8 @@ class LocalRepositoryTest {
                     1,
                     "leaf"
                 )
-            ), listOf(
+            ),
+            classificationData = listOf(
                 ClassificationData(
                     LeafState.Sick,
                     Pair("bacterial_spot", 0.95f),
@@ -177,7 +183,11 @@ class LocalRepositoryTest {
                         Pair("yellow_leaf_curl_virus", 0.01f),
                     )
                 )
-            )
+            ),
+            leafDetectionModel = "YoloV8",
+            leafClassificationModel = "MobileNetV2",
+            threadsUsed = "4",
+            processing = "CPU"
         )
     }
 

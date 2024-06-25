@@ -33,7 +33,11 @@ internal class AnalyzeImageUseCase(
                 classificationInferenceTimeMs = classificationInferenceTime,
                 numberDiseasesIdentified = numberDiseasesIdentified,
                 listLeafBoxCoordinates = boundingBoxes,
-                classificationData = classifications
+                classificationData = classifications,
+                leafDetectionModel = "YoloV8",
+                leafClassificationModel = configData.model,
+                threadsUsed = configData.numberThreads.toString(),
+                processing = configData.processing
             )
             val savedId = repository.saveAnalysis(analysisData).getOrThrow()
             return Result.success(analysisData.copy(id = savedId))

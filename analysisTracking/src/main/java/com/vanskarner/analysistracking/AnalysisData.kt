@@ -63,6 +63,10 @@ data class AnalysisDetailData(
     val numberDiseasesIdentified: Int,
     val listLeafBoxCoordinates: List<BoundingBoxData>,
     val classificationData: List<ClassificationData>,
+    val leafDetectionModel:String,
+    val leafClassificationModel:String,
+    val threadsUsed:String,
+    val processing:String,
 )
 
 data class SetConfigData(

@@ -112,6 +112,13 @@ class AnalyzeImageUseCaseTest {
             expectedPredictions,
             analysisDetailData.classificationData[1].predictions
         )
+        assertEquals(expectedAnalysis.leafDetectionModel, analysisDetailData.leafDetectionModel)
+        assertEquals(
+            expectedAnalysis.leafClassificationModel,
+            analysisDetailData.leafClassificationModel
+        )
+        assertEquals(expectedAnalysis.threadsUsed, analysisDetailData.threadsUsed)
+        assertEquals(expectedAnalysis.processing, analysisDetailData.processing)
     }
 
     private fun createDetections(): Pair<Long, List<BoundingBoxData>> {
@@ -182,7 +189,11 @@ class AnalyzeImageUseCaseTest {
             note = "Some note",
             numberDiseasesIdentified = 2,
             listLeafBoxCoordinates = boundingBoxes,
-            classificationData = classifications
+            classificationData = classifications,
+            leafDetectionModel = "YoloV8",
+            leafClassificationModel = "MobileNetV2",
+            threadsUsed = "4",
+            processing = "CPU",
         )
     }
 

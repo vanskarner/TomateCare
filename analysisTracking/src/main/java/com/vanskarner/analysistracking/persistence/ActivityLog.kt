@@ -18,4 +18,8 @@ data class ActivityLogEntity(
     @ColumnInfo(name = "number_diseases_identified") val numberDiseasesIdentified: Int,
     @ColumnInfo(name = "leaf_box_coordinates") val listLeafBoxCoordinates: List<BoundingBoxData>,
     @ColumnInfo(name = "classifications") val classificationData: List<ClassificationData>,
+    @ColumnInfo(name = "detection_model") val leafDetectionModel:String,
+    @ColumnInfo(name = "classification_model") val leafClassificationModel:String,
+    @ColumnInfo(name = "threads_used") val threadsUsed:String,
+    @ColumnInfo(name = "processing") val processing:String,
 )
