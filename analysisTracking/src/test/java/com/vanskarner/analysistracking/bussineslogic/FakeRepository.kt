@@ -12,8 +12,8 @@ class FakeRepository(
         TODO("Not yet implemented")
     }
 
-    override suspend fun saveAnalysis(analysisDetailData: AnalysisDetailData): Result<Unit> {
-        return Result.success(Unit)
+    override suspend fun saveAnalysis(analysisDetailData: AnalysisDetailData): Result<Int> {
+        return Result.success(1)
     }
 
     override suspend fun findAnalysis(id: Int): Result<AnalysisDetailData> {

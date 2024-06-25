@@ -7,7 +7,7 @@ internal interface Repository {
 
     suspend fun list(): Result<List<AnalysisData>>
 
-    suspend fun saveAnalysis(analysisDetailData: AnalysisDetailData): Result<Unit>
+    suspend fun saveAnalysis(analysisDetailData: AnalysisDetailData): Result<Int>
 
     suspend fun findAnalysis(id:Int): Result<AnalysisDetailData>
 

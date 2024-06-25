@@ -9,7 +9,7 @@ import androidx.room.Query
 interface ActivityLogDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(activityLogEntity: ActivityLogEntity)
+    suspend fun insert(activityLogEntity: ActivityLogEntity): Long
 
     @Query("SELECT * FROM activity_log WHERE uid=:id LIMIT 1")
     suspend fun find(id: Int): ActivityLogEntity?

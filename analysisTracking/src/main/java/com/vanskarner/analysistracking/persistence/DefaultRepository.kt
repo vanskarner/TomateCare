@@ -96,10 +96,10 @@ internal class DefaultRepository(
         return Result.success(exampleData)
     }
 
-    override suspend fun saveAnalysis(analysisDetailData: AnalysisDetailData): Result<Unit> {
+    override suspend fun saveAnalysis(analysisDetailData: AnalysisDetailData): Result<Int> {
         return try {
-            activityLogDao.insert(analysisDetailData.toEntity())
-            Result.success(Unit)
+            val id = activityLogDao.insert(analysisDetailData.toEntity())
+            Result.success(id.toInt())
         } catch (exception: Exception) {
             Result.failure(exception)
         }

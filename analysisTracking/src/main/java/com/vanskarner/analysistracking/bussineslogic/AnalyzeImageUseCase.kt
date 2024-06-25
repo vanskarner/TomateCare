@@ -35,8 +35,8 @@ internal class AnalyzeImageUseCase(
                 listLeafBoxCoordinates = boundingBoxes,
                 classificationData = classifications
             )
-            repository.saveAnalysis(analysisData).getOrThrow()
-            return Result.success(analysisData)
+            val savedId = repository.saveAnalysis(analysisData).getOrThrow()
+            return Result.success(analysisData.copy(id = savedId))
         }
 
     private suspend fun getClassifications(

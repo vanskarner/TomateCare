@@ -83,6 +83,7 @@ class AnalyzeImageUseCaseTest {
             "/Android/data/com.vanskarner.tomatecare/files/Pictures/Plant_7809504466231131920.jpg"
         val analysisDetailData = useCase.execute(expectedPath, validConfigData).getOrThrow()
 
+        assertEquals(1, analysisDetailData.id)
         assertEquals(expectedPath, analysisDetailData.imagePath)
         assertEquals(expectedDetections.first, analysisDetailData.detectionInferenceTimeMs)
         assertEquals(
