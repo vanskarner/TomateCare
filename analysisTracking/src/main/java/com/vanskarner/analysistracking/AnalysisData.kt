@@ -54,12 +54,12 @@ data class AnalysisData(
 )
 
 data class AnalysisDetailData(
-    val id: Int,
+    val id: Int = 0,
     val imagePath: String,
     val date: Date,
     val detectionInferenceTimeMs: Long,
     val classificationInferenceTimeMs: Long,
-    val note: String,
+    val note: String = "",
     val numberDiseasesIdentified: Int,
     val listLeafBoxCoordinates: List<BoundingBoxData>,
     val classificationData: List<ClassificationData>,

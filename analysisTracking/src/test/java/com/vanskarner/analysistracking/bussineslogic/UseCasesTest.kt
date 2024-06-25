@@ -26,25 +26,25 @@ class UseCasesTest {
         val invalidNumberResults = SetConfigData(
             numberResults = 0,
             numberThreads = 4,
-            processing = "gpu",
-            model = "mobileNetV2",
+            processing = "GPU",
+            model = "MobileNetV2",
         )
         val invalidNumberThreads = SetConfigData(
             numberResults = 4,
             numberThreads = 0,
-            processing = "gpu",
-            model = "mobileNetV2",
+            processing = "GPU",
+            model = "MobileNetV2",
         )
         val invalidProcessing = SetConfigData(
             numberResults = 4,
             numberThreads = 4,
             processing = "unknown",
-            model = "mobileNetV2",
+            model = "MobileNetV2",
         )
         val invalidModel = SetConfigData(
             numberResults = 4,
             numberThreads = 4,
-            processing = "gpu",
+            processing = "GPU",
             model = "unknown",
         )
         val exception1 = useCase.execute(invalidNumberResults).exceptionOrNull()
@@ -64,8 +64,8 @@ class UseCasesTest {
         val expectedConfig = SetConfigData(
             numberResults = 4,
             numberThreads = Runtime.getRuntime().availableProcessors(),
-            processing = "cpu",
-            model = "mobileNetV2",
+            processing = "CPU",
+            model = "MobileNetV2",
         )
         val actualConfig = useCase.execute(expectedConfig).getOrThrow()
 
