@@ -4,12 +4,6 @@ import com.vanskarner.analysistracking.AnalysisError
 import com.vanskarner.analysistracking.ConfigData
 import com.vanskarner.analysistracking.SetConfigData
 
-internal class GetAnalysisTrackingUseCases(private val repository: Repository) {
-
-    suspend fun execute() = repository.list()
-
-}
-
 internal class GetConfigUseCase {
     companion object {
         private const val MAX_RESULTS = 8
