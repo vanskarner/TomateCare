@@ -5,6 +5,10 @@ import com.vanskarner.analysistracking.SetConfigData
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Test
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
+import org.mockito.kotlin.mock
 
 class UseCasesTest {
 
@@ -73,6 +77,33 @@ class UseCasesTest {
         assertEquals(expectedConfig.numberThreads, actualConfig.numberThreads)
         assertEquals(expectedConfig.processing, actualConfig.processing)
         assertEquals(expectedConfig.model, actualConfig.model)
+    }
+
+    @Test
+    fun `UpdateAnalysisNoteUseCase with validId should be updated`() = runTest {
+        val repository: Repository = mock()
+        val expectedId = 1
+        val expectedNote = "Some Note"
+        `when`(repository.updateAnalysisNote(expectedId, expectedNote))
+            .thenReturn(Result.success(Unit))
+        val useCase = UpdateAnalysisNoteUseCase(repository)
+        useCase.execute(expectedId, expectedNote).getOrThrow()
+
+        verify(repository, times(1))
+            .updateAnalysisNote(expectedId,expectedNote)
+    }
+
+    @Test
+    fun `DeleteAnalysisUseCase with validIds should be removed`() = runTest {
+        val repository: Repository = mock()
+        val expectedIds = listOf(1,2,3)
+        `when`(repository.deleteAnalysis(expectedIds))
+            .thenReturn(Result.success(Unit))
+        val useCase = DeleteAnalysisUseCase(repository)
+        useCase.execute(expectedIds).getOrThrow()
+
+        verify(repository, times(1))
+            .deleteAnalysis(expectedIds)
     }
 
 }

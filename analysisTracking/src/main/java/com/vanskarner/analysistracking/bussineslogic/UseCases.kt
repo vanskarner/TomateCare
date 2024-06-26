@@ -44,3 +44,19 @@ internal class ValidateConfigUseCase {
     }
 
 }
+
+internal class UpdateAnalysisNoteUseCase(
+    private val repository: Repository
+) {
+
+    suspend fun execute(id: Int, note: String) = repository.updateAnalysisNote(id, note)
+
+}
+
+internal class DeleteAnalysisUseCase(
+    private val repository: Repository
+) {
+
+    suspend fun execute(id: List<Int>) = repository.deleteAnalysis(id)
+
+}
