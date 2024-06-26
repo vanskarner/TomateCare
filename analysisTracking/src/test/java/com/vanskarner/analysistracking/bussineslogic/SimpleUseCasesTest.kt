@@ -10,7 +10,7 @@ import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.kotlin.mock
 
-class UseCasesTest {
+class SimpleUseCasesTest {
 
     @Test
     fun `GetConfigUseCase return default config`() {
