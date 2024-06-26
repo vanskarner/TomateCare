@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.vanskarner.analysistracking.AnalysisTrackingComponent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,10 +29,15 @@ internal class LogsViewModel @Inject constructor(
 
     fun getData() {
         viewModelScope.launch {
-            component.getAnalysisList()
+            component.getAnalysis()
                 .onSuccess {
                     fullList.clear()
-                    fullList.addAll(it.toListModel())
+                    val logModelList = it.map { item ->
+                        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                        val formattedDate = formatter.format(item.date)
+                        item.toModel(formattedDate)
+                    }
+                    fullList.addAll(logModelList)
                     _list.value = fullList
                 }
         }
