@@ -28,8 +28,8 @@ class FakeRepository(
         return Result.success(Unit)
     }
 
-    override suspend fun deleteAnalysis(ids: List<Int>): Result<Unit> {
-        return Result.success(Unit)
+    override suspend fun deleteAnalysis(ids: List<Int>): Result<Int> {
+        return Result.success(1)
     }
 
 }

@@ -90,20 +90,21 @@ class UseCasesTest {
         useCase.execute(expectedId, expectedNote).getOrThrow()
 
         verify(repository, times(1))
-            .updateAnalysisNote(expectedId,expectedNote)
+            .updateAnalysisNote(expectedId, expectedNote)
     }
 
     @Test
     fun `DeleteAnalysisUseCase with validIds should be removed`() = runTest {
         val repository: Repository = mock()
-        val expectedIds = listOf(1,2,3)
+        val expectedIds = listOf(1, 2, 3)
         `when`(repository.deleteAnalysis(expectedIds))
-            .thenReturn(Result.success(Unit))
+            .thenReturn(Result.success(expectedIds.size))
         val useCase = DeleteAnalysisUseCase(repository)
-        useCase.execute(expectedIds).getOrThrow()
+        val actualDeletedItems = useCase.execute(expectedIds).getOrThrow()
 
         verify(repository, times(1))
             .deleteAnalysis(expectedIds)
+        assertEquals(expectedIds.size, actualDeletedItems)
     }
 
 }
