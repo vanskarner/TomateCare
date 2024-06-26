@@ -136,10 +136,11 @@ class LocalRepositoryTest {
         val item2 = exampleData()
         defaultRepository.saveAnalysis(item1).getOrThrow()
         defaultRepository.saveAnalysis(item2).getOrThrow()
-        defaultRepository.deleteAnalysis(ids).getOrThrow()
+        val actualNumberDeletedItems = defaultRepository.deleteAnalysis(ids).getOrThrow()
         val list = defaultRepository.getAnalysisList().getOrThrow()
 
         assertEquals(1, list.size)
+        assertEquals(1, actualNumberDeletedItems)
     }
 
     private fun exampleData(): AnalysisDetailData {

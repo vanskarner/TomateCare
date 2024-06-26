@@ -52,10 +52,10 @@ internal class DefaultRepository(
         }
     }
 
-    override suspend fun deleteAnalysis(ids: List<Int>): Result<Unit> {
+    override suspend fun deleteAnalysis(ids: List<Int>): Result<Int> {
         return try {
-            activityLogDao.deleteByIds(ids)
-            Result.success(Unit)
+            val numberDeletedItems = activityLogDao.deleteByIds(ids)
+            Result.success(numberDeletedItems)
         } catch (exception: Exception) {
             Result.failure(exception)
         }

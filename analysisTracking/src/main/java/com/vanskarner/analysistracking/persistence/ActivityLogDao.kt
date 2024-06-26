@@ -21,6 +21,6 @@ interface ActivityLogDao {
     suspend fun updateNote(id: Int, updatedNote: String): Int
 
     @Query("DELETE FROM activity_log WHERE uid IN (:userIds)")
-    suspend fun deleteByIds(userIds: List<Int>)
+    suspend fun deleteByIds(userIds: List<Int>):Int
 
 }
