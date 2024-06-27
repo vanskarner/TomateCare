@@ -4,7 +4,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.activity.result.ActivityResultLauncher
@@ -63,8 +62,11 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         viewModel.settingModel.observe(viewLifecycleOwner) {
             settingDialog.show(childFragmentManager, it)
         }
-        viewModel.error.observe(viewLifecycleOwner) { showError() }
+        viewModel.error.observe(viewLifecycleOwner) { showError(it) }
         viewModel.idLog.observe(viewLifecycleOwner) { goToIdentificationFragment(it) }
+        viewModel.defaultImage.observe(viewLifecycleOwner) {
+            binding.imvPlantCover.setImageResource(R.drawable.plant_96)
+        }
     }
 
     private fun registerForTakePicture(onSuccess: () -> Unit): ActivityResultLauncher<Uri> {
@@ -112,15 +114,7 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         if (fileToDelete.exists()) fileToDelete.delete()
     }
 
-    private fun showError() {
-        binding.btnPhotos.visibility = View.VISIBLE
-        binding.btnCapture.visibility = View.VISIBLE
-        binding.tvTips.visibility = View.VISIBLE
-        binding.imvSettings.visibility = View.VISIBLE
-        binding.imvPlantCover.visibility = View.VISIBLE
-        binding.clIdentification.visibility = View.GONE
-        binding.imvPhotoToAnalyze.setImageBitmap(null)
-        binding.imvPhotoToAnalyze.visibility = View.GONE
+    private fun showError(throwable: Throwable) {
         showToast(R.string.error_non_analyzable_image)
     }
 

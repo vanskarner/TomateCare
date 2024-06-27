@@ -21,6 +21,7 @@ fun loadImageBase64(imageView: ImageView, imageBase64: String) {
 fun loadBitmap(imageView: ImageView, imgBitmap: Bitmap?) {
     Glide.with(imageView.context)
         .load(imgBitmap)
+        .error(R.drawable.plant_96)
         .into(imageView)
 }
 

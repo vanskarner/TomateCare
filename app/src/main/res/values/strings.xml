@@ -83,4 +83,6 @@
     <string name="error_temporary_image">No se pudo crear el archivo temporal para respaldo de imagen</string>
 
     <string name="provider_authorities_camera">com.vanskarner.tomatecare.fileprovider</string>
+    <string name="finished_analysis">Análisis terminado</string>
+    <string name="other_image">Otra Imagen</string>
 </resources>
