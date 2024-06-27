@@ -1,6 +1,7 @@
 package com.vanskarner.tomatecare.ui.capture
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -56,6 +57,16 @@ internal class CaptureViewModel @Inject constructor(): ViewModel() {
         viewModelScope.launch {
             _loading.value = true
             _imageToAnalyze.value = bitmap
+            delay(3000)
+//            _error.value = Unit
+            _idLog.value = 12
+        }
+    }
+
+    fun analyzeImage2(imgPath: String) {
+        viewModelScope.launch {
+            _loading.value = true
+            _imageToAnalyze.value = BitmapFactory.decodeFile(imgPath)
             delay(3000)
 //            _error.value = Unit
             _idLog.value = 12

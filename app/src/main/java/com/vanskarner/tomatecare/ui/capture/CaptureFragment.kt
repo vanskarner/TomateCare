@@ -31,32 +31,29 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
 
     @Inject
     lateinit var settingDialog: SettingDialog
+
     @Inject
     lateinit var advicesDialog: AdvicesDialog
     private val viewModel: CaptureViewModel by viewModels()
     private val viewModelActivity: MainViewModel by activityViewModels()
-    private val selectedImage =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                result.data?.data?.let { uri ->
-                    try {
-                        val contentResolver = requireContext().contentResolver
-                        val inputStream = contentResolver.openInputStream(uri)
-                        val bitmap = BitmapFactory.decodeStream(inputStream)
-                        viewModel.analyzeImage(bitmap)
-                    } catch (_: Exception) {
-                        showToast(R.string.image_not_loaded)
-                    }
-                } ?: showToast(R.string.image_not_loaded)
-            }
-        }
     private var currentPhotoPath: String = ""
     private val cameraRequest =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val imageBitmap = BitmapFactory.decodeFile(currentPhotoPath)
-                viewModel.analyzeImage(imageBitmap)
+                viewModel.analyzeImage2(currentPhotoPath)
             } else deleteTempFile()
+        }
+    private val galleryRequest =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                val tempFile = createTempImageFile()
+                val inputStream = requireContext().contentResolver.openInputStream(uri)
+                val outputStream = tempFile.outputStream()
+                inputStream?.copyTo(outputStream)
+                inputStream?.close()
+                outputStream.close()
+                viewModel.analyzeImage2(currentPhotoPath)
+            }
         }
 
     override fun inflateBinding(
@@ -75,10 +72,7 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         binding.btnCapture.setOnClickListener { openCamera() }
         binding.imvSettings.setOnClickListener { viewModel.getSetting() }
         binding.tvTips.setOnClickListener { advicesDialog.show(childFragmentManager) }
-        binding.btnPhotos.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            selectedImage.launch(intent)
-        }
+        binding.btnPhotos.setOnClickListener { openGallery() }
         settingDialog.setOnApply {
             viewModel.updateSetting(it)
             settingDialog.dismiss()
@@ -101,10 +95,14 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         }
     }
 
+    private fun openGallery() {
+        galleryRequest.launch("image/*")
+    }
+
     private fun getUriCreatedTempFile(): Uri? {
         return try {
             val photoFile = createTempImageFile()
-            if (photoFile != null && photoFile.exists())
+            if (photoFile.exists())
                 FileProvider.getUriForFile(
                     requireContext(),
                     getString(R.string.provider_authorities_camera),
@@ -116,16 +114,12 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         }
     }
 
-    private fun createTempImageFile(prefix: String = "Plant"): File? {
+    private fun createTempImageFile(prefix: String = "Plant"): File {
         val imageFileName = "${prefix}_"
         val storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return try {
-            val image = File.createTempFile(imageFileName, ".jpg", storageDir)
-            currentPhotoPath = image.absolutePath
-            image
-        } catch (e: IOException) {
-            null
-        }
+        val image = File.createTempFile(imageFileName, ".jpg", storageDir)
+        currentPhotoPath = image.absolutePath
+        return image
     }
 
     private fun deleteTempFile() {
