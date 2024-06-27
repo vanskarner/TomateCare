@@ -14,4 +14,8 @@ sealed class AnalysisError : Exception() {
         private fun readResolve(): Any = InvalidConfig
     }
 
+    object GPUNotSupportedByDevice : AnalysisError() {
+        private fun readResolve(): Any = InvalidConfig
+    }
+
 }

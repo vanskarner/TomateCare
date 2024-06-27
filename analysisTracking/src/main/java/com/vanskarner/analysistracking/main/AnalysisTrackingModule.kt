@@ -14,7 +14,7 @@ import com.vanskarner.analysistracking.bussineslogic.GetConfigUseCase
 import com.vanskarner.analysistracking.bussineslogic.Repository
 import com.vanskarner.analysistracking.bussineslogic.UpdateAnalysisNoteUseCase
 import com.vanskarner.analysistracking.bussineslogic.ValidateConfigUseCase
-import com.vanskarner.analysistracking.computervision.DefaultComputerVision
+import com.vanskarner.analysistracking.computervision.TFLiteComputerVision
 import com.vanskarner.analysistracking.persistence.ActivityLogDao
 import com.vanskarner.analysistracking.persistence.DefaultRepository
 import com.vanskarner.diseases.DiseasesComponent
@@ -54,7 +54,7 @@ internal object AnalysisTrackingModule {
 
     @Provides
     fun providesComputerVision(@ApplicationContext context: Context): ComputerVision {
-        return DefaultComputerVision(context)
+        return TFLiteComputerVision(context)
     }
 
     @Provides
