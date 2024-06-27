@@ -33,7 +33,6 @@ internal class CaptureViewModel @Inject constructor() : ViewModel() {
     val imageToAnalyze: LiveData<Bitmap> = _imageToAnalyze
 
     private var myModel = SettingModel(
-        0.3f,
         3,
         3,
         listOf("CPU", "GPU"),
@@ -44,7 +43,6 @@ internal class CaptureViewModel @Inject constructor() : ViewModel() {
             "MobileNetV3Large",
             "MobileNetV3Small"
         ),
-        0.8f,
         5,
         5,
         0,
