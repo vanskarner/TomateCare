@@ -6,13 +6,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.vanskarner.analysis.AnalysisComponent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class CaptureViewModel @Inject constructor() : ViewModel() {
+internal class CaptureViewModel @Inject constructor(
+    private val analysisComponent: AnalysisComponent
+) : ViewModel() {
 
     private val _settingModel = MutableLiveData<SettingModel>()
     private val _start = MutableLiveData(true)
@@ -32,22 +35,7 @@ internal class CaptureViewModel @Inject constructor() : ViewModel() {
     val idLog: LiveData<Int> = _idLog
     val imageToAnalyze: LiveData<Bitmap> = _imageToAnalyze
 
-    private var myModel = SettingModel(
-        3,
-        3,
-        listOf("CPU", "GPU"),
-        listOf(
-            "SqueezeNet",
-            "SqueezeNext",
-            "MobileNetV2",
-            "MobileNetV3Large",
-            "MobileNetV3Small"
-        ),
-        5,
-        5,
-        0,
-        1
-    )
+    private var myModel = analysisComponent.getConfigParams().toModel()
 
     fun getSetting() {
         _settingModel.value = myModel
