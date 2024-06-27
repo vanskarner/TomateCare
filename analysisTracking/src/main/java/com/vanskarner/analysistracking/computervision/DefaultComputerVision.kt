@@ -10,15 +10,24 @@ import com.vanskarner.analysistracking.BoundingBoxData
 import com.vanskarner.analysistracking.ClassificationData
 import com.vanskarner.analysistracking.bussineslogic.ComputerVision
 import org.tensorflow.lite.Interpreter
+import org.tensorflow.lite.gpu.CompatibilityList
+import org.tensorflow.lite.gpu.GpuDelegate
+import java.nio.ByteBuffer
 
 class DefaultComputerVision(private val context: Context) : ComputerVision {
 
     override suspend fun detectLeaves(imgPath: String): Pair<Long, List<BoundingBoxData>> {
+        val numThreads = Runtime.getRuntime().availableProcessors()
         val imgBitmap = BitmapFactory.decodeFile(imgPath)
-        val options = Interpreter
-            .Options()
-            .setNumThreads(4)
-        return useYoloV8LeafDetection(context, imgBitmap, options)
+        val compatList = CompatibilityList()
+        if (compatList.isDelegateSupportedOnThisDevice) {
+            Interpreter.Options()
+                .addDelegate(GpuDelegate())
+        } else {
+            val options = Interpreter.Options()
+                .setNumThreads(numThreads)
+            return useYoloV8LeafDetection(context, imgBitmap, options)
+        }
     }
 
     override suspend fun classifyLeavesWithMobileNetV3Small(

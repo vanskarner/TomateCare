@@ -28,7 +28,7 @@ internal fun useYoloV8LeafDetection(
     imgBitmap: Bitmap,
     options: Interpreter.Options
 ): Pair<Long, List<BoundingBoxData>> {
-    val model = FileUtil.loadMappedFile(context, "Leaf_Detection-YoloV8_float16.tflite")
+    val model = getYoloV8Model(context)
     val interpreter = Interpreter(model, options)
     val outputTensor = getOutputTensor(interpreter)
     val inferenceTimeMilliSeconds = measureTimeMillis {
@@ -46,6 +46,9 @@ internal fun useYoloV8LeafDetection(
     )
     return Pair(inferenceTimeMilliSeconds, boundingBoxes)
 }
+
+fun getYoloV8Model(context: Context) =
+    FileUtil.loadMappedFile(context, "Leaf_Detection-YoloV8_float16.tflite")
 
 private fun getInputTensor(imgBitmap: Bitmap, interpreter: Interpreter): TensorBuffer {
     val inputShape = interpreter.getInputTensor(0).shape()
