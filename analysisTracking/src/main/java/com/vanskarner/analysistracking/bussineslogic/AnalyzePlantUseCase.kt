@@ -17,16 +17,20 @@ internal class AnalyzePlantUseCase(
         runCatching {
             val validConfig = validateConfigUseCase.execute(configData).getOrThrow()
             val leafDetection = detectLeavesUseCase.execute(imgPath).getOrThrow()
+            val leafDetectionSelection = leafDetection.copy(
+                second = leafDetection.second.sortedByDescending { it.cnf }
+                    .take(validConfig.numberResults)
+            )
             val leafClassification =
-                classifyLeavesUseCase.execute(imgPath, leafDetection.second, validConfig)
+                classifyLeavesUseCase.execute(imgPath, leafDetectionSelection.second, validConfig)
                     .getOrThrow()
             val analysisData = AnalysisDetailData(
                 imagePath = imgPath,
                 date = Date(),
-                detectionInferenceTimeMs = leafDetection.first,
+                detectionInferenceTimeMs = leafDetectionSelection.first,
                 classificationInferenceTimeMs = leafClassification.first,
                 numberDiseasesIdentified = getNumberDiseases(leafClassification.second),
-                listLeafBoxCoordinates = leafDetection.second,
+                listLeafBoxCoordinates = leafDetectionSelection.second,
                 classificationData = leafClassification.second,
                 leafDetectionModel = "YoloV8",
                 leafClassificationModel = validConfig.model,
