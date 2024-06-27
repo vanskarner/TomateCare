@@ -1,16 +1,13 @@
 package com.vanskarner.tomatecare.ui.capture
 
-import android.app.Activity
-import android.content.Intent
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.activityViewModels
@@ -37,24 +34,8 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
     private val viewModel: CaptureViewModel by viewModels()
     private val viewModelActivity: MainViewModel by activityViewModels()
     private var currentPhotoPath: String = ""
-    private val cameraRequest =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                viewModel.analyzeImage2(currentPhotoPath)
-            } else deleteTempFile()
-        }
-    private val galleryRequest =
-        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            uri?.let {
-                val tempFile = createTempImageFile()
-                val inputStream = requireContext().contentResolver.openInputStream(uri)
-                val outputStream = tempFile.outputStream()
-                inputStream?.copyTo(outputStream)
-                inputStream?.close()
-                outputStream.close()
-                viewModel.analyzeImage2(currentPhotoPath)
-            }
-        }
+    private val cameraRequest = registerForTakePicture { viewModel.analyzeImage2(currentPhotoPath) }
+    private val galleryRequest = registerForGallery { viewModel.analyzeImage2(currentPhotoPath) }
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -88,11 +69,8 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
     }
 
     private fun openCamera() {
-        val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        getUriCreatedTempFile()?.let {
-            takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, it)
-            cameraRequest.launch(takePhotoIntent)
-        }
+        val photoUri = getUriCreatedTempFile()
+        photoUri?.let { cameraRequest.launch(it) }
     }
 
     private fun openGallery() {
@@ -142,6 +120,28 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
     private fun goToIdentificationFragment(idLog: Int) {
         val navDirection = CaptureFragmentDirections.toIdentificationFragment(idLog)
         findNavController().navigate(navDirection)
+    }
+
+    //----------
+    private fun registerForTakePicture(onSuccess: () -> Unit): ActivityResultLauncher<Uri> {
+        return registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+            if (success) onSuccess.invoke()
+            else deleteTempFile()
+        }
+    }
+
+    private fun registerForGallery(onSuccess: () -> Unit): ActivityResultLauncher<String> {
+        return registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                val tempFile = createTempImageFile()
+                val inputStream = requireContext().contentResolver.openInputStream(uri)
+                val outputStream = tempFile.outputStream()
+                inputStream?.copyTo(outputStream)
+                inputStream?.close()
+                outputStream.close()
+                onSuccess.invoke()
+            }
+        }
     }
 
 }
