@@ -2,7 +2,6 @@ package com.vanskarner.analysistracking.computervision
 
 import android.content.Context
 import android.graphics.Bitmap
-import com.vanskarner.analysistracking.BoundingBoxData
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.support.common.FileUtil

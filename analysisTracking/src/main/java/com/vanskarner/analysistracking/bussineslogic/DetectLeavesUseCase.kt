@@ -9,10 +9,10 @@ internal class DetectLeavesUseCase(
 
     suspend fun execute(imgPath: String): Result<Pair<Long, List<BoundingBoxData>>> {
         return computerVision.detectLeaves(imgPath)
-            .onSuccess { detectionLeaves ->
+            .mapCatching { detectionLeaves ->
                 val noLeaves = detectionLeaves.second.isEmpty()
-                if (noLeaves) return Result.failure(AnalysisError.NoLeaves)
-                return Result.success(detectionLeaves)
+                if (noLeaves) throw AnalysisError.NoLeaves
+                detectionLeaves
             }
     }
 
