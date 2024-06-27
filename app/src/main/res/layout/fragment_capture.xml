@@ -31,6 +31,16 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription,ImageContrastCheck" />
 
+        <com.vanskarner.tomatecare.ui.OverlayView
+            android:id="@+id/overlay"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:translationZ="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
         <ImageView
             android:id="@+id/imvSettings"
             android:layout_width="40dp"
