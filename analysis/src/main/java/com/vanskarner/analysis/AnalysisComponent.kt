@@ -8,7 +8,7 @@ interface AnalysisComponent {
 
     suspend fun findAnalysisDetail(id: Int): Result<AnalysisDetailData>
 
-    suspend fun getConfigParams(): ConfigData
+    fun getConfigParams(): ConfigData
 
     suspend fun updateAnalysisNote(id: Int, note: String): Result<Unit>
 

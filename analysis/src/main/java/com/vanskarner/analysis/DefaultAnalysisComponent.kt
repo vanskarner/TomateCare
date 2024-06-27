@@ -28,7 +28,7 @@ internal class DefaultAnalysisComponent(
     override suspend fun findAnalysisDetail(id: Int): Result<AnalysisDetailData> =
         findAnalysisUseCase.execute(id)
 
-    override suspend fun getConfigParams(): ConfigData = getConfigUseCase.execute()
+    override fun getConfigParams(): ConfigData = getConfigUseCase.execute()
 
     override suspend fun updateAnalysisNote(id: Int, note: String): Result<Unit> =
         updateAnalysisNoteUseCase.execute(id, note)
