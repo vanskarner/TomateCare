@@ -9,7 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/analysisTracking" />
+            <option value="$PROJECT_DIR$/analysis" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/diseases" />
           </set>

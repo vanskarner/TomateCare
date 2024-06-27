@@ -2,9 +2,9 @@ package com.vanskarner.tomatecare.main
 
 import android.content.Context
 import androidx.room.Room
-import com.vanskarner.analysistracking.persistence.ActivityLogDao
-import com.vanskarner.analysistracking.persistence.BoundingBoxesConverter
-import com.vanskarner.analysistracking.persistence.ClassificationsConverter
+import com.vanskarner.analysis.persistence.ActivityLogDao
+import com.vanskarner.analysis.persistence.BoundingBoxesConverter
+import com.vanskarner.analysis.persistence.ClassificationsConverter
 import com.vanskarner.diseases.DiseasesComponent
 import com.vanskarner.diseases.main.DiseasesComponentFactory
 import com.vanskarner.tomatecare.ui.CustomNavigationBottomNav

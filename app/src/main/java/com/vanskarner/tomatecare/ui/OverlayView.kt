@@ -8,7 +8,7 @@ import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.vanskarner.analysistracking.BoundingBoxData
+import com.vanskarner.analysis.BoundingBoxData
 import com.vanskarner.tomatecare.R
 
 /**

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vanskarner.analysistracking.AnalysisTrackingComponent
+import com.vanskarner.analysis.AnalysisComponent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class LogsViewModel @Inject constructor(
-    private val component: AnalysisTrackingComponent
+    private val component: AnalysisComponent
 ) : ViewModel() {
     private val _list = MutableLiveData<List<LogModel>>()
     private val _msgDelete = MutableLiveData<Unit>()
