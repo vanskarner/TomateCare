@@ -53,22 +53,12 @@ internal class CaptureViewModel @Inject constructor(): ViewModel() {
         this.myModel = setting
     }
 
-    fun analyzeImage(bitmap: Bitmap) {
-        viewModelScope.launch {
-            _loading.value = true
-            _imageToAnalyze.value = bitmap
-            delay(3000)
-//            _error.value = Unit
-            _idLog.value = 12
-        }
-    }
-
-    fun analyzeImage2(imgPath: String) {
+    fun analyzeImage(imgPath: String) {
         viewModelScope.launch {
             _loading.value = true
             _imageToAnalyze.value = BitmapFactory.decodeFile(imgPath)
             delay(3000)
-//            _error.value = Unit
+            /*_error.value = Unit*/
             _idLog.value = 12
         }
     }

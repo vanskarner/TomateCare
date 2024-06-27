@@ -80,6 +80,7 @@
     <string name="error_non_analyzable_image">La imagen no pudo ser analizada</string>
     <string name="no_item_selected">No ha seleccionado ningun elemento</string>
     <string name="sick_format">Sick: %d</string>
+    <string name="error_temporary_image">No se pudo crear el archivo temporal para respaldo de imagen</string>
 
     <string name="provider_authorities_camera">com.vanskarner.tomatecare.fileprovider</string>
 </resources>

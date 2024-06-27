@@ -20,7 +20,6 @@ import com.vanskarner.tomatecare.ui.Selection
 import com.vanskarner.tomatecare.databinding.FragmentCaptureBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
-import java.io.IOException
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -34,8 +33,8 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
     private val viewModel: CaptureViewModel by viewModels()
     private val viewModelActivity: MainViewModel by activityViewModels()
     private var currentPhotoPath: String = ""
-    private val cameraRequest = registerForTakePicture { viewModel.analyzeImage2(currentPhotoPath) }
-    private val galleryRequest = registerForGallery { viewModel.analyzeImage2(currentPhotoPath) }
+    private val cameraRequest = registerForTakePicture { viewModel.analyzeImage(currentPhotoPath) }
+    private val galleryRequest = registerForGallery { viewModel.analyzeImage(currentPhotoPath) }
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -50,10 +49,10 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             onBackPressed = { viewModelActivity.showBottomNavigation(Selection.Identification) })
-        binding.btnCapture.setOnClickListener { openCamera() }
+        binding.btnCapture.setOnClickListener { createTempImageUri { cameraRequest.launch(it) } }
         binding.imvSettings.setOnClickListener { viewModel.getSetting() }
         binding.tvTips.setOnClickListener { advicesDialog.show(childFragmentManager) }
-        binding.btnPhotos.setOnClickListener { openGallery() }
+        binding.btnPhotos.setOnClickListener { galleryRequest.launch("image/*") }
         settingDialog.setOnApply {
             viewModel.updateSetting(it)
             settingDialog.dismiss()
@@ -68,27 +67,35 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         viewModel.idLog.observe(viewLifecycleOwner) { goToIdentificationFragment(it) }
     }
 
-    private fun openCamera() {
-        val photoUri = getUriCreatedTempFile()
-        photoUri?.let { cameraRequest.launch(it) }
+    private fun registerForTakePicture(onSuccess: () -> Unit): ActivityResultLauncher<Uri> {
+        return registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+            if (success) onSuccess.invoke()
+            else deleteTempFile()
+        }
     }
 
-    private fun openGallery() {
-        galleryRequest.launch("image/*")
+    private fun registerForGallery(onSuccess: () -> Unit): ActivityResultLauncher<String> {
+        return registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                val tempFile = createTempImageFile()
+                val inputStream = requireContext().contentResolver.openInputStream(uri)
+                val outputStream = tempFile.outputStream()
+                inputStream?.copyTo(outputStream)
+                inputStream?.close()
+                outputStream.close()
+                onSuccess.invoke()
+            }
+        }
     }
 
-    private fun getUriCreatedTempFile(): Uri? {
-        return try {
-            val photoFile = createTempImageFile()
-            if (photoFile.exists())
-                FileProvider.getUriForFile(
-                    requireContext(),
-                    getString(R.string.provider_authorities_camera),
-                    photoFile
-                )
-            else null
-        } catch (_: IOException) {
-            null
+    private fun createTempImageUri(onSuccess: (Uri) -> Unit) {
+        try {
+            createTempImageFile().takeIf { it.exists() }?.let { photoFile ->
+                val authority = getString(R.string.provider_authorities_camera)
+                onSuccess(FileProvider.getUriForFile(requireContext(), authority, photoFile))
+            } ?: showToast(R.string.error_temporary_image)
+        } catch (_: Exception) {
+            showToast(R.string.error_temporary_image)
         }
     }
 
@@ -120,28 +127,6 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
     private fun goToIdentificationFragment(idLog: Int) {
         val navDirection = CaptureFragmentDirections.toIdentificationFragment(idLog)
         findNavController().navigate(navDirection)
-    }
-
-    //----------
-    private fun registerForTakePicture(onSuccess: () -> Unit): ActivityResultLauncher<Uri> {
-        return registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-            if (success) onSuccess.invoke()
-            else deleteTempFile()
-        }
-    }
-
-    private fun registerForGallery(onSuccess: () -> Unit): ActivityResultLauncher<String> {
-        return registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            uri?.let {
-                val tempFile = createTempImageFile()
-                val inputStream = requireContext().contentResolver.openInputStream(uri)
-                val outputStream = tempFile.outputStream()
-                inputStream?.copyTo(outputStream)
-                inputStream?.close()
-                outputStream.close()
-                onSuccess.invoke()
-            }
-        }
     }
 
 }
