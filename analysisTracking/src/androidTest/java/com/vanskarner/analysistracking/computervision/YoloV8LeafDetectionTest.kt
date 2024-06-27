@@ -3,13 +3,11 @@ package com.vanskarner.analysistracking.computervision
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.test.platform.app.InstrumentationRegistry
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.Assert.*
 import org.tensorflow.lite.Interpreter
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class YoloV8LeafDetectionTest {
 
     @Test
@@ -19,7 +17,7 @@ class YoloV8LeafDetectionTest {
             .setNumThreads(4)
         val image = loadImageExample()
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        val result = useYoloV8LeafDetection(appContext, image, interpreterOptions)
+        val result = useYoloV8LeafDetection(appContext, image, interpreterOptions).getOrThrow()
 
         //Inference time depends on hardware,change it according to case
         assertTrue(

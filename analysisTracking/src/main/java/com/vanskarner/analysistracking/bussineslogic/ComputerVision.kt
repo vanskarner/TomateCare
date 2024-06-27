@@ -5,7 +5,7 @@ import com.vanskarner.analysistracking.ClassificationData
 
 interface ComputerVision {
 
-    suspend fun detectLeaves(imgPath: String): Pair<Long, List<BoundingBoxData>>
+    suspend fun detectLeaves(imgPath: String): Result<Pair<Long, List<BoundingBoxData>>>
 
     suspend fun classifyLeavesWithMobileNetV3Small(
         imgPath: String,

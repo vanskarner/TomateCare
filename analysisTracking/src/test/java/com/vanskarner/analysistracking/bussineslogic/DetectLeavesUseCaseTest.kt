@@ -18,7 +18,7 @@ class DetectLeavesUseCaseTest {
         val expectedNoLeaves = Pair(2000L, emptyList<BoundingBoxData>())
         val imgPath =
             "/Android/data/com.vanskarner.tomatecare/files/Pictures/Plant_7809504466231131920.jpg"
-        `when`(computerVision.detectLeaves(imgPath)).thenReturn(expectedNoLeaves)
+        `when`(computerVision.detectLeaves(imgPath)).thenReturn(Result.success(expectedNoLeaves))
         val exception = DetectLeavesUseCase(computerVision)
             .execute(imgPath)
             .exceptionOrNull()
@@ -33,7 +33,7 @@ class DetectLeavesUseCaseTest {
         val expected = Pair(2000L, listOf(createBoundingBoxData(), createBoundingBoxData()))
         val imgPath =
             "/Android/data/com.vanskarner.tomatecare/files/Pictures/Plant_7809504466231131920.jpg"
-        `when`(computerVision.detectLeaves(imgPath)).thenReturn(expected)
+        `when`(computerVision.detectLeaves(imgPath)).thenReturn(Result.success(expected))
         val actual = DetectLeavesUseCase(computerVision)
             .execute(imgPath)
             .getOrThrow()

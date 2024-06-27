@@ -13,7 +13,7 @@ import org.tensorflow.lite.Interpreter
 
 class DefaultComputerVision(private val context: Context) : ComputerVision {
 
-    override suspend fun detectLeaves(imgPath: String): Pair<Long, List<BoundingBoxData>> {
+    override suspend fun detectLeaves(imgPath: String): Result<Pair<Long, List<BoundingBoxData>>> {
         val imgBitmap = BitmapFactory.decodeFile(imgPath)
         val options = Interpreter
             .Options()

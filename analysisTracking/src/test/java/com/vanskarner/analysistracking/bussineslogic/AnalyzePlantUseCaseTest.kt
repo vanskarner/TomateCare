@@ -36,7 +36,8 @@ class AnalyzePlantUseCaseTest {
         val expectedLeafClassification = createLeafClassification(createPredictions())
         val expectedPath =
             "/Android/data/com.vanskarner.tomatecare/files/Pictures/Plant_7809504466231131920.jpg"
-        `when`(computerVision.detectLeaves(expectedPath)).thenReturn(expectedLeafDetection)
+        `when`(computerVision.detectLeaves(expectedPath))
+            .thenReturn(Result.success(expectedLeafDetection))
         `when`(
             computerVision.classifyLeavesWithMobileNetV2(
                 imgPath = expectedPath,
