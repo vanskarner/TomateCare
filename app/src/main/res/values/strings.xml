@@ -77,6 +77,7 @@
     <string name="apply">Aplicar</string>
     <string name="description_capture_error">No se encontró una planta</string>
     <string name="image_not_loaded">No se puede cargar la imagen</string>
+    <string name="updated_note">Nota actualizada</string>
     <string name="error_non_analyzable_image">La imagen no pudo ser analizada</string>
     <string name="error_unknown">Algo salió mal…</string>
     <string name="error_gpu_not_supported_device">El dispositivo no soporta el uso de GPU</string>

@@ -1,94 +1,111 @@
 package com.vanskarner.tomatecare.ui.identification
 
 import android.graphics.Bitmap
+import android.graphics.Bitmap.createBitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.graphics.Rect
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.vanskarner.analysis.AnalysisComponent
+import com.vanskarner.analysis.LeafState
+import com.vanskarner.tomatecare.ui.common.BoundingBoxModel
+import com.vanskarner.tomatecare.ui.common.toModel
+import com.vanskarner.tomatecare.ui.errors.ErrorFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
-internal class IdentificationViewModel @Inject constructor(): ViewModel() {
+internal class IdentificationViewModel @Inject constructor(
+    private val analysisComponent: AnalysisComponent,
+    private val errorFilter: ErrorFilter
+) : ViewModel() {
     private val _identification = MutableLiveData<IdentificationDetailModel>()
     private val _note = MutableLiveData<String>()
     private val _summary = MutableLiveData<SummaryModel>()
     private val _leafInfo = MutableLiveData<LeafInfoModel>()
+    private val _error = MutableLiveData<String>()
+    private val _updatedNote = MutableLiveData<Unit>()
+    private val _boundingBoxes = MutableLiveData<List<BoundingBoxModel>>()
 
     val identification: LiveData<IdentificationDetailModel> = _identification
     val note: LiveData<String> = _note
     val summary: LiveData<SummaryModel> = _summary
     val leafInfo: LiveData<LeafInfoModel> = _leafInfo
+    val error: LiveData<String> = _error
+    val updatedNote: LiveData<Unit> = _updatedNote
+    val boundingBoxes: LiveData<List<BoundingBoxModel>> = _boundingBoxes
 
-    //just to see how it looks, then delete
-    fun exampleData() {
-        val bitmap = exampleBitmap()
-        val leavesImage = listOf(
-            LeafModel(bitmap, true, "", 95.5f),
-            LeafModel(bitmap, false, "Bacterial Spot", 95.5f),
-            LeafModel(bitmap, false, "Early Blight", 95.5f),
-            LeafModel(bitmap, false, "Late Blight", 95.5f),
-            LeafModel(bitmap, true, "", 95.5f),
-            LeafModel(bitmap, false, "Leaf Mold", 95.5f),
-            LeafModel(bitmap, false, "Mosaic Virus", 95.5f),
-            LeafModel(bitmap, true, "", 95.5f),
-            LeafModel(bitmap, false, "Septoria Leaf Spot", 95.5f),
-            LeafModel(bitmap, false, "Target Spot", 95.5f),
-            LeafModel(bitmap, true, "", 95.5f),
-            LeafModel(bitmap, false, "Two Spotted Spider Mite", 95.5f),
-            LeafModel(bitmap, false, "Yellow Leaf Curl Virus", 95.5f),
-        )
-        val data =
-            IdentificationDetailModel(
-                1,
-                "3 Mayo 2024",
-                bitmap,
-                leavesImage,
-                "Some description from the user about the context of the image"
-            )
-        _identification.value = data
+    private fun showError(msg: String) {
+        _error.value = msg
     }
 
-    //just to see how it looks, then delete
-    private fun exampleBitmap(): Bitmap {
-        // Tamaño del bitmap
-        val ancho = 200
-        val alto = 200
-
-        // Crear un bitmap con el tamaño especificado
-        val bitmap = Bitmap.createBitmap(ancho, alto, Bitmap.Config.ARGB_8888)
-
-        // Crear un lienzo para dibujar en el bitmap
-        val canvas = Canvas(bitmap)
-
-        // Dibujar un rectángulo de fondo blanco
-        val paint = Paint().apply {
-            color = Color.WHITE
+    fun showAnalysis(analysisId: Int) {
+        viewModelScope.launch {
+            analysisComponent.findAnalysisDetail(analysisId)
+                .onSuccess {
+                    val plantImage = BitmapFactory.decodeFile(it.imagePath)
+                    val leafModelList = it.listLeafBoxCoordinates.toModel()
+                        .zip(it.classificationData)
+                        .map { boxAndLeaf ->
+                            val leafImage = cropImageFromBoundingBox(plantImage, boxAndLeaf.first)
+                            val diseaseName = boxAndLeaf.second.bestPrediction.first
+                            val isHealthy = boxAndLeaf.second.leafState == LeafState.Healthy
+                            val probability = boxAndLeaf.second.bestPrediction.second
+                            LeafModel(
+                                image = leafImage,
+                                diseases = diseaseName,
+                                isHealthy = isHealthy,
+                                probability = probability
+                            )
+                        }
+                    val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                    val creationDate = formatter.format(it.date)
+                    val identificationDetailModel = IdentificationDetailModel(
+                        id = it.id,
+                        creationDate = creationDate,
+                        plantImage = plantImage,
+                        leavesImage = leafModelList,
+                        description = it.note
+                    )
+                    _boundingBoxes.value = it.listLeafBoxCoordinates.toModel()
+                    _identification.value = identificationDetailModel
+                }
+                .onFailure { showError(errorFilter.filter(it)) }
         }
-        canvas.drawRect(0f, 0f, ancho.toFloat(), alto.toFloat(), paint)
-
-        // Dibujar un círculo rojo en el centro
-        paint.color = Color.RED
-        val radio = 50f
-        val centroX = ancho / 2f
-        val centroY = alto / 2f
-        canvas.drawCircle(centroX, centroY, radio, paint)
-
-        // Dibujar un texto negro
-        paint.color = Color.BLACK
-        paint.textSize = 30f
-        val texto = "My Image"
-        val textoAncho = paint.measureText(texto)
-        val textoX = centroX - textoAncho / 2
-        canvas.drawText(texto, textoX, centroY, paint)
-
-        return bitmap
     }
 
-    fun saveNote(text: String) {
+    private fun cropImageFromBoundingBox(imgBitmap: Bitmap, boundingBox: BoundingBoxModel): Bitmap {
+        val imageWidth = imgBitmap.width
+        val imageHeight = imgBitmap.height
+        val x1 = boundingBox.x1 * imageWidth
+        val y1 = boundingBox.y1 * imageHeight
+        val x2 = boundingBox.x2 * imageWidth
+        val y2 = boundingBox.y2 * imageHeight
+        val croppedImageWidth = (x2 - x1).toInt()
+        val croppedImageHeight = (y2 - y1).toInt()
+        if (croppedImageWidth <= 0 || croppedImageHeight <= 0)
+            throw IllegalArgumentException("The dimensions of the area to be trimmed cannot be <= 0")
+        val rectTarget = Rect(0, 0, croppedImageWidth, croppedImageHeight)
+        val croppedImage =
+            createBitmap(croppedImageWidth, croppedImageHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(croppedImage)
+        val rect = Rect(x1.toInt(), y1.toInt(), x2.toInt(), y2.toInt())
+        canvas.drawBitmap(imgBitmap, rect, rectTarget, null)
+        return croppedImage
+    }
 
+    fun saveNote(analysisId: Int, text: String) {
+        viewModelScope.launch {
+            analysisComponent.updateAnalysisNote(analysisId, text)
+                .onSuccess { _updatedNote.value = Unit }
+                .onFailure { showError(errorFilter.filter(it)) }
+        }
     }
 
     fun getNote() {
@@ -129,16 +146,7 @@ internal class IdentificationViewModel @Inject constructor(): ViewModel() {
     }
 
     fun getLeafInfo() {
-        val model = LeafInfoModel(
-            exampleBitmap(),
-            false,
-            "Mosaic Virus(95%)",
-            "Typically, first symptoms appear as yellowing or bronzing of young leaflets as well\n" +
-                    "as necrosis of leaflet veins. Severely affected plants stop growing and leaflets curl\n" +
-                    "downward."
-        )
-        _leafInfo.value = model
+//        _leafInfo.value = model
     }
-
 
 }
