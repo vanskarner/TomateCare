@@ -42,13 +42,17 @@ class TFLiteComputerVision(private val context: Context) : ComputerVision {
         numberThreads: Int
     ): Result<Pair<Long, List<ClassificationData>>> {
         val bitmapImage = BitmapFactory.decodeFile(imgPath)
-        val bitmapImages = list.map { cropImageFromBoundingBox(bitmapImage, it) }
+        val bitmapImages = list
+            .map { cropImageFromBoundingBox(bitmapImage, it) }
+            .map { resizeImage(it) }
         if (useGPU) {
             val compatList = CompatibilityList()
             if (compatList.isDelegateSupportedOnThisDevice) {
-                val options = Interpreter.Options().addDelegate(GpuDelegate())
+                val delegate = GpuDelegate(compatList.bestOptionsForThisDevice)
+                val options = Interpreter.Options().addDelegate(delegate)
                 val result = useMobilenetV3Small(context, bitmapImages, options)
                 compatList.close()
+                delegate.close()
                 return result
             }
             return Result.failure(AnalysisError.GPUNotSupportedByDevice)
@@ -65,13 +69,17 @@ class TFLiteComputerVision(private val context: Context) : ComputerVision {
         numberThreads: Int
     ): Result<Pair<Long, List<ClassificationData>>> {
         val bitmapImage = BitmapFactory.decodeFile(imgPath)
-        val bitmapImages = list.map { cropImageFromBoundingBox(bitmapImage, it) }
+        val bitmapImages = list
+            .map { cropImageFromBoundingBox(bitmapImage, it) }
+            .map { resizeImage(it) }
         if (useGPU) {
             val compatList = CompatibilityList()
             if (compatList.isDelegateSupportedOnThisDevice) {
-                val options = Interpreter.Options().addDelegate(GpuDelegate())
+                val delegate = GpuDelegate(compatList.bestOptionsForThisDevice)
+                val options = Interpreter.Options().addDelegate(delegate)
                 val result = useMobilenetV3Large(context, bitmapImages, options)
                 compatList.close()
+                delegate.close()
                 return result
             }
             return Result.failure(AnalysisError.GPUNotSupportedByDevice)
@@ -88,13 +96,17 @@ class TFLiteComputerVision(private val context: Context) : ComputerVision {
         numberThreads: Int
     ): Result<Pair<Long, List<ClassificationData>>> {
         val bitmapImage = BitmapFactory.decodeFile(imgPath)
-        val bitmapImages = list.map { cropImageFromBoundingBox(bitmapImage, it) }
+        val bitmapImages = list
+            .map { cropImageFromBoundingBox(bitmapImage, it) }
+            .map { resizeImage(it) }
         if (useGPU) {
             val compatList = CompatibilityList()
             if (compatList.isDelegateSupportedOnThisDevice) {
-                val options = Interpreter.Options().addDelegate(GpuDelegate())
+                val delegate = GpuDelegate(compatList.bestOptionsForThisDevice)
+                val options = Interpreter.Options().addDelegate(delegate)
                 val result = useMobilenetV2(context, bitmapImages, options)
                 compatList.close()
+                delegate.close()
                 return result
             }
             return Result.failure(AnalysisError.GPUNotSupportedByDevice)
@@ -111,13 +123,17 @@ class TFLiteComputerVision(private val context: Context) : ComputerVision {
         numberThreads: Int
     ): Result<Pair<Long, List<ClassificationData>>> {
         val bitmapImage = BitmapFactory.decodeFile(imgPath)
-        val bitmapImages = list.map { cropImageFromBoundingBox(bitmapImage, it) }
+        val bitmapImages = list
+            .map { cropImageFromBoundingBox(bitmapImage, it) }
+            .map { resizeImage(it) }
         if (useGPU) {
             val compatList = CompatibilityList()
             if (compatList.isDelegateSupportedOnThisDevice) {
-                val options = Interpreter.Options().addDelegate(GpuDelegate())
+                val delegate = GpuDelegate(compatList.bestOptionsForThisDevice)
+                val options = Interpreter.Options().addDelegate(delegate)
                 val result = useSqueezeNetMish(context, bitmapImages, options)
                 compatList.close()
+                delegate.close()
                 return result
             }
             return Result.failure(AnalysisError.GPUNotSupportedByDevice)
@@ -134,13 +150,17 @@ class TFLiteComputerVision(private val context: Context) : ComputerVision {
         numberThreads: Int
     ): Result<Pair<Long, List<ClassificationData>>> {
         val bitmapImage = BitmapFactory.decodeFile(imgPath)
-        val bitmapImages = list.map { cropImageFromBoundingBox(bitmapImage, it) }
+        val bitmapImages = list
+            .map { cropImageFromBoundingBox(bitmapImage, it) }
+            .map { resizeImage(it) }
         if (useGPU) {
             val compatList = CompatibilityList()
             if (compatList.isDelegateSupportedOnThisDevice) {
-                val options = Interpreter.Options().addDelegate(GpuDelegate())
+                val delegate = GpuDelegate(compatList.bestOptionsForThisDevice)
+                val options = Interpreter.Options().addDelegate(delegate)
                 val result = useNASNetMobile(context, bitmapImages, options)
                 compatList.close()
+                delegate.close()
                 return result
             }
             return Result.failure(AnalysisError.GPUNotSupportedByDevice)

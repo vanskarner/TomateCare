@@ -7,8 +7,6 @@ import java.nio.ByteOrder
 import kotlin.math.exp
 import kotlin.math.pow
 
-internal fun resizeImages(images: List<Bitmap>) = images.map { resizeImage(it) }
-
 internal fun resizeImage(image: Bitmap) =
     Bitmap.createScaledBitmap(image, CLASSIFICATION_IMG_SIZE, CLASSIFICATION_IMG_SIZE, false)
 
