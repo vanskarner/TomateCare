@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vanskarner.analysis.AnalysisComponent
+import com.vanskarner.tomatecare.ui.errors.ErrorFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class CaptureViewModel @Inject constructor(
-    private val analysisComponent: AnalysisComponent
+    private val analysisComponent: AnalysisComponent,
+    private val errorFilter: ErrorFilter
 ) : ViewModel() {
 
     private val _settingModel = MutableLiveData<SettingModel>()

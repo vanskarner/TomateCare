@@ -8,6 +8,8 @@ import com.vanskarner.analysis.persistence.ClassificationsConverter
 import com.vanskarner.diseases.DiseasesComponent
 import com.vanskarner.diseases.main.DiseasesComponentFactory
 import com.vanskarner.tomatecare.ui.CustomNavigationBottomNav
+import com.vanskarner.tomatecare.ui.errors.DefaultErrorFilter
+import com.vanskarner.tomatecare.ui.errors.ErrorFilter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,5 +44,11 @@ object MainActivityModule {
     @Provides
     @Singleton
     fun provideDiseasesComponent(): DiseasesComponent = DiseasesComponentFactory.createComponent()
+
+    @Provides
+    @Singleton
+    fun provideErrorFilter(@ApplicationContext context: Context): ErrorFilter {
+        return DefaultErrorFilter(context)
+    }
 
 }

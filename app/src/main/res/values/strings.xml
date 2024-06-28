@@ -78,9 +78,15 @@
     <string name="description_capture_error">No se encontró una planta</string>
     <string name="image_not_loaded">No se puede cargar la imagen</string>
     <string name="error_non_analyzable_image">La imagen no pudo ser analizada</string>
+    <string name="error_unknown">Algo salió mal…</string>
+    <string name="error_gpu_not_supported_device">El dispositivo no soporta el uso de GPU</string>
+    <string name="error_invalid_config">La configuracion aplicada es inválida</string>
     <string name="no_item_selected">No ha seleccionado ningun elemento</string>
     <string name="sick_format">Sick: %d</string>
     <string name="error_temporary_image">No se pudo crear el archivo temporal para respaldo de imagen</string>
+    <string name="error_no_leaves">No se encontraron hojas en la imagen</string>
+    <string name="error_no_found">Elemento no encontrado</string>
+    <string name="error_disease_not_found">Enfermedad no encontrada</string>
 
     <string name="provider_authorities_camera">com.vanskarner.tomatecare.fileprovider</string>
     <string name="finished_analysis">Análisis terminado</string>
