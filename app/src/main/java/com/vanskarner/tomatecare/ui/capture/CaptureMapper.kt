@@ -1,6 +1,7 @@
 package com.vanskarner.tomatecare.ui.capture
 
 import com.vanskarner.analysis.ConfigData
+import com.vanskarner.analysis.SetConfigData
 
 internal fun ConfigData.toModel() = SettingModel(
     maxResults = maxResults,
@@ -11,4 +12,11 @@ internal fun ConfigData.toModel() = SettingModel(
     threadLimit = maxThreads,
     selectedModelIndex = modelList.lastIndex,
     selectedProcessorIndex = processingList.lastIndex
+)
+
+internal fun SettingModel.toData() = SetConfigData(
+    numberThreads = threads,
+    numberResults = maxResults,
+    processing = processors[selectedProcessorIndex],
+    model = models[selectedModelIndex]
 )

@@ -1,5 +1,6 @@
 package com.vanskarner.tomatecare.ui.capture
 
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -12,6 +13,7 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.vanskarner.tomatecare.ui.common.BaseBindingFragment
 import com.vanskarner.tomatecare.ui.MainViewModel
 import com.vanskarner.tomatecare.R
@@ -32,8 +34,14 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
     private val viewModel: CaptureViewModel by viewModels()
     private val viewModelActivity: MainViewModel by activityViewModels()
     private var currentPhotoPath: String = ""
-    private val cameraRequest = registerForTakePicture { viewModel.analyzeImage(currentPhotoPath) }
-    private val galleryRequest = registerForGallery { viewModel.analyzeImage(currentPhotoPath) }
+    private val cameraRequest = registerForTakePicture {
+        showImageFromPath(currentPhotoPath)
+        viewModel.analyzeImage(currentPhotoPath)
+    }
+    private val galleryRequest = registerForGallery {
+        showImageFromPath(currentPhotoPath)
+        viewModel.analyzeImage(currentPhotoPath)
+    }
 
     override fun inflateBinding(
         inflater: LayoutInflater,
@@ -59,13 +67,17 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
     }
 
     override fun setupViewModel() {
-        viewModel.settingModel.observe(viewLifecycleOwner) {
+        viewModel.setting.observe(viewLifecycleOwner) {
             settingDialog.show(childFragmentManager, it)
         }
         viewModel.error.observe(viewLifecycleOwner) { showError(it) }
         viewModel.idLog.observe(viewLifecycleOwner) { goToIdentificationFragment(it) }
         viewModel.defaultImage.observe(viewLifecycleOwner) {
             binding.imvPlantCover.setImageResource(R.drawable.plant_96)
+        }
+        viewModel.boundingBoxes.observe(viewLifecycleOwner) {
+            if (it.isEmpty()) binding.overlay.clear()
+            else binding.overlay.setResults(it)
         }
     }
 
@@ -114,9 +126,14 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         if (fileToDelete.exists()) fileToDelete.delete()
     }
 
-    private fun showError(throwable: Throwable) {
-        showToast(R.string.error_non_analyzable_image)
+    private fun showImageFromPath(imgPath: String) {
+        Glide.with(requireContext())
+            .load(BitmapFactory.decodeFile(imgPath))
+            .error(R.drawable.plant_96)
+            .into(binding.imvPlantCover)
     }
+
+    private fun showError(msgError: String) = showToast(msgError)
 
     private fun goToIdentificationFragment(idLog: Int) {
         val navDirection = CaptureFragmentDirections.toIdentificationFragment(idLog)

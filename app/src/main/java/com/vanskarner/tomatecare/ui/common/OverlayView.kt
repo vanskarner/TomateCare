@@ -1,4 +1,4 @@
-package com.vanskarner.tomatecare.ui
+package com.vanskarner.tomatecare.ui.common
 
 import android.content.Context
 import android.graphics.Canvas
@@ -8,7 +8,6 @@ import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.vanskarner.analysis.BoundingBoxData
 import com.vanskarner.tomatecare.R
 
 /**
@@ -16,7 +15,7 @@ import com.vanskarner.tomatecare.R
  */
 class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
-    private var results = listOf<BoundingBoxData>()
+    private var results = listOf<BoundingBoxModel>()
     private var boxPaint = Paint()
     private var textBackgroundPaint = Paint()
     private var textPaint = Paint()
@@ -77,7 +76,7 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
         }
     }
 
-    fun setResults(boundingBoxData: List<BoundingBoxData>) {
+    fun setResults(boundingBoxData: List<BoundingBoxModel>) {
         results = boundingBoxData
         invalidate()
     }

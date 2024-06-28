@@ -22,7 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="#F3EDF7"
-            android:imageBitmap="@{viewModel.imageToAnalyze}"
             android:scaleType="fitXY"
             android:src="@drawable/plant_96"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
@@ -31,7 +30,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription,ImageContrastCheck" />
 
-        <com.vanskarner.tomatecare.ui.OverlayView
+        <com.vanskarner.tomatecare.ui.common.OverlayView
             android:id="@+id/overlay"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -163,7 +162,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="24dp"
-                    android:onClick="@{() -> viewModel.otherImage()}"
+                    android:onClick="@{() -> viewModel.showStart()}"
                     android:text="@string/other_image" />
 
                 <Button

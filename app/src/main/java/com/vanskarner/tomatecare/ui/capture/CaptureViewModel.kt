@@ -1,16 +1,17 @@
 package com.vanskarner.tomatecare.ui.capture
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vanskarner.analysis.AnalysisComponent
+import com.vanskarner.tomatecare.ui.common.BoundingBoxModel
+import com.vanskarner.tomatecare.ui.common.toModel
 import com.vanskarner.tomatecare.ui.errors.ErrorFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,62 +20,83 @@ internal class CaptureViewModel @Inject constructor(
     private val errorFilter: ErrorFilter
 ) : ViewModel() {
 
-    private val _settingModel = MutableLiveData<SettingModel>()
+    private val _setting = MutableLiveData<SettingModel>()
     private val _startVisibility = MutableLiveData(true)
     private val _loadingVisibility = MutableLiveData(false)
     private val _analysisFinishedVisibility = MutableLiveData(false)
     private val _defaultImage = MutableLiveData<Unit>()
-    private val _error = MutableLiveData<Throwable>()
+    private val _error = MutableLiveData<String>()
     private val _idLog = MutableLiveData<Int>()
-    private val _imageToAnalyze = MutableLiveData<Bitmap>()
+    private val _boundingBoxes = MutableLiveData<List<BoundingBoxModel>>()
 
-    val settingModel: LiveData<SettingModel> = _settingModel
+    val setting: LiveData<SettingModel> = _setting
     val startVisibility: LiveData<Boolean> = _startVisibility
     val loadingVisibility: LiveData<Boolean> = _loadingVisibility
     val analysisFinishedVisibility: LiveData<Boolean> = _analysisFinishedVisibility
     val defaultImage: LiveData<Unit> = _defaultImage
-    val error: LiveData<Throwable> = _error
+    val error: LiveData<String> = _error
     val idLog: LiveData<Int> = _idLog
-    val imageToAnalyze: LiveData<Bitmap> = _imageToAnalyze
+    val boundingBoxes: LiveData<List<BoundingBoxModel>> = _boundingBoxes
 
-    private var myModel = analysisComponent.getConfigParams().toModel()
+    private var settingModel = analysisComponent.getConfigParams().toModel()
+    private var analysisId = 0
 
     fun getSetting() {
-        _settingModel.value = myModel
+        _setting.value = settingModel
     }
 
     fun updateSetting(setting: SettingModel) {
-        this.myModel = setting
-    }
-
-    fun nextScreen() {
-        _idLog.value = 12
-    }
-
-    fun otherImage() {
-        _analysisFinishedVisibility.value = false
-        _startVisibility.value = true
-        _defaultImage.value = Unit
-    }
-
-    private fun showError() {
-        _loadingVisibility.value = false
-        _startVisibility.value = true
-        _defaultImage.value = Unit
-        _error.value = Exception("Something went wrong")
+        this.settingModel = setting
     }
 
     fun analyzeImage(imgPath: String) {
+        showLoading()
         viewModelScope.launch {
-            _startVisibility.value = false
-            _loadingVisibility.value = true
-            _imageToAnalyze.value = BitmapFactory.decodeFile(imgPath)
-            delay(3000)
-
-            _loadingVisibility.value = false
-            _analysisFinishedVisibility.value = true
-            /*showError()*/
+            val analysisResult = withContext(Dispatchers.IO) {
+                analysisComponent.analyzePlant(imgPath, settingModel.toData())
+            }
+            withContext(Dispatchers.Main) {
+                analysisResult
+                    .onSuccess {
+                        analysisId = it.id
+                        _boundingBoxes.value = it.listLeafBoxCoordinates.toModel()
+                        showAnalysisFinished()
+                    }
+                    .onFailure { showError(errorFilter.filter(it)) }
+            }
         }
+    }
+
+    fun nextScreen() {
+        _idLog.value = analysisId
+    }
+
+    fun showStart() {
+        _loadingVisibility.value = false
+        _analysisFinishedVisibility.value = false
+        _startVisibility.value = true
+        _defaultImage.value = Unit
+        _boundingBoxes.value = emptyList()
+    }
+
+    private fun showLoading() {
+        _startVisibility.value = false
+        _analysisFinishedVisibility.value = false
+        _loadingVisibility.value = true
+    }
+
+    private fun showAnalysisFinished() {
+        _loadingVisibility.value = false
+        _startVisibility.value = false
+        _analysisFinishedVisibility.value = true
+    }
+
+    private fun showError(msgError: String) {
+        _analysisFinishedVisibility.value = false
+        _loadingVisibility.value = false
+        _startVisibility.value = true
+        _defaultImage.value = Unit
+        _error.value = msgError
     }
 
 }
