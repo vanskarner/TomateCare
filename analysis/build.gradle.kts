@@ -51,6 +51,7 @@ dependencies {
     implementation("org.tensorflow:tensorflow-lite-support:0.4.4")//0.1.0
     implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
     implementation("org.tensorflow:tensorflow-lite-gpu:2.16.1")//2.3.0
+    implementation("org.tensorflow:tensorflow-lite-gpu-api:2.16.1")
 
 /*    //TFLite - other way
     implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
