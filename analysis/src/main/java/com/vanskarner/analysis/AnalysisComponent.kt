@@ -14,4 +14,6 @@ interface AnalysisComponent {
 
     suspend fun deleteAnalysisByIds(ids: List<Int>): Result<Int>
 
+    suspend fun getAnalysisNote(id:Int):Result<String>
+
 }

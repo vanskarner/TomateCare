@@ -54,3 +54,11 @@ internal class DeleteAnalysisUseCase(
     suspend fun execute(id: List<Int>) = repository.deleteAnalysis(id)
 
 }
+
+internal class GetAnalysisNoteUseCase(
+    private val repository: Repository
+) {
+
+    suspend fun execute(id: Int) = repository.findAnalysisNote(id)
+
+}

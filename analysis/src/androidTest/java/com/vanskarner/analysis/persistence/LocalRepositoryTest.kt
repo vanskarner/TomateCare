@@ -143,6 +143,22 @@ class LocalRepositoryTest {
         assertEquals(1, actualNumberDeletedItems)
     }
 
+    @Test
+    fun findAnalysisNote_withInvalidId_returnNotFoundError() = runTest {
+        val exception = defaultRepository.findAnalysisNote(33).exceptionOrNull()
+
+        assertTrue(exception is AnalysisError.NotFound)
+    }
+
+    @Test
+    fun findAnalysisNote_withValidId_returnNote() = runTest {
+        val expectedItem = exampleData()
+        val savedId = defaultRepository.saveAnalysis(expectedItem).getOrThrow()
+        val actualNote = defaultRepository.findAnalysisNote(savedId).getOrThrow()
+
+        assertEquals(expectedItem.note, actualNote)
+    }
+
     private fun exampleData(): AnalysisDetailData {
         return AnalysisDetailData(
             id = 0,

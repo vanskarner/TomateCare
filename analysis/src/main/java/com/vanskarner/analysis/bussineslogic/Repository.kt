@@ -17,4 +17,6 @@ internal interface Repository {
 
     suspend fun deleteAnalysis(ids: List<Int>): Result<Int>
 
+    suspend fun findAnalysisNote(id:Int):Result<String>
+
 }

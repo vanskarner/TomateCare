@@ -107,4 +107,19 @@ class SimpleUseCasesTest {
         assertEquals(expectedIds.size, actualDeletedItems)
     }
 
+    @Test
+    fun `GetAnalysisNoteUseCase with validId should note`() = runTest {
+        val repository: Repository = mock()
+        val expectedId = 137
+        val expectedNote = "Some Note"
+        `when`(repository.findAnalysisNote(expectedId))
+            .thenReturn(Result.success(expectedNote))
+        val useCase = GetAnalysisNoteUseCase(repository)
+        val actualNote = useCase.execute(expectedId).getOrThrow()
+
+        verify(repository, times(1))
+            .findAnalysisNote(expectedId)
+        assertEquals(expectedNote, actualNote)
+    }
+
 }

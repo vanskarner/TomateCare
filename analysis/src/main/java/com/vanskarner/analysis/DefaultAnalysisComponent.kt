@@ -3,6 +3,7 @@ package com.vanskarner.analysis
 import com.vanskarner.analysis.bussineslogic.AnalyzePlantUseCase
 import com.vanskarner.analysis.bussineslogic.DeleteAnalysisUseCase
 import com.vanskarner.analysis.bussineslogic.FindAnalysisUseCase
+import com.vanskarner.analysis.bussineslogic.GetAnalysisNoteUseCase
 import com.vanskarner.analysis.bussineslogic.GetAnalysisUseCase
 import com.vanskarner.analysis.bussineslogic.GetConfigUseCase
 import com.vanskarner.analysis.bussineslogic.UpdateAnalysisNoteUseCase
@@ -13,7 +14,8 @@ internal class DefaultAnalysisComponent(
     private val findAnalysisUseCase: FindAnalysisUseCase,
     private val getConfigUseCase: GetConfigUseCase,
     private val updateAnalysisNoteUseCase: UpdateAnalysisNoteUseCase,
-    private val deleteAnalysisUseCase: DeleteAnalysisUseCase
+    private val deleteAnalysisUseCase: DeleteAnalysisUseCase,
+    private val getAnalysisNoteUseCase: GetAnalysisNoteUseCase
 ) : AnalysisComponent {
 
     override suspend fun getAnalysis(): Result<List<AnalysisData>> {
@@ -35,5 +37,7 @@ internal class DefaultAnalysisComponent(
 
     override suspend fun deleteAnalysisByIds(ids: List<Int>): Result<Int> =
         deleteAnalysisUseCase.execute(ids)
+
+    override suspend fun getAnalysisNote(id: Int): Result<String> = getAnalysisNoteUseCase.execute(id)
 
 }

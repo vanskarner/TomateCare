@@ -9,6 +9,7 @@ import com.vanskarner.analysis.bussineslogic.ComputerVision
 import com.vanskarner.analysis.bussineslogic.DeleteAnalysisUseCase
 import com.vanskarner.analysis.bussineslogic.DetectLeavesUseCase
 import com.vanskarner.analysis.bussineslogic.FindAnalysisUseCase
+import com.vanskarner.analysis.bussineslogic.GetAnalysisNoteUseCase
 import com.vanskarner.analysis.bussineslogic.GetAnalysisUseCase
 import com.vanskarner.analysis.bussineslogic.GetConfigUseCase
 import com.vanskarner.analysis.bussineslogic.Repository
@@ -35,7 +36,8 @@ internal object AnalysisModule {
         findAnalysisUseCase: FindAnalysisUseCase,
         getConfigUseCase: GetConfigUseCase,
         updateAnalysisNoteUseCase: UpdateAnalysisNoteUseCase,
-        deleteAnalysisUseCase: DeleteAnalysisUseCase
+        deleteAnalysisUseCase: DeleteAnalysisUseCase,
+        getAnalysisNoteUseCase: GetAnalysisNoteUseCase
     ): AnalysisComponent {
         return DefaultAnalysisComponent(
             getAnalysisUseCase,
@@ -43,7 +45,8 @@ internal object AnalysisModule {
             findAnalysisUseCase,
             getConfigUseCase,
             updateAnalysisNoteUseCase,
-            deleteAnalysisUseCase
+            deleteAnalysisUseCase,
+            getAnalysisNoteUseCase
         )
     }
 
@@ -97,6 +100,11 @@ internal object AnalysisModule {
     @Provides
     fun provideDeleteAnalysisUseCase(repository: Repository): DeleteAnalysisUseCase {
         return DeleteAnalysisUseCase(repository)
+    }
+
+    @Provides
+    fun provideGetAnalysisNoteUseCase(repository: Repository): GetAnalysisNoteUseCase {
+        return GetAnalysisNoteUseCase(repository)
     }
 
 }

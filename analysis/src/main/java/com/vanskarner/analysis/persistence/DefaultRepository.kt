@@ -61,4 +61,14 @@ internal class DefaultRepository(
         }
     }
 
+    override suspend fun findAnalysisNote(id: Int): Result<String> {
+        return try {
+            val note = activityLogDao.getNoteByUid(id)
+            if (note == null) Result.failure(AnalysisError.NotFound)
+            else Result.success(note)
+        } catch (exception: Exception) {
+            Result.failure(exception)
+        }
+    }
+
 }

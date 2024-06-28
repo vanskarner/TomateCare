@@ -14,7 +14,7 @@ import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.gpu.CompatibilityList
 import org.tensorflow.lite.gpu.GpuDelegate
 
-class TFLiteComputerVision(private val context: Context) : ComputerVision {
+internal class TFLiteComputerVision(private val context: Context) : ComputerVision {
 
     override suspend fun detectLeaves(imgPath: String): Result<Pair<Long, List<BoundingBoxData>>> {
         val compatList = CompatibilityList()
