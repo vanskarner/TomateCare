@@ -1,8 +1,10 @@
 package com.vanskarner.diseases.persistence
 
+import com.vanskarner.diseases.bussineslogic.DiseaseDetailData
 import com.vanskarner.diseases.bussineslogic.DiseasesRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -110,6 +112,22 @@ class DefaultDiseasesRepositoryTest {
         assertEquals("Mancha diana", names[6])
         assertEquals("Virus del enrollamiento de la hoja amarilla", names[7])
         assertEquals("", names[8])
+    }
+
+    @Test
+    fun `findByKeyCodes with invalid keyCodes should return some empty diseases`() = runTest {
+        val emptyDisease = DiseaseDetailData.empty()
+        val keyCodes = listOf(
+            "unknown",
+            "early_blight",
+            "unknown"
+        )
+        val diseases = repository.findByKeyCodes(keyCodes).getOrThrow()
+
+        assertEquals(keyCodes.size,diseases.size)
+        assertEquals(emptyDisease, diseases[0])
+        assertNotEquals(emptyDisease, diseases[1])
+        assertEquals(emptyDisease, diseases[2])
     }
 
 }

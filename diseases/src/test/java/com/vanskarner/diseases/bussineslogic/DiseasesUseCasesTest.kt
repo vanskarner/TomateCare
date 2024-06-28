@@ -11,6 +11,7 @@ class DiseasesUseCasesTest {
     private lateinit var findDiseaseUseCase: FindDiseaseUseCase
     private lateinit var getNameByKeyCodeUseCase: GetNameByKeyCodeUseCase
     private lateinit var getNamesByKeyCodesUseCase: GetNamesByKeyCodesUseCase
+    private lateinit var findDiseasesByKeyCodesUseCase: FindDiseasesByKeyCodesUseCase
     private val exampleList by lazy {
         listOf(
             DiseaseData(1, "Bacterial Spot", "Some Image", "Some Symptoms"),
@@ -31,14 +32,35 @@ class DiseasesUseCasesTest {
     }
     private val exampleName = "Bacterial Spot"
     private val exampleNameList = listOf("Bacterial Spot", "Mosaic Virus")
+    private val exampleListByKeyCodes by lazy {
+        listOf(
+            DiseaseDetailData(
+                1,
+                "Bacterial Spot",
+                "Some Image",
+                "Some Agent",
+                "Some Symptoms",
+                "Some Condition",
+                "Some Control",
+                "Some Source"
+            )
+        )
+    }
 
     @Before
     fun setUp() {
-        repository = FakeDiseasesRepository(exampleList, exampleItem, exampleName, exampleNameList)
+        repository = FakeDiseasesRepository(
+            exampleList,
+            exampleItem,
+            exampleName,
+            exampleNameList,
+            exampleListByKeyCodes
+        )
         getDiseasesUseCase = GetDiseasesUseCase(repository)
         findDiseaseUseCase = FindDiseaseUseCase(repository)
         getNameByKeyCodeUseCase = GetNameByKeyCodeUseCase(repository)
         getNamesByKeyCodesUseCase = GetNamesByKeyCodesUseCase(repository)
+        findDiseasesByKeyCodesUseCase = FindDiseasesByKeyCodesUseCase(repository)
     }
 
     @Test
@@ -75,6 +97,13 @@ class DiseasesUseCasesTest {
         val actualNameList = getNamesByKeyCodesUseCase.execute(keyCodes).getOrThrow()
 
         assertEquals(exampleNameList.size, actualNameList.size)
+    }
+
+    @Test
+    fun `execute findDiseasesByKeyCodesUseCase return diseases`() = runTest {
+        val keyCodes = listOf("any_code1")
+        val actualList = findDiseasesByKeyCodesUseCase.execute(keyCodes).getOrThrow()
+        assertEquals(exampleListByKeyCodes.size, actualList.size)
     }
 
 }

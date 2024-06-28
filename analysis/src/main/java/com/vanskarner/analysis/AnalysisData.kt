@@ -61,6 +61,7 @@ data class AnalysisDetailData(
     val classificationInferenceTimeMs: Long,
     val note: String = "",
     val numberDiseasesIdentified: Int,
+    val diseaseKeyCodes:List<String> = emptyList(),
     val listLeafBoxCoordinates: List<BoundingBoxData>,
     val classificationData: List<ClassificationData>,
     val leafDetectionModel:String,

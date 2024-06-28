@@ -45,7 +45,7 @@ internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificati
         binding.imvOnBack.setOnClickListener { goToCaptureFragment() }
         binding.rcvLeaves.adapter = leafAdapter
         binding.tvSummary.setOnClickListener { viewModel.getSummary() }
-        binding.tvAddNote.setOnClickListener { viewModel.getNote() }
+        binding.tvAddNote.setOnClickListener { viewModel.getNote(args.idLog) }
         leafAdapter.setOnClickListener { viewModel.getLeafInfo() }
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,

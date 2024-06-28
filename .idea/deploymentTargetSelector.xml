@@ -5,10 +5,7 @@
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="findAnalysisNote_withValidId_returnNote()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="LocalRepositoryTest">
+      <SelectionState runConfigName="Tests in 'com.vanskarner.analysis.persistence'">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

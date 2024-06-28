@@ -3,11 +3,13 @@ package com.vanskarner.diseases
 import com.vanskarner.diseases.bussineslogic.DiseaseData
 import com.vanskarner.diseases.bussineslogic.DiseaseDetailData
 import com.vanskarner.diseases.bussineslogic.FindDiseaseUseCase
+import com.vanskarner.diseases.bussineslogic.FindDiseasesByKeyCodesUseCase
 import com.vanskarner.diseases.bussineslogic.GetDiseasesUseCase
 import com.vanskarner.diseases.bussineslogic.GetNameByKeyCodeUseCase
 import com.vanskarner.diseases.bussineslogic.GetNamesByKeyCodesUseCase
 
 internal class DefaultDiseasesComponent(
+    private val findDiseasesByKeyCodesUseCase: FindDiseasesByKeyCodesUseCase,
     private val getDiseasesUseCase: GetDiseasesUseCase,
     private val findDiseaseUseCase: FindDiseaseUseCase,
     private val getNameByKeyCodeUseCase: GetNameByKeyCodeUseCase,
@@ -24,5 +26,8 @@ internal class DefaultDiseasesComponent(
 
     override suspend fun getNamesByKeyCodes(keyCodes: List<String>) =
         getNamesByKeyCodesUseCase.execute(keyCodes)
+
+    override suspend fun findByKeyCodes(keyCodes: List<String>): Result<List<DiseaseDetailData>> =
+        findDiseasesByKeyCodesUseCase.execute(keyCodes)
 
 }

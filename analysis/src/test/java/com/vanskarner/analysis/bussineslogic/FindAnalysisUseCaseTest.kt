@@ -55,6 +55,8 @@ class FindAnalysisUseCaseTest {
         assertEquals(expected.classificationInferenceTimeMs,actual.classificationInferenceTimeMs)
         assertEquals(expected.note,actual.note)
         assertEquals(expected.numberDiseasesIdentified,actual.numberDiseasesIdentified)
+        assertEquals(listOf("bacterial_spot"),actual.diseaseKeyCodes)
+        assertEquals(expected.diseaseKeyCodes,actual.diseaseKeyCodes)
         assertEquals(expected.listLeafBoxCoordinates,actual.listLeafBoxCoordinates)
         assertEquals(expectedRealName,actual.classificationData[0].bestPrediction.first)
         assertEquals(expectedRealNames,actual.classificationData[0].predictions.map { prediction -> prediction.first })
@@ -104,6 +106,7 @@ class FindAnalysisUseCaseTest {
             classificationInferenceTimeMs = 3000,
             note = "Some note",
             numberDiseasesIdentified = 1,
+            diseaseKeyCodes = listOf("bacterial_spot"),
             listLeafBoxCoordinates = listLeafBoxCoordinates,
             classificationData = classifications,
             leafDetectionModel = "YoloV8",

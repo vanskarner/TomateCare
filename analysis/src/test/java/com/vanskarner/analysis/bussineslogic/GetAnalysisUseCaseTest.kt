@@ -83,6 +83,7 @@ class GetAnalysisUseCaseTest {
             classificationInferenceTimeMs = 3000,
             note = "Some note",
             numberDiseasesIdentified = 1,
+            diseaseKeyCodes = listOf("bacterial_spot"),
             listLeafBoxCoordinates = listLeafBoxCoordinates,
             classificationData = classifications,
             leafDetectionModel = "YoloV8",

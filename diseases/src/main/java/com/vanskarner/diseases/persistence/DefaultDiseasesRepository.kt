@@ -34,6 +34,15 @@ internal class DefaultDiseasesRepository : DiseasesRepository {
         return Result.success(names)
     }
 
+    override suspend fun findByKeyCodes(keyCodes: List<String>): Result<List<DiseaseDetailData>> {
+        val listDTO = loadDiseasesFromJsonFile()
+        val diseases = keyCodes.map { keyCode ->
+            listDTO.diseases.find { it.keyCode == keyCode }?.toDetailData()
+                ?: DiseaseDetailData.empty()
+        }
+        return Result.success(diseases)
+    }
+
     private fun loadDiseasesFromJsonFile(): DiseasesDTO {
         return try {
             val jsonFilePath = "/diseases.json"

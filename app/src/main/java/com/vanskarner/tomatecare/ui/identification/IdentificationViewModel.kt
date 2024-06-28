@@ -108,8 +108,12 @@ internal class IdentificationViewModel @Inject constructor(
         }
     }
 
-    fun getNote() {
-        _note.value = "Note of example"
+    fun getNote(analysisId: Int) {
+        viewModelScope.launch {
+            analysisComponent.getAnalysisNote(analysisId)
+                .onSuccess { _note.value = it }
+                .onFailure { showError(errorFilter.filter(it)) }
+        }
     }
 
     fun getSummary() {

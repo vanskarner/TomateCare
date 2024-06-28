@@ -10,4 +10,6 @@ internal interface DiseasesRepository {
 
     suspend fun getNamesByKeyCodes(keyCodes: List<String>): Result<List<String>>
 
+    suspend fun findByKeyCodes(keyCodes: List<String>): Result<List<DiseaseDetailData>>
+
 }

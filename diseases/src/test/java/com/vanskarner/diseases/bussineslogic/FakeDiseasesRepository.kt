@@ -5,6 +5,7 @@ class FakeDiseasesRepository(
     private val item: DiseaseDetailData,
     private val nameDisease: String,
     private val nameDiseases: List<String>,
+    private val listByKeCodes: List<DiseaseDetailData>
 ) : DiseasesRepository {
 
     override suspend fun list(): Result<List<DiseaseData>> {
@@ -21,6 +22,10 @@ class FakeDiseasesRepository(
 
     override suspend fun getNamesByKeyCodes(keyCodes: List<String>): Result<List<String>> {
         return Result.success(nameDiseases)
+    }
+
+    override suspend fun findByKeyCodes(keyCodes: List<String>): Result<List<DiseaseDetailData>> {
+        return Result.success(listByKeCodes)
     }
 
 }
