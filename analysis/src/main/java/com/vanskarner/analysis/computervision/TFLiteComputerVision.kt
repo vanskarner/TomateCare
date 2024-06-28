@@ -20,11 +20,17 @@ class TFLiteComputerVision(private val context: Context) : ComputerVision {
         val compatList = CompatibilityList()
         val isDelegateSupportedOnThisDevice = compatList.isDelegateSupportedOnThisDevice
         val imgBitmap = BitmapFactory.decodeFile(imgPath)
+        if (isDelegateSupportedOnThisDevice) {
+            val delegate = GpuDelegate(compatList.bestOptionsForThisDevice)
+            val options = Interpreter.Options().addDelegate(delegate)
+            val result = useYoloV8LeafDetection(context, imgBitmap, options)
+            compatList.close()
+            delegate.close()
+            return result
+        }
         val numThreads = Runtime.getRuntime().availableProcessors()
-        val interpreterOptions =
-            if (isDelegateSupportedOnThisDevice) Interpreter.Options().addDelegate(GpuDelegate())
-            else Interpreter.Options().setNumThreads(numThreads)
-        val result = useYoloV8LeafDetection(context, imgBitmap, interpreterOptions)
+        val options = Interpreter.Options().setNumThreads(numThreads)
+        val result = useYoloV8LeafDetection(context, imgBitmap, options)
         compatList.close()
         return result
     }
