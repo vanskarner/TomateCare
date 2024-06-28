@@ -18,18 +18,18 @@ internal class CaptureViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _settingModel = MutableLiveData<SettingModel>()
-    private val _start = MutableLiveData(true)
-    private val _loading = MutableLiveData(false)
-    private val _analysisFinished = MutableLiveData(false)
+    private val _startVisibility = MutableLiveData(true)
+    private val _loadingVisibility = MutableLiveData(false)
+    private val _analysisFinishedVisibility = MutableLiveData(false)
     private val _defaultImage = MutableLiveData<Unit>()
     private val _error = MutableLiveData<Throwable>()
     private val _idLog = MutableLiveData<Int>()
     private val _imageToAnalyze = MutableLiveData<Bitmap>()
 
     val settingModel: LiveData<SettingModel> = _settingModel
-    val start: LiveData<Boolean> = _start
-    val loading: LiveData<Boolean> = _loading
-    val analysisFinished: LiveData<Boolean> = _analysisFinished
+    val startVisibility: LiveData<Boolean> = _startVisibility
+    val loadingVisibility: LiveData<Boolean> = _loadingVisibility
+    val analysisFinishedVisibility: LiveData<Boolean> = _analysisFinishedVisibility
     val defaultImage: LiveData<Unit> = _defaultImage
     val error: LiveData<Throwable> = _error
     val idLog: LiveData<Int> = _idLog
@@ -50,27 +50,27 @@ internal class CaptureViewModel @Inject constructor(
     }
 
     fun otherImage() {
-        _analysisFinished.value = false
-        _start.value = true
+        _analysisFinishedVisibility.value = false
+        _startVisibility.value = true
         _defaultImage.value = Unit
     }
 
     private fun showError() {
-        _loading.value = false
-        _start.value = true
+        _loadingVisibility.value = false
+        _startVisibility.value = true
         _defaultImage.value = Unit
         _error.value = Exception("Something went wrong")
     }
 
     fun analyzeImage(imgPath: String) {
         viewModelScope.launch {
-            _start.value = false
-            _loading.value = true
+            _startVisibility.value = false
+            _loadingVisibility.value = true
             _imageToAnalyze.value = BitmapFactory.decodeFile(imgPath)
             delay(3000)
 
-            _loading.value = false
-            _analysisFinished.value = true
+            _loadingVisibility.value = false
+            _analysisFinishedVisibility.value = true
             /*showError()*/
         }
     }
