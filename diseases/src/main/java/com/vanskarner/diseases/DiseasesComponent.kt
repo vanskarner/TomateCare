@@ -56,4 +56,14 @@ interface DiseasesComponent {
      */
     suspend fun findByKeyCodes(keyCodes: List<String>): Result<List<DiseaseDetailData>>
 
+    /**
+     * Find the disease by its keyCode.
+     * @param keyCode disease identifier
+     * @return [Result], encapsulates success or failure.
+     * - [Result.onSuccess], returns the searched [DiseaseDetailData]
+     * - [Result.onFailure], one of the following errors occurred:
+     * [DiseasesPersistenceError.NotFound]
+     */
+    suspend fun findByKeyCode(keyCode: String): Result<DiseaseDetailData>
+
 }

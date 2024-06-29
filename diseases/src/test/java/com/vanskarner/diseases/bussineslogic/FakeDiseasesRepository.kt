@@ -28,4 +28,8 @@ class FakeDiseasesRepository(
         return Result.success(listByKeCodes)
     }
 
+    override suspend fun findByKeyCode(keyCode: String): Result<DiseaseDetailData> {
+        return Result.success(item)
+    }
+
 }

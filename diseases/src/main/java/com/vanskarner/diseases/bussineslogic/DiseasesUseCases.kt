@@ -29,3 +29,9 @@ internal class FindDiseasesByKeyCodesUseCase(private val repository: DiseasesRep
     suspend fun execute(keyCodes: List<String>) = repository.findByKeyCodes(keyCodes)
 
 }
+
+internal class FindDiseaseByKeyCodeUseCase(private val repository: DiseasesRepository) {
+
+    suspend fun execute(keyCode: String) = repository.findByKeyCode(keyCode)
+
+}

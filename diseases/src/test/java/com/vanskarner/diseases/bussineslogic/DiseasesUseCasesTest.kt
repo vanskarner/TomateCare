@@ -12,6 +12,7 @@ class DiseasesUseCasesTest {
     private lateinit var getNameByKeyCodeUseCase: GetNameByKeyCodeUseCase
     private lateinit var getNamesByKeyCodesUseCase: GetNamesByKeyCodesUseCase
     private lateinit var findDiseasesByKeyCodesUseCase: FindDiseasesByKeyCodesUseCase
+    private lateinit var findDiseaseByKeyCodeUseCase: FindDiseaseByKeyCodeUseCase
     private val exampleList by lazy {
         listOf(
             DiseaseData(1, "Bacterial Spot", "Some Image", "Some Symptoms"),
@@ -61,6 +62,7 @@ class DiseasesUseCasesTest {
         getNameByKeyCodeUseCase = GetNameByKeyCodeUseCase(repository)
         getNamesByKeyCodesUseCase = GetNamesByKeyCodesUseCase(repository)
         findDiseasesByKeyCodesUseCase = FindDiseasesByKeyCodesUseCase(repository)
+        findDiseaseByKeyCodeUseCase = FindDiseaseByKeyCodeUseCase(repository)
     }
 
     @Test
@@ -104,6 +106,21 @@ class DiseasesUseCasesTest {
         val keyCodes = listOf("any_code1")
         val actualList = findDiseasesByKeyCodesUseCase.execute(keyCodes).getOrThrow()
         assertEquals(exampleListByKeyCodes.size, actualList.size)
+    }
+
+    @Test
+    fun `execute findDiseaseByKeyCodeUseCase return disease`(): Unit = runTest {
+        val exampleKeyCode = "bacterial_spot"
+        val diseases = findDiseaseByKeyCodeUseCase.execute(exampleKeyCode).getOrThrow()
+
+        assertEquals(exampleItem.id, diseases.id)
+        assertEquals(exampleItem.name, diseases.name)
+        assertEquals(exampleItem.imageBase64, diseases.imageBase64)
+        assertEquals(exampleItem.causalAgent, diseases.causalAgent)
+        assertEquals(exampleItem.symptoms, diseases.symptoms)
+        assertEquals(exampleItem.developmentConditions, diseases.developmentConditions)
+        assertEquals(exampleItem.control, diseases.control)
+        assertEquals(exampleItem.source, diseases.source)
     }
 
 }

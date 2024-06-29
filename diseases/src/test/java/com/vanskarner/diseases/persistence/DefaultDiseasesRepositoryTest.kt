@@ -130,4 +130,20 @@ class DefaultDiseasesRepositoryTest {
         assertEquals(emptyDisease, diseases[2])
     }
 
+    @Test
+    fun `findByKeyCode with valid id should get disease`() = runTest {
+        val exampleKeyCode = "bacterial_spot"
+        val detailDisease = repository.findByKeyCode(exampleKeyCode).getOrThrow()
+
+        assertEquals(1, detailDisease.id)
+        assertTrue(detailDisease.name.isNotEmpty())
+        assertTrue(detailDisease.imageBase64.isNotEmpty())
+        assertTrue(detailDisease.symptoms.isNotEmpty())
+    }
+
+    @Test(expected = DiseasesPersistenceError.NotFound::class)
+    fun `find findByKeyCode invalid id should return NotFound`() = runTest {
+        val exampleKeyCode = "unknown"
+        repository.findByKeyCode(exampleKeyCode).getOrThrow()
+    }
 }
