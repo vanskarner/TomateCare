@@ -5,6 +5,7 @@ import java.util.Date
 data class ClassificationData(
     val leafState: LeafState,
     val bestPrediction: Pair<String, Float>,
+    val bestPredictionKeyCode:String,
     val predictions: List<Pair<String, Float>>
 ) {
     companion object {
@@ -15,6 +16,7 @@ data class ClassificationData(
             ClassificationData(
                 LeafState.Healthy,
                 bestPrediction,
+                bestPrediction.first,
                 predictions
             )
 
@@ -25,6 +27,7 @@ data class ClassificationData(
             ClassificationData(
                 LeafState.Sick,
                 bestPrediction,
+                bestPrediction.first,
                 predictions
             )
     }

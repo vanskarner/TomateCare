@@ -2,7 +2,6 @@ package com.vanskarner.analysis.bussineslogic
 
 import com.vanskarner.analysis.BoundingBoxData
 import com.vanskarner.analysis.ClassificationData
-import com.vanskarner.analysis.LeafState
 import com.vanskarner.analysis.SetConfigData
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -94,7 +93,7 @@ class AnalyzePlantUseCaseTest {
         val inferenceTime = 2000L
         val bestPrediction = Pair("bacterial_spot", 0.95f)
         val classifications = listOf(
-            ClassificationData(LeafState.Sick, bestPrediction, predictions)
+            ClassificationData.sick(bestPrediction, predictions)
         )
         return Pair(inferenceTime, classifications)
     }

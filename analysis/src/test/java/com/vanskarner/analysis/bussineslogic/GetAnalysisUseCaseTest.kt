@@ -3,7 +3,6 @@ package com.vanskarner.analysis.bussineslogic
 import com.vanskarner.analysis.AnalysisDetailData
 import com.vanskarner.analysis.BoundingBoxData
 import com.vanskarner.analysis.ClassificationData
-import com.vanskarner.analysis.LeafState
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Test
@@ -73,7 +72,7 @@ class GetAnalysisUseCaseTest {
             Pair("yellow_leaf_curl_virus", 0f),
         )
         val classifications = listOf(
-            ClassificationData(LeafState.Sick, bestPrediction, predictions)
+            ClassificationData.sick(bestPrediction, predictions)
         )
         return AnalysisDetailData(
             id = 1,

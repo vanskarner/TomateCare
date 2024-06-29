@@ -8,7 +8,6 @@ import com.vanskarner.analysis.AnalysisDetailData
 import com.vanskarner.analysis.AnalysisError
 import com.vanskarner.analysis.BoundingBoxData
 import com.vanskarner.analysis.ClassificationData
-import com.vanskarner.analysis.LeafState
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert.*
@@ -160,6 +159,18 @@ class LocalRepositoryTest {
     }
 
     private fun exampleData(): AnalysisDetailData {
+        val predictions = listOf(
+            Pair("bacterial_spot", 0.95f),
+            Pair("early_blight", 0.0f),
+            Pair("healthy", 0.0f),
+            Pair("late_blight", 0.01f),
+            Pair("leaf_mold", 0.01f),
+            Pair("mosaic_virus", 0.0f),
+            Pair("septoria_leaf_spot", 0.01f),
+            Pair("target_spot", 0.0f),
+            Pair("twospotted_spider_mite", 0.01f),
+            Pair("yellow_leaf_curl_virus", 0.01f),
+        )
         return AnalysisDetailData(
             id = 0,
             imagePath = "/Android/data/com.vanskarner.tomatecare/files/Pictures/Plant_7809504466231131920.jpg",
@@ -184,22 +195,7 @@ class LocalRepositoryTest {
                 )
             ),
             classificationData = listOf(
-                ClassificationData(
-                    LeafState.Sick,
-                    Pair("bacterial_spot", 0.95f),
-                    listOf(
-                        Pair("bacterial_spot", 0.95f),
-                        Pair("early_blight", 0.0f),
-                        Pair("healthy", 0.0f),
-                        Pair("late_blight", 0.01f),
-                        Pair("leaf_mold", 0.01f),
-                        Pair("mosaic_virus", 0.0f),
-                        Pair("septoria_leaf_spot", 0.01f),
-                        Pair("target_spot", 0.0f),
-                        Pair("twospotted_spider_mite", 0.01f),
-                        Pair("yellow_leaf_curl_virus", 0.01f),
-                    )
-                )
+                ClassificationData.sick(Pair("bacterial_spot", 0.95f), predictions)
             ),
             leafDetectionModel = "YoloV8",
             leafClassificationModel = "MobileNetV2",
