@@ -141,7 +141,7 @@ internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificati
         bindingNote.edtNote.setSelection(bindingNote.edtNote.text.length)
         bindingNote.btnCancel.setOnClickListener { alertDialog.cancel() }
         bindingNote.btnSave.setOnClickListener {
-            val text = bindingNote.edtNote.toString()
+            val text = bindingNote.edtNote.text.toString()
             accept.invoke(text)
             alertDialog.cancel()
         }
