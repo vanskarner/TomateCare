@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vanskarner.analysis.AnalysisComponent
 import com.vanskarner.analysis.LeafState
+import com.vanskarner.diseases.DiseasesComponent
 import com.vanskarner.tomatecare.ui.common.BoundingBoxModel
 import com.vanskarner.tomatecare.ui.common.toModel
 import com.vanskarner.tomatecare.ui.errors.ErrorFilter
@@ -23,6 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class IdentificationViewModel @Inject constructor(
     private val analysisComponent: AnalysisComponent,
+    private val diseasesComponent: DiseasesComponent,
     private val errorFilter: ErrorFilter
 ) : ViewModel() {
     private val _identification = MutableLiveData<IdentificationDetailModel>()
@@ -31,7 +33,6 @@ internal class IdentificationViewModel @Inject constructor(
     private val _leafInfo = MutableLiveData<LeafInfoModel>()
     private val _error = MutableLiveData<String>()
     private val _updatedNote = MutableLiveData<Unit>()
-    private val _boundingBoxes = MutableLiveData<List<BoundingBoxModel>>()
 
     val identification: LiveData<IdentificationDetailModel> = _identification
     val note: LiveData<String> = _note
@@ -39,11 +40,9 @@ internal class IdentificationViewModel @Inject constructor(
     val leafInfo: LiveData<LeafInfoModel> = _leafInfo
     val error: LiveData<String> = _error
     val updatedNote: LiveData<Unit> = _updatedNote
-    val boundingBoxes: LiveData<List<BoundingBoxModel>> = _boundingBoxes
 
-    private fun showError(msg: String) {
-        _error.value = msg
-    }
+    private var currentId = -1
+    private var currentSummary = SummaryModel.empty()
 
     fun showAnalysis(analysisId: Int) {
         viewModelScope.launch {
@@ -58,6 +57,7 @@ internal class IdentificationViewModel @Inject constructor(
                             val isHealthy = boxAndLeaf.second.leafState == LeafState.Healthy
                             val probability = boxAndLeaf.second.bestPrediction.second
                             LeafModel(
+                                keyCode = boxAndLeaf.second.bestPredictionKeyCode,
                                 image = leafImage,
                                 diseases = diseaseName,
                                 isHealthy = isHealthy,
@@ -69,15 +69,73 @@ internal class IdentificationViewModel @Inject constructor(
                     val identificationDetailModel = IdentificationDetailModel(
                         id = it.id,
                         creationDate = creationDate,
-                        plantImage = plantImage,
-                        leavesImage = leafModelList,
-                        description = it.note
+                        imgPath = it.imagePath,
+                        boundingBoxes = it.listLeafBoxCoordinates.toModel(),
+                        leavesImage = leafModelList
                     )
-                    _boundingBoxes.value = it.listLeafBoxCoordinates.toModel()
+                    val recommendations = diseasesComponent.findByKeyCodes(it.diseaseKeyCodes)
+                        .getOrDefault(emptyList())
+                        .map { disease -> RecommendationModel(disease.name, disease.control) }
+                    val diseases = recommendations
+                        .map { item -> item.diseaseName }
+                        .mapIndexed { index, item ->
+                            if (index % 2 == 1) "- $item\n"
+                            else "- $item "
+                        }.joinToString("")
+                    currentSummary = SummaryModel(
+                        detectionInference = "${it.detectionInferenceTimeMs}",
+                        classificationInference = "${it.classificationInferenceTimeMs}",
+                        detectionModel = it.leafDetectionModel,
+                        classificationModel = it.leafClassificationModel,
+                        usedThreads = it.threadsUsed,
+                        processing = it.processing,
+                        identifiedDiseases = "${it.numberDiseasesIdentified}",
+                        diseases = diseases,
+                        recommendations = recommendations
+                    )
+                    currentId = identificationDetailModel.id
                     _identification.value = identificationDetailModel
                 }
-                .onFailure { showError(errorFilter.filter(it)) }
+                .onFailure { showError(it) }
         }
+    }
+
+    fun saveNote(text: String) {
+        viewModelScope.launch {
+            analysisComponent.updateAnalysisNote(currentId, text)
+                .onSuccess { _updatedNote.value = Unit }
+                .onFailure { showError(it) }
+        }
+    }
+
+    fun getNote() {
+        viewModelScope.launch {
+            analysisComponent.getAnalysisNote(currentId)
+                .onSuccess { _note.value = it }
+                .onFailure { showError(it) }
+        }
+    }
+
+    fun getSummary() {
+        _summary.value = currentSummary
+    }
+
+    fun getLeafInfo(leafModel: LeafModel) {
+        viewModelScope.launch {
+            val symptoms = diseasesComponent.findByKeyCode(leafModel.keyCode)
+                .getOrNull()?.symptoms?:""
+            _leafInfo.value = LeafInfoModel(
+                keyCode = leafModel.keyCode,
+                image = leafModel.image,
+                isHealthy = leafModel.isHealthy,
+                prediction = "${leafModel.diseases} (${leafModel.probability * 100}%)",
+                shortDescriptionDisease = symptoms,
+            )
+        }
+    }
+
+    private fun showError(error: Throwable) {
+        _error.value = errorFilter.filter(error)
     }
 
     private fun cropImageFromBoundingBox(imgBitmap: Bitmap, boundingBox: BoundingBoxModel): Bitmap {
@@ -98,67 +156,6 @@ internal class IdentificationViewModel @Inject constructor(
         val rect = Rect(x1.toInt(), y1.toInt(), x2.toInt(), y2.toInt())
         canvas.drawBitmap(imgBitmap, rect, rectTarget, null)
         return croppedImage
-    }
-
-    fun saveNote(analysisId: Int, text: String) {
-        viewModelScope.launch {
-            analysisComponent.updateAnalysisNote(analysisId, text)
-                .onSuccess { _updatedNote.value = Unit }
-                .onFailure { showError(errorFilter.filter(it)) }
-        }
-    }
-
-    fun getNote(analysisId: Int) {
-        viewModelScope.launch {
-            analysisComponent.getAnalysisNote(analysisId)
-                .onSuccess { _note.value = it }
-                .onFailure { showError(errorFilter.filter(it)) }
-        }
-    }
-
-    fun getSummary() {
-        val recomendations = listOf(
-            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
-            RecommendationModel("Baterial Spot", "Otra descripcion"),
-            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
-            RecommendationModel("Baterial Spot", "Otra descripcion"),
-            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
-            RecommendationModel("Baterial Spot", "Otra descripcion"),
-            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
-            RecommendationModel("Baterial Spot", "Otra descripcion"),
-            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
-            RecommendationModel("Baterial Spot", "Otra descripcion"),
-            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
-            RecommendationModel("Baterial Spot", "Otra descripcion"),
-            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
-            RecommendationModel("Baterial Spot", "Otra descripcion"),
-            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
-            RecommendationModel("Baterial Spot", "Otra descripcion"),
-            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
-            RecommendationModel("Baterial Spot", "Otra descripcion"),
-            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
-            RecommendationModel("Baterial Spot", "Otra descripcion"),
-            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
-            RecommendationModel("Baterial Spot", "Otra descripcion"),
-            RecommendationModel("Mosaic Virus", " Alguna descripcion"),
-            RecommendationModel("Baterial Spot", "Otra descripcion"),
-        )
-//        val recomendations = emptyList<RecommendationModel>()
-        _summary.value = SummaryModel(
-            detectionInference = "2000",
-            classificationInference = "1500",
-            detectionModel = "Yolov8",
-            classificationModel = "MobileNetv2",
-            usedThreads = "8",
-            processing = "CPU",
-            identifiedDiseases = "2",
-            diseases = "Mosaic Virus \nBaterial Spot",
-            recommendations = recomendations
-        )
-    }
-
-    fun getLeafInfo() {
-//        _leafInfo.value = model
     }
 
 }

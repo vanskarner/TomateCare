@@ -1,16 +1,18 @@
 package com.vanskarner.tomatecare.ui.identification
 
 import android.graphics.Bitmap
+import com.vanskarner.tomatecare.ui.common.BoundingBoxModel
 
 internal data class IdentificationDetailModel(
     val id: Int,
     val creationDate: String,
-    val plantImage: Bitmap,
-    val leavesImage: List<LeafModel>,
-    val description: String
+    val imgPath: String,
+    val boundingBoxes: List<BoundingBoxModel>,
+    val leavesImage: List<LeafModel>
 )
 
 internal data class LeafModel(
+    val keyCode:String,
     val image: Bitmap,
     val isHealthy: Boolean,
     val diseases: String,
@@ -18,6 +20,7 @@ internal data class LeafModel(
 )
 
 internal data class LeafInfoModel(
+    val keyCode:String,
     val image: Bitmap,
     val isHealthy: Boolean,
     val prediction: String,
@@ -34,6 +37,20 @@ internal data class SummaryModel(
     val identifiedDiseases: String,
     val diseases: String,
     val recommendations: List<RecommendationModel>
-)
+) {
+    companion object {
+        fun empty() = SummaryModel(
+            detectionInference = "",
+            classificationInference = "",
+            detectionModel = "",
+            classificationModel = "",
+            usedThreads = "",
+            processing = "",
+            identifiedDiseases = "",
+            diseases = "",
+            recommendations = emptyList()
+        )
+    }
+}
 
 internal data class RecommendationModel(val diseaseName: String, val diseaseControl: String)

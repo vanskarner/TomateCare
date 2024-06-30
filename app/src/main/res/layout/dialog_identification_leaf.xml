@@ -59,7 +59,7 @@
             <TextView
                 android:id="@+id/tvDiseaseTitle"
                 android:textColor="@{model.isHealthy? @color/leaf_healthy: @color/leaf_sick}"
-                android:text="@{model.prediction}"
+                android:text="@{model.isHealthy? @string/healthy+` `+model.prediction:model.prediction}"
                 android:layout_width="match_parent"
                 android:gravity="center"
                 android:layout_height="wrap_content"

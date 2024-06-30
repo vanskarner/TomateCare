@@ -1,7 +1,6 @@
 package com.vanskarner.analysis.bussineslogic
 
 import com.vanskarner.analysis.AnalysisDetailData
-import com.vanskarner.analysis.ClassificationData
 import com.vanskarner.analysis.LeafState
 import com.vanskarner.analysis.SetConfigData
 import java.util.Date
@@ -29,7 +28,10 @@ internal class AnalyzePlantUseCase(
                 date = Date(),
                 detectionInferenceTimeMs = leafDetectionSelection.first,
                 classificationInferenceTimeMs = leafClassification.first,
-                numberDiseasesIdentified = getNumberDiseases(leafClassification.second),
+                numberDiseasesIdentified = leafClassification.second
+                    .filter { it.leafState == LeafState.Sick }
+                    .map { it.bestPrediction.first }
+                    .distinct().size,
                 listLeafBoxCoordinates = leafDetectionSelection.second,
                 classificationData = leafClassification.second,
                 leafDetectionModel = "YoloV8",
@@ -40,16 +42,5 @@ internal class AnalyzePlantUseCase(
             val savedId = repository.saveAnalysis(analysisData).getOrThrow()
             return Result.success(analysisData.copy(id = savedId))
         }
-
-    private fun getNumberDiseases(classification: List<ClassificationData>): Int {
-        val haveAnyDisease = classification.any { it.leafState == LeafState.Sick }
-        var numberDiseasesIdentified = 0
-        if (haveAnyDisease) {
-            numberDiseasesIdentified = classification
-                .map { it.bestPrediction.first }
-                .distinct().size
-        }
-        return numberDiseasesIdentified
-    }
 
 }

@@ -45,8 +45,8 @@ internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificati
         binding.imvOnBack.setOnClickListener { goToCaptureFragment() }
         binding.rcvLeaves.adapter = leafAdapter
         binding.tvSummary.setOnClickListener { viewModel.getSummary() }
-        binding.tvAddNote.setOnClickListener { viewModel.getNote(args.idLog) }
-        leafAdapter.setOnClickListener { viewModel.getLeafInfo() }
+        binding.tvAddNote.setOnClickListener { viewModel.getNote() }
+        leafAdapter.setOnClickListener { viewModel.getLeafInfo(it) }
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             onBackPressed = { goToCaptureFragment() })
@@ -59,16 +59,12 @@ internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificati
             showLeaves(it.leavesImage)
         }
         viewModel.note.observe(viewLifecycleOwner) {
-            showAddNote(it) { text -> viewModel.saveNote(args.idLog, text) }
+            showAddNote(it) { text -> viewModel.saveNote(text) }
         }
         viewModel.summary.observe(viewLifecycleOwner) { showSummary(it) }
         viewModel.leafInfo.observe(viewLifecycleOwner) { showLeafInfoDialog(it) }
         viewModel.error.observe(viewLifecycleOwner) { showToast(it) }
         viewModel.updatedNote.observe(viewLifecycleOwner) { showToast(R.string.updated_note) }
-        viewModel.boundingBoxes.observe(viewLifecycleOwner){
-            if (it.isEmpty()) binding.overlay.clear()
-            else binding.overlay.setResults(it)
-        }
     }
 
     private fun goToCaptureFragment() {
@@ -97,7 +93,7 @@ internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificati
         }
         bindingLeafInfo.tvDiseaseInfo.setOnClickListener {
             alertDialog.cancel()
-            goToDiseasesFragment()
+            goToDiseasesFragment(model.keyCode)
         }
         bindingLeafInfo.model = model
         alertDialog.show()
@@ -131,7 +127,7 @@ internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificati
         alertDialog.show()
     }
 
-    private fun showAddNote(note: String, accept: (text: String) -> Unit) {
+    private fun showAddNote(note: String, onAccept: (text: String) -> Unit) {
         val bindingNote = DialogIdentificationNoteBinding.inflate(layoutInflater)
         val builder = AlertDialog.Builder(requireContext())
         builder.setView(bindingNote.root)
@@ -142,15 +138,14 @@ internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificati
         bindingNote.btnCancel.setOnClickListener { alertDialog.cancel() }
         bindingNote.btnSave.setOnClickListener {
             val text = bindingNote.edtNote.text.toString()
-            accept.invoke(text)
+            onAccept.invoke(text)
             alertDialog.cancel()
         }
         alertDialog.show()
     }
 
-    private fun goToDiseasesFragment() {
-        val direction = IdentificationFragmentDirections.toDiseasesFragment()
-        direction.idSelected = 1
+    private fun goToDiseasesFragment(keyCode:String) {
+        val direction = IdentificationFragmentDirections.toDiseasesFragment(keyCode)
         findNavController().navigate(direction)
     }
 

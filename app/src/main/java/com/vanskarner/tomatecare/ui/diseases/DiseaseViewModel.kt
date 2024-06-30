@@ -24,10 +24,10 @@ internal class DiseaseViewModel @Inject constructor(
     val diseaseDetail: LiveData<DiseaseDetailModel> = _diseaseDetail
     val moreInfo: LiveData<String> = _moreInfo
 
-    fun startInfo(idDisease: Int) {
+    fun startInfo(keyCode: String) {
         viewModelScope.launch {
-            if (idDisease != -1) {
-                diseasesComponent.find(idDisease)
+            if (keyCode.isNotEmpty()) {
+                diseasesComponent.findByKeyCode(keyCode)
                     .onSuccess { _moreInfo.value = it.name }
             }
             diseasesComponent.getList()
