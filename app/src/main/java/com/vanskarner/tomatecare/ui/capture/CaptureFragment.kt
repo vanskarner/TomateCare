@@ -75,10 +75,6 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         viewModel.defaultImage.observe(viewLifecycleOwner) {
             binding.imvPlantCover.setImageResource(R.drawable.plant_96)
         }
-        viewModel.boundingBoxes.observe(viewLifecycleOwner) {
-            if (it.isEmpty()) binding.overlay.clear()
-            else binding.overlay.setResults(it)
-        }
     }
 
     private fun registerForTakePicture(onSuccess: () -> Unit): ActivityResultLauncher<Uri> {
