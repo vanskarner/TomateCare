@@ -7,6 +7,7 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.vanskarner.tomatecare.R
+import java.io.IOException
 
 @BindingAdapter("android:imageBase64")
 fun loadImageBase64(imageView: ImageView, imageBase64: String) {
@@ -42,11 +43,17 @@ fun setBoundingBox(overlayView: OverlayView, boundingBoxes: List<BoundingBoxMode
 
 @BindingAdapter("android:assetImage")
 fun loadAssetImage(imageView: ImageView, imageName: String?) {
-    imageName?.let {
-        val correctPlant = imageView.context.assets.open(imageName)
-        Glide.with(imageView.context)
-            .load(BitmapFactory.decodeStream(correctPlant))
-            .error(R.drawable.baseline_image_24)
-            .into(imageView)
+    imageName?.let { name ->
+        try {
+            imageView.context.assets.open(name).use { inputStream ->
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                Glide.with(imageView.context)
+                    .load(bitmap)
+                    .error(R.drawable.baseline_image_24)
+                    .into(imageView)
+            }
+        } catch (e: IOException) {
+            imageView.setImageResource(R.drawable.baseline_image_24)
+        }
     }
 }

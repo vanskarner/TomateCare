@@ -1,12 +1,10 @@
 package com.vanskarner.tomatecare.ui.capture
 
 import android.app.Dialog
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import com.bumptech.glide.Glide
 import com.vanskarner.tomatecare.databinding.DialogCaptureAdviceBinding
 
 internal class AdvicesDialog : DialogFragment() {
@@ -18,26 +16,11 @@ internal class AdvicesDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bindingAdvices = DialogCaptureAdviceBinding.inflate(layoutInflater)
-        val correctPlant = requireContext().assets.open("correct_plant.png")
-        val distantPlant = requireContext().assets.open("distant_plant.jpeg")
-        val plantNearby = requireContext().assets.open("plant_nearby.jpg")
-        val unfocusedPlant = requireContext().assets.open("unfocused_plant.jpg")
-        val accumulatedPlants = requireContext().assets.open("accumulated_plants.jpeg")
-        Glide.with(this)
-            .load(BitmapFactory.decodeStream(correctPlant))
-            .into(bindingAdvices.imvCorrectPlant)
-        Glide.with(this)
-            .load(BitmapFactory.decodeStream(distantPlant))
-            .into(bindingAdvices.imvDistantPlant)
-        Glide.with(this)
-            .load(BitmapFactory.decodeStream(plantNearby))
-            .into(bindingAdvices.imvPlantNearby)
-        Glide.with(this)
-            .load(BitmapFactory.decodeStream(unfocusedPlant))
-            .into(bindingAdvices.imvBlurredPlant)
-        Glide.with(this)
-            .load(BitmapFactory.decodeStream(accumulatedPlants))
-            .into(bindingAdvices.imvAccumulatedPlants)
+        bindingAdvices.correctPlant = "correct_plant.png"
+        bindingAdvices.remotePlant = "distant_plant.jpeg"
+        bindingAdvices.plantVeryClose = "plant_nearby.jpg"
+        bindingAdvices.blurredPlant = "unfocused_plant.jpg"
+        bindingAdvices.accumulatedPlants = "accumulated_plants.jpeg"
         val alertBuilder = AlertDialog.Builder(requireContext())
         alertBuilder.setView(bindingAdvices.root)
         return alertBuilder.create()
