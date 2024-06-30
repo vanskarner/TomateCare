@@ -10,7 +10,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vanskarner.analysis.AnalysisComponent
-import com.vanskarner.analysis.LeafState
 import com.vanskarner.diseases.DiseasesComponent
 import com.vanskarner.tomatecare.ui.common.BoundingBoxModel
 import com.vanskarner.tomatecare.ui.common.toModel
@@ -53,46 +52,16 @@ internal class IdentificationViewModel @Inject constructor(
                         .zip(it.classificationData)
                         .map { boxAndLeaf ->
                             val leafImage = cropImageFromBoundingBox(plantImage, boxAndLeaf.first)
-                            val diseaseName = boxAndLeaf.second.bestPrediction.first
-                            val isHealthy = boxAndLeaf.second.leafState == LeafState.Healthy
-                            val probability = boxAndLeaf.second.bestPrediction.second
-                            LeafModel(
-                                keyCode = boxAndLeaf.second.bestPredictionKeyCode,
-                                image = leafImage,
-                                diseases = diseaseName,
-                                isHealthy = isHealthy,
-                                probability = probability
-                            )
+                            boxAndLeaf.second.toLeafModel(leafImage)
                         }
                     val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
                     val creationDate = formatter.format(it.date)
-                    val identificationDetailModel = IdentificationDetailModel(
-                        id = it.id,
-                        creationDate = creationDate,
-                        imgPath = it.imagePath,
-                        boundingBoxes = it.listLeafBoxCoordinates.toModel(),
-                        leavesImage = leafModelList
-                    )
+                    val identificationDetailModel =
+                        it.toIdentificationDetailModel(creationDate, leafModelList)
                     val recommendations = diseasesComponent.findByKeyCodes(it.diseaseKeyCodes)
                         .getOrDefault(emptyList())
                         .map { disease -> RecommendationModel(disease.name, disease.control) }
-                    val diseases = recommendations
-                        .map { item -> item.diseaseName }
-                        .mapIndexed { index, item ->
-                            if (index % 2 == 1) "- $item\n"
-                            else "- $item "
-                        }.joinToString("")
-                    currentSummary = SummaryModel(
-                        detectionInference = "${it.detectionInferenceTimeMs}",
-                        classificationInference = "${it.classificationInferenceTimeMs}",
-                        detectionModel = it.leafDetectionModel,
-                        classificationModel = it.leafClassificationModel,
-                        usedThreads = it.threadsUsed,
-                        processing = it.processing,
-                        identifiedDiseases = "${it.numberDiseasesIdentified}",
-                        diseases = diseases,
-                        recommendations = recommendations
-                    )
+                    currentSummary = it.toSummaryModel(recommendations)
                     currentId = identificationDetailModel.id
                     _identification.value = identificationDetailModel
                 }
@@ -123,14 +92,8 @@ internal class IdentificationViewModel @Inject constructor(
     fun getLeafInfo(leafModel: LeafModel) {
         viewModelScope.launch {
             val symptoms = diseasesComponent.findByKeyCode(leafModel.keyCode)
-                .getOrNull()?.symptoms?:""
-            _leafInfo.value = LeafInfoModel(
-                keyCode = leafModel.keyCode,
-                image = leafModel.image,
-                isHealthy = leafModel.isHealthy,
-                prediction = "${leafModel.diseases} (${leafModel.probability * 100}%)",
-                shortDescriptionDisease = symptoms,
-            )
+                .getOrNull()?.symptoms ?: ""
+            _leafInfo.value = leafModel.toLeafInfoModel(symptoms)
         }
     }
 
