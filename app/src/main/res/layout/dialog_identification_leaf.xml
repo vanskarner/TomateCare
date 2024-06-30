@@ -9,6 +9,10 @@
             name="model"
             type="com.vanskarner.tomatecare.ui.identification.LeafInfoModel" />
 
+        <variable
+            name="croppedImage"
+            type="android.graphics.Bitmap" />
+
         <import type="android.view.View" />
     </data>
 
@@ -18,10 +22,10 @@
 
         <ImageView
             android:id="@+id/imvLeaf"
-            android:imageBitmap="@{model.image}"
             android:layout_width="0dp"
             android:layout_height="420dp"
             android:background="@color/background_images"
+            android:imageBitmap="@{croppedImage}"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -58,18 +62,18 @@
 
             <TextView
                 android:id="@+id/tvDiseaseTitle"
-                android:textColor="@{model.isHealthy? @color/leaf_healthy: @color/leaf_sick}"
-                android:text="@{model.isHealthy? @string/healthy+` `+model.prediction:model.prediction}"
                 android:layout_width="match_parent"
-                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:ellipsize="end"
+                android:gravity="center"
                 android:maxLength="80"
                 android:maxLines="1"
+                android:text="@{model.isHealthy? @string/healthy+` `+model.prediction:model.prediction}"
+                android:textColor="@{model.isHealthy? @color/leaf_healthy: @color/leaf_sick}"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:text="@tools:sample/lorem/random"
@@ -77,8 +81,6 @@
 
             <TextView
                 android:id="@+id/tvDiseaseDescription"
-                android:visibility="@{model.isHealthy? View.GONE:View.VISIBLE}"
-                android:text="@{model.shortDescriptionDisease}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -86,13 +88,14 @@
                 android:layout_marginBottom="4dp"
                 android:ellipsize="end"
                 android:maxLines="5"
+                android:text="@{model.shortDescriptionDisease}"
                 android:textColor="@color/white"
+                android:visibility="@{model.isHealthy? View.GONE:View.VISIBLE}"
                 tools:ignore="VisualLintLongText"
                 tools:text="@tools:sample/lorem/random" />
 
             <TextView
                 android:id="@+id/tvDiseaseInfo"
-                android:visibility="@{model.isHealthy? View.GONE:View.VISIBLE}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -100,9 +103,10 @@
                 android:layout_marginBottom="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:text="@string/more_information"
                 android:textColor="@color/links"
                 android:textStyle="bold"
-                android:text="@string/more_information" />
+                android:visibility="@{model.isHealthy? View.GONE:View.VISIBLE}" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

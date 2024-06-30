@@ -1,9 +1,7 @@
 package com.vanskarner.tomatecare.ui.identification
 
 import android.graphics.Bitmap
-import android.graphics.Bitmap.createBitmap
-import android.graphics.Canvas
-import android.graphics.Rect
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +18,7 @@ import com.vanskarner.tomatecare.databinding.DialogIdentificationNoteBinding
 import com.vanskarner.tomatecare.databinding.DialogIdentificationRecommendationBinding
 import com.vanskarner.tomatecare.databinding.DialogIdentificationSummaryBinding
 import com.vanskarner.tomatecare.databinding.FragmentIdentificationBinding
-import com.vanskarner.tomatecare.ui.common.BoundingBoxModel
+import com.vanskarner.tomatecare.ui.common.OverlayView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -56,7 +54,7 @@ internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificati
         viewModel.showAnalysis(args.idLog)
         viewModel.identification.observe(viewLifecycleOwner) {
             binding.model = it
-            showLeaves(it.leavesImage)
+            showLeaves(it.imgPath, it.leavesImage)
         }
         viewModel.note.observe(viewLifecycleOwner) {
             showAddNote(it) { text -> viewModel.saveNote(text) }
@@ -72,7 +70,10 @@ internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificati
         findNavController().navigate(direction)
     }
 
-    private fun showLeaves(list: List<LeafModel>) = leafAdapter.updateList(list)
+    private fun showLeaves(imgPath: String, list: List<LeafModel>) {
+        val rootImage: Bitmap? = BitmapFactory.decodeFile(imgPath)
+        rootImage?.let { leafAdapter.updateList(it, list) }
+    }
 
     private fun showLeafInfoDialog(model: LeafInfoModel) {
         val bindingLeafInfo = DialogIdentificationLeafBinding.inflate(layoutInflater)
@@ -95,7 +96,10 @@ internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificati
             alertDialog.cancel()
             goToDiseasesFragment(model.keyCode)
         }
+        val rootImage = BitmapFactory.decodeFile(model.rootImagePath)
+        val croppedImage = OverlayView.cropImageFromBoundingBox(rootImage, model.boundingBoxModel)
         bindingLeafInfo.model = model
+        bindingLeafInfo.croppedImage = croppedImage
         alertDialog.show()
     }
 
@@ -144,29 +148,10 @@ internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificati
         alertDialog.show()
     }
 
-    private fun goToDiseasesFragment(keyCode:String) {
-        val direction = IdentificationFragmentDirections.toDiseasesFragment(keyCode)
+    private fun goToDiseasesFragment(keyCode: String) {
+        val direction = IdentificationFragmentDirections.toDiseasesFragment()
+        direction.keyCode = keyCode
         findNavController().navigate(direction)
-    }
-
-    private fun cropImageFromBoundingBox(imgBitmap: Bitmap, boundingBox: BoundingBoxModel): Bitmap {
-        val imageWidth = imgBitmap.width
-        val imageHeight = imgBitmap.height
-        val x1 = boundingBox.x1 * imageWidth
-        val y1 = boundingBox.y1 * imageHeight
-        val x2 = boundingBox.x2 * imageWidth
-        val y2 = boundingBox.y2 * imageHeight
-        val croppedImageWidth = (x2 - x1).toInt()
-        val croppedImageHeight = (y2 - y1).toInt()
-        if (croppedImageWidth <= 0 || croppedImageHeight <= 0)
-            throw IllegalArgumentException("The dimensions of the area to be trimmed cannot be <= 0")
-        val rectTarget = Rect(0, 0, croppedImageWidth, croppedImageHeight)
-        val croppedImage =
-            createBitmap(croppedImageWidth, croppedImageHeight, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(croppedImage)
-        val rect = Rect(x1.toInt(), y1.toInt(), x2.toInt(), y2.toInt())
-        canvas.drawBitmap(imgBitmap, rect, rectTarget, null)
-        return croppedImage
     }
 
 }

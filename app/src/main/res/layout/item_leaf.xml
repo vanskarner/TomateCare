@@ -9,6 +9,10 @@
             name="model"
             type="com.vanskarner.tomatecare.ui.identification.LeafModel" />
 
+        <variable
+            name="croppedImage"
+            type="android.graphics.Bitmap" />
+
         <import type="android.view.View" />
     </data>
 
@@ -51,7 +55,7 @@
                 android:layout_height="150dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:imageBitmap="@{model.image}"
+                android:imageBitmap="@{croppedImage}"
                 android:scaleType="fitXY"
                 app:layout_constraintBottom_toTopOf="@+id/tvLeafDisease"
                 app:layout_constraintEnd_toEndOf="parent"

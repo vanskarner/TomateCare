@@ -1,6 +1,8 @@
 package com.vanskarner.tomatecare.ui.common
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Bitmap.createBitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -83,5 +85,28 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
 
     companion object {
         private const val BOUNDING_RECT_TEXT_PADDING = 8
+
+        fun cropImageFromBoundingBox(
+            imgBitmap: Bitmap,
+            boundingBox: BoundingBoxModel
+        ): Bitmap {
+            val imageWidth = imgBitmap.width
+            val imageHeight = imgBitmap.height
+            val x1 = boundingBox.x1 * imageWidth
+            val y1 = boundingBox.y1 * imageHeight
+            val x2 = boundingBox.x2 * imageWidth
+            val y2 = boundingBox.y2 * imageHeight
+            val croppedImageWidth = (x2 - x1).toInt()
+            val croppedImageHeight = (y2 - y1).toInt()
+            if (croppedImageWidth <= 0 || croppedImageHeight <= 0)
+                throw IllegalArgumentException("The dimensions of the area to be trimmed cannot be <= 0")
+            val rectTarget = Rect(0, 0, croppedImageWidth, croppedImageHeight)
+            val croppedImage =
+                createBitmap(croppedImageWidth, croppedImageHeight, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(croppedImage)
+            val rect = Rect(x1.toInt(), y1.toInt(), x2.toInt(), y2.toInt())
+            canvas.drawBitmap(imgBitmap, rect, rectTarget, null)
+            return croppedImage
+        }
     }
 }

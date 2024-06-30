@@ -21,7 +21,8 @@
         tools:layout="@layout/fragment_diseases" >
         <argument
             android:name="keyCode"
-            app:argType="string" />
+            app:argType="string"
+            android:defaultValue="" />
     </fragment>
     <fragment
         android:id="@+id/identificationFragment"

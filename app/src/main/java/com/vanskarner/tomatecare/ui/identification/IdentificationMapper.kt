@@ -1,14 +1,18 @@
 package com.vanskarner.tomatecare.ui.identification
 
-import android.graphics.Bitmap
 import com.vanskarner.analysis.AnalysisDetailData
 import com.vanskarner.analysis.ClassificationData
 import com.vanskarner.analysis.LeafState
+import com.vanskarner.tomatecare.ui.common.BoundingBoxModel
 import com.vanskarner.tomatecare.ui.common.toModel
 
-internal fun ClassificationData.toLeafModel(leafImage: Bitmap) = LeafModel(
+internal fun ClassificationData.toLeafModel(
+    rootImagePath: String,
+    boundingBoxModel: BoundingBoxModel
+) = LeafModel(
     keyCode = bestPredictionKeyCode,
-    image = leafImage,
+    rootImagePath = rootImagePath,
+    boundingBoxModel = boundingBoxModel,
     diseases = bestPrediction.first,
     isHealthy = leafState == LeafState.Healthy,
     probability = bestPrediction.second
@@ -46,7 +50,8 @@ internal fun AnalysisDetailData.toSummaryModel(recommendations: List<Recommendat
 
 internal fun LeafModel.toLeafInfoModel(symptoms: String) = LeafInfoModel(
     keyCode = keyCode,
-    image = image,
+    rootImagePath = rootImagePath,
+    boundingBoxModel = boundingBoxModel,
     isHealthy = isHealthy,
     prediction = "$diseases (${probability * 100}%)",
     shortDescriptionDisease = symptoms,

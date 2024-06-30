@@ -55,6 +55,7 @@ internal class DiseasesFragment : BaseBindingFragment<FragmentDiseasesBinding>()
             binding.svDiseases.isIconified = false
             binding.svDiseases.setQuery(it, true)
         }
+        viewModel.error.observe(viewLifecycleOwner) { showToast(it) }
     }
 
     private fun showDiseases(list: List<DiseaseModel>) = diseaseAdapter.updateList(list)
