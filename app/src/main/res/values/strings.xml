@@ -30,7 +30,7 @@
     <string name="sick">Enferma</string>
     <string name="total_time_spent">Tiempo total empleado:</string>
     <string name="total_sheets_analyzed">Total de hojas analizadas:</string>
-    <string name="identified">identificadas:</string>
+    <string name="identified">identificadas: %s</string>
     <string name="recommendations">Recomendaciones</string>
     <string name="note">Nota</string>
     <string name="write_your_note_here">Escribe tu descripción aquí…</string>
@@ -92,4 +92,10 @@
     <string name="provider_authorities_camera">com.vanskarner.tomatecare.fileprovider</string>
     <string name="finished_analysis">Análisis terminado</string>
     <string name="other_image">Otra Imagen</string>
+    <string name="detection_inference">Inferencia de detección: %s ms</string>
+    <string name="classification_inference">Inferencia de classificación: %s ms</string>
+    <string name="detection_model">Modelo de detección: %s</string>
+    <string name="classification_model">Modelo de clasificación: %s</string>
+    <string name="used_threads">Hilos usados: %s</string>
+    <string name="processing_value">Procesamiento: %s</string>
 </resources>

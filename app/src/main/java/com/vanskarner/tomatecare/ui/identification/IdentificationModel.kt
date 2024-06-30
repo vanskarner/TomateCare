@@ -25,9 +25,13 @@ internal data class LeafInfoModel(
 )
 
 internal data class SummaryModel(
-    val totalTimeSpent: String,
-    val analyzedLeaves: Int,
-    val identifiedDiseases: Int,
+    val detectionInference: String,
+    val classificationInference: String,
+    val detectionModel: String,
+    val classificationModel: String,
+    val usedThreads: String,
+    val processing: String,
+    val identifiedDiseases: String,
     val diseases: String,
     val recommendations: List<RecommendationModel>
 )

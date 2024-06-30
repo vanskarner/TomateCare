@@ -15,9 +15,7 @@ import com.vanskarner.tomatecare.ui.common.BoundingBoxModel
 import com.vanskarner.tomatecare.ui.common.toModel
 import com.vanskarner.tomatecare.ui.errors.ErrorFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Locale
 import javax.inject.Inject
@@ -146,9 +144,17 @@ internal class IdentificationViewModel @Inject constructor(
             RecommendationModel("Baterial Spot", "Otra descripcion"),
         )
 //        val recomendations = emptyList<RecommendationModel>()
-        val summaryModel =
-            SummaryModel("30 ms", 20, 2, "Mosaic Virus \nBaterial Spot", recomendations)
-        _summary.value = summaryModel
+        _summary.value = SummaryModel(
+            detectionInference = "2000",
+            classificationInference = "1500",
+            detectionModel = "Yolov8",
+            classificationModel = "MobileNetv2",
+            usedThreads = "8",
+            processing = "CPU",
+            identifiedDiseases = "2",
+            diseases = "Mosaic Virus \nBaterial Spot",
+            recommendations = recomendations
+        )
     }
 
     fun getLeafInfo() {
