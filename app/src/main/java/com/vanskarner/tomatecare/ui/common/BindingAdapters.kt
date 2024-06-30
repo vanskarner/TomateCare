@@ -3,6 +3,7 @@ package com.vanskarner.tomatecare.ui.common
 import android.graphics.Bitmap
 import android.util.Base64
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.vanskarner.tomatecare.R
@@ -26,9 +27,17 @@ fun loadBitmap(imageView: ImageView, imgBitmap: Bitmap?) {
 }
 
 @BindingAdapter("android:imagePath")
-fun loadImagePath(imageView: ImageView, imgPath:String) {
+fun loadImagePath(imageView: ImageView, imgPath: String) {
     Glide.with(imageView.context)
         .load(imgPath)
         .error(R.drawable.baseline_image_24)
         .into(imageView)
 }
+
+@BindingAdapter("formattedText", "replacement")
+fun setFormattedText(textView: TextView, formattedText: String, replacement: String?) {
+    replacement?.let {
+        textView.text = String.format(formattedText, it)
+    }
+}
+
