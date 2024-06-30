@@ -70,7 +70,10 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
         viewModel.setting.observe(viewLifecycleOwner) {
             settingDialog.show(childFragmentManager, it)
         }
-        viewModel.error.observe(viewLifecycleOwner) { showError(it) }
+        viewModel.error.observe(viewLifecycleOwner) {
+            deleteTempFile()
+            showError(it)
+        }
         viewModel.idLog.observe(viewLifecycleOwner) { goToIdentificationFragment(it) }
         viewModel.defaultImage.observe(viewLifecycleOwner) {
             binding.imvPlantCover.setImageResource(R.drawable.plant_96)
@@ -79,8 +82,7 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
 
     private fun registerForTakePicture(onSuccess: () -> Unit): ActivityResultLauncher<Uri> {
         return registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-            if (success) onSuccess.invoke()
-            else deleteTempFile()
+            if (success) onSuccess.invoke() else deleteTempFile()
         }
     }
 

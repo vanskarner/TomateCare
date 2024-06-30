@@ -1,6 +1,7 @@
 package com.vanskarner.tomatecare.ui.common
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Base64
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
@@ -37,4 +38,15 @@ fun loadImagePath(imageView: ImageView, imgPath: String) {
 fun setBoundingBox(overlayView: OverlayView, boundingBoxes: List<BoundingBoxModel>?) {
     if (boundingBoxes.isNullOrEmpty()) overlayView.clear()
     else overlayView.setResults(boundingBoxes)
+}
+
+@BindingAdapter("android:assetImage")
+fun loadAssetImage(imageView: ImageView, imageName: String?) {
+    imageName?.let {
+        val correctPlant = imageView.context.assets.open(imageName)
+        Glide.with(imageView.context)
+            .load(BitmapFactory.decodeStream(correctPlant))
+            .error(R.drawable.baseline_image_24)
+            .into(imageView)
+    }
 }
