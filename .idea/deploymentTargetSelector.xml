@@ -8,12 +8,6 @@
       <SelectionState runConfigName="TFLiteComputerVisionPerformanceTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="imageUsedForDetection_returnInputStream()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="imageUsedForDetection_returnValidInputStream()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="imagesUsedForClassification_returnValidInputStream()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>

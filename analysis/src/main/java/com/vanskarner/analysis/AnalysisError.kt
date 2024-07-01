@@ -18,4 +18,8 @@ sealed class AnalysisError : Exception() {
         private fun readResolve(): Any = InvalidConfig
     }
 
+    object InvalidModel : AnalysisError() {
+        private fun readResolve(): Any = InvalidModel
+    }
+
 }
