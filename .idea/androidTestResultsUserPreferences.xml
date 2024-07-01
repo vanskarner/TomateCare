@@ -3,6 +3,19 @@
   <component name="AndroidTestResultsUserPreferences">
     <option name="androidTestResultsTableState">
       <map>
+        <entry key="-2142475609">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="4_WVGA_Nexus_S_API_26" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-2070465474">
           <value>
             <AndroidTestResultsTableState>
@@ -107,6 +120,32 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-1064938706">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="4_WVGA_Nexus_S_API_26" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-1030729837">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="4_WVGA_Nexus_S_API_26" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-1025138615">
           <value>
             <AndroidTestResultsTableState>
@@ -147,6 +186,19 @@
           </value>
         </entry>
         <entry key="-837598312">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="4_WVGA_Nexus_S_API_26" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="-812143433">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
@@ -278,6 +330,19 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="-84206444">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="4_WVGA_Nexus_S_API_26" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="-47648419">
           <value>
             <AndroidTestResultsTableState>
@@ -325,6 +390,19 @@
                   <entry key="4_WVGA_Nexus_S_API_26" value="120" />
                   <entry key="Duration" value="90" />
                   <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="43539957">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="4_WVGA_Nexus_S_API_26" value="172" />
+                  <entry key="Duration" value="143" />
+                  <entry key="Tests" value="453" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
@@ -447,7 +525,33 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="493309421">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="4_WVGA_Nexus_S_API_26" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="774485819">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="4_WVGA_Nexus_S_API_26" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="928862993">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
@@ -512,6 +616,19 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="1215886965">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="4_WVGA_Nexus_S_API_26" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="1352393505">
           <value>
             <AndroidTestResultsTableState>
@@ -527,6 +644,19 @@
           </value>
         </entry>
         <entry key="1444675363">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="4_WVGA_Nexus_S_API_26" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="1470134110">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">
@@ -578,6 +708,19 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="1773694698">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="4_WVGA_Nexus_S_API_26" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="1804234408">
           <value>
             <AndroidTestResultsTableState>
@@ -604,7 +747,33 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="1859052889">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="4_WVGA_Nexus_S_API_26" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="2032190540">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="4_WVGA_Nexus_S_API_26" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="2141555143">
           <value>
             <AndroidTestResultsTableState>
               <option name="preferredColumnWidths">

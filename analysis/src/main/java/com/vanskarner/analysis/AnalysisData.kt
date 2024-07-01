@@ -1,5 +1,6 @@
 package com.vanskarner.analysis
 
+import java.io.InputStream
 import java.util.Date
 
 data class ClassificationData(
@@ -85,6 +86,19 @@ data class ConfigData(
     val maxThreads: Int,
     val processingList: List<String>,
     val modelList: List<String>
+)
+
+data class TestConfigData(
+    val numberThreads: Int,
+    val processing: String,
+    val model: String
+)
+
+data class TestInfoData(
+    val inputStreamForDetection: InputStream,
+    val inputStreamForClassification: List<InputStream>,
+    val detectionInferenceTime:Long,
+    val classificationInferenceTime:Long,
 )
 
 enum class LeafState {
