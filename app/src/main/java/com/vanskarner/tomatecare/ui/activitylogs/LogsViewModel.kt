@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vanskarner.analysis.AnalysisComponent
+import com.vanskarner.tomatecare.ui.errors.ErrorFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -13,12 +14,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class LogsViewModel @Inject constructor(
-    private val component: AnalysisComponent
+    private val analysisComponent: AnalysisComponent,
+    private val errorFilter: ErrorFilter
 ) : ViewModel() {
     private val _list = MutableLiveData<List<LogModel>>()
     private val _msgDelete = MutableLiveData<Unit>()
     private val _msgNoItemSelected = MutableLiveData<Unit>()
     private val _restart = MutableLiveData<Unit>()
+    private var _error = MutableLiveData<String>()
     private var fullList = mutableListOf<LogModel>()
     private var filterList = mutableListOf<LogModel>()
 
@@ -26,10 +29,11 @@ internal class LogsViewModel @Inject constructor(
     val msgDelete: LiveData<Unit> = _msgDelete
     val noItemSelected: LiveData<Unit> = _msgNoItemSelected
     val restart: LiveData<Unit> = _restart
+    val error: LiveData<String> = _error
 
     fun getData() {
         viewModelScope.launch {
-            component.getAnalysis()
+            analysisComponent.getAnalysis()
                 .onSuccess {
                     fullList.clear()
                     val logModelList = it.map { item ->
@@ -39,7 +43,7 @@ internal class LogsViewModel @Inject constructor(
                     }
                     fullList.addAll(logModelList)
                     _list.value = fullList
-                }
+                }.onFailure { showError(it) }
         }
     }
 
@@ -50,9 +54,18 @@ internal class LogsViewModel @Inject constructor(
     }
 
     fun deleteSelectedItems() {
-        fullList.removeIf { it.checked }
-        _list.value = fullList
-        _restart.value = Unit
+        viewModelScope.launch {
+            val idsToDelete = fullList.filter { it.checked }.map { it.id }
+            if (idsToDelete.isNotEmpty()) {
+                println("DEBUG-MD")
+                analysisComponent.deleteAnalysisByIds(idsToDelete)
+                    .onSuccess {
+                        getData()
+                        _restart.value = Unit
+                    }
+                    .onFailure { showError(it) }
+            }
+        }
     }
 
     fun filterByNote(name: String) {
@@ -64,6 +77,10 @@ internal class LogsViewModel @Inject constructor(
                     filterList.add(item)
             _list.value = filterList
         }
+    }
+
+    private fun showError(error: Throwable) {
+        _error.value = errorFilter.filter(error)
     }
 
 }
