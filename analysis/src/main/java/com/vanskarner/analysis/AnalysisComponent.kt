@@ -1,5 +1,7 @@
 package com.vanskarner.analysis
 
+import java.io.InputStream
+
 interface AnalysisComponent {
 
     suspend fun getAnalysis(): Result<List<AnalysisData>>
@@ -16,15 +18,25 @@ interface AnalysisComponent {
 
     suspend fun getAnalysisNote(id: Int): Result<String>
 
-/*    *//**
+    /**
      * Performs a performance test of both the leaf detection model and the tomato disease
      * classification model. The default leaf detection model for this test is YOLOV8n.
      * @param config test configuration parameters
      * @return [Result], encapsulates success or failure.
-     * - [Result.onSuccess], returns [TestInfoData]: It contains the inference times and
-     * input streams of the images used for the test.
+     * - [Result.onSuccess], returns the inference times, the first value is for detection
+     * and the second for classification.
      * - [Result.onFailure], one of the following errors occurred
-     *//*
-    suspend fun performanceTest(config: TestConfigData): Result<TestInfoData>*/
+     * [AnalysisError.InvalidConfig],[AnalysisError.InvalidModel],[AnalysisError.GPUNotSupportedByDevice]
+     */
+    suspend fun performanceTest(config: TestConfigData): Result<Pair<Long, Long>>
+
+    /**
+     * Get the images used for testing in InputStream format. The first value is used for
+     * detection and the second for classification.
+     * @return [Result], encapsulates success or failure.
+     * - [Result.onSuccess], returns Pair
+     * - [Result.onFailure], not mapped
+     */
+    suspend fun getImagesUsedForTest():Result<Pair<InputStream,InputStream>>
 
 }

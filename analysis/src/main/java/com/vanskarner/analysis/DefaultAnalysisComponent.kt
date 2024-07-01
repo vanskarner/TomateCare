@@ -6,7 +6,10 @@ import com.vanskarner.analysis.bussineslogic.FindAnalysisUseCase
 import com.vanskarner.analysis.bussineslogic.GetAnalysisNoteUseCase
 import com.vanskarner.analysis.bussineslogic.GetAnalysisUseCase
 import com.vanskarner.analysis.bussineslogic.GetConfigUseCase
+import com.vanskarner.analysis.bussineslogic.GetTestResourcesUseCase
+import com.vanskarner.analysis.bussineslogic.TestPerformanceUseCase
 import com.vanskarner.analysis.bussineslogic.UpdateAnalysisNoteUseCase
+import java.io.InputStream
 
 internal class DefaultAnalysisComponent(
     private val getAnalysisUseCase: GetAnalysisUseCase,
@@ -15,7 +18,9 @@ internal class DefaultAnalysisComponent(
     private val getConfigUseCase: GetConfigUseCase,
     private val updateAnalysisNoteUseCase: UpdateAnalysisNoteUseCase,
     private val deleteAnalysisUseCase: DeleteAnalysisUseCase,
-    private val getAnalysisNoteUseCase: GetAnalysisNoteUseCase
+    private val getAnalysisNoteUseCase: GetAnalysisNoteUseCase,
+    private val performanceUseCase: TestPerformanceUseCase,
+    private val getTestResourcesUseCase: GetTestResourcesUseCase
 ) : AnalysisComponent {
 
     override suspend fun getAnalysis(): Result<List<AnalysisData>> {
@@ -38,6 +43,13 @@ internal class DefaultAnalysisComponent(
     override suspend fun deleteAnalysisByIds(ids: List<Int>): Result<Int> =
         deleteAnalysisUseCase.execute(ids)
 
-    override suspend fun getAnalysisNote(id: Int): Result<String> = getAnalysisNoteUseCase.execute(id)
+    override suspend fun getAnalysisNote(id: Int): Result<String> =
+        getAnalysisNoteUseCase.execute(id)
+
+    override suspend fun performanceTest(config: TestConfigData): Result<Pair<Long, Long>> =
+        performanceUseCase.execute(config)
+
+    override suspend fun getImagesUsedForTest(): Result<Pair<InputStream, InputStream>> =
+        getTestResourcesUseCase.execute()
 
 }

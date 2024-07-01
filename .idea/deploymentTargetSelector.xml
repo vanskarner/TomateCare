@@ -5,13 +5,7 @@
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="TFLiteComputerVisionPerformanceTest">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="imagesUsedForClassification_returnValidInputStream()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="testYoloV8nModel_withCPU_returnDetectionInferenceTime()">
+      <SelectionState runConfigName="Tests in 'com.vanskarner.analysis'">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

@@ -6,16 +6,20 @@ import com.vanskarner.analysis.DefaultAnalysisComponent
 import com.vanskarner.analysis.bussineslogic.AnalyzePlantUseCase
 import com.vanskarner.analysis.bussineslogic.ClassifyLeavesUseCase
 import com.vanskarner.analysis.bussineslogic.ComputerVision
+import com.vanskarner.analysis.bussineslogic.ComputerVisionPerformance
 import com.vanskarner.analysis.bussineslogic.DeleteAnalysisUseCase
 import com.vanskarner.analysis.bussineslogic.DetectLeavesUseCase
 import com.vanskarner.analysis.bussineslogic.FindAnalysisUseCase
 import com.vanskarner.analysis.bussineslogic.GetAnalysisNoteUseCase
 import com.vanskarner.analysis.bussineslogic.GetAnalysisUseCase
 import com.vanskarner.analysis.bussineslogic.GetConfigUseCase
+import com.vanskarner.analysis.bussineslogic.GetTestResourcesUseCase
 import com.vanskarner.analysis.bussineslogic.Repository
+import com.vanskarner.analysis.bussineslogic.TestPerformanceUseCase
 import com.vanskarner.analysis.bussineslogic.UpdateAnalysisNoteUseCase
 import com.vanskarner.analysis.bussineslogic.ValidateConfigUseCase
 import com.vanskarner.analysis.computervision.TFLiteComputerVision
+import com.vanskarner.analysis.computervision.TFLiteComputerVisionPerformance
 import com.vanskarner.analysis.persistence.ActivityLogDao
 import com.vanskarner.analysis.persistence.DefaultRepository
 import com.vanskarner.diseases.DiseasesComponent
@@ -37,7 +41,9 @@ internal object AnalysisModule {
         getConfigUseCase: GetConfigUseCase,
         updateAnalysisNoteUseCase: UpdateAnalysisNoteUseCase,
         deleteAnalysisUseCase: DeleteAnalysisUseCase,
-        getAnalysisNoteUseCase: GetAnalysisNoteUseCase
+        getAnalysisNoteUseCase: GetAnalysisNoteUseCase,
+        performanceUseCase: TestPerformanceUseCase,
+        getTestResourcesUseCase: GetTestResourcesUseCase
     ): AnalysisComponent {
         return DefaultAnalysisComponent(
             getAnalysisUseCase,
@@ -46,7 +52,9 @@ internal object AnalysisModule {
             getConfigUseCase,
             updateAnalysisNoteUseCase,
             deleteAnalysisUseCase,
-            getAnalysisNoteUseCase
+            getAnalysisNoteUseCase,
+            performanceUseCase,
+            getTestResourcesUseCase
         )
     }
 
@@ -61,16 +69,26 @@ internal object AnalysisModule {
     }
 
     @Provides
+    fun providesComputerVisionPerformance(@ApplicationContext context: Context): ComputerVisionPerformance {
+        return TFLiteComputerVisionPerformance(context)
+    }
+
+    @Provides
+    fun provideValidateConfigUseCase(): ValidateConfigUseCase {
+        return ValidateConfigUseCase()
+    }
+
+    @Provides
     fun provideGetAnalysisUseCase(repository: Repository): GetAnalysisUseCase {
         return GetAnalysisUseCase(repository)
     }
 
     @Provides
     fun provideAnalyzePlantUseCase(
+        validateConfigUseCase: ValidateConfigUseCase,
         repository: Repository,
         computerVision: ComputerVision
     ): AnalyzePlantUseCase {
-        val validateConfigUseCase = ValidateConfigUseCase()
         return AnalyzePlantUseCase(
             validateConfigUseCase,
             DetectLeavesUseCase(computerVision),
@@ -105,6 +123,21 @@ internal object AnalysisModule {
     @Provides
     fun provideGetAnalysisNoteUseCase(repository: Repository): GetAnalysisNoteUseCase {
         return GetAnalysisNoteUseCase(repository)
+    }
+
+    @Provides
+    fun provideTestPerformanceUseCase(
+        validateConfigUseCase: ValidateConfigUseCase,
+        computerVisionPerformance: ComputerVisionPerformance,
+    ): TestPerformanceUseCase {
+        return TestPerformanceUseCase(computerVisionPerformance, validateConfigUseCase)
+    }
+
+    @Provides
+    fun provideGetTestResourcesUseCase(
+        computerVisionPerformance: ComputerVisionPerformance
+    ): GetTestResourcesUseCase {
+        return GetTestResourcesUseCase(computerVisionPerformance)
     }
 
 }
