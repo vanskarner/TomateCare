@@ -22,6 +22,7 @@ internal class DefaultErrorFilter(
         AnalysisError.InvalidConfig -> getString(R.string.error_invalid_config)
         AnalysisError.NoLeaves -> getString(R.string.error_no_leaves)
         AnalysisError.NotFound -> getString(R.string.error_no_found)
+        AnalysisError.InvalidModel -> getString(R.string.error_invalid_model)
     }
 
     private fun filterDiseasesError(error: DiseasesPersistenceError) = when (error) {
