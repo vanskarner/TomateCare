@@ -51,20 +51,20 @@ android {
     correctErrorTypes = true
 }*/
 
-
+//noinspection GradleDependency,KaptUsageInsteadOfKsp
 dependencies {
 
-    //noinspection GradleDependency
+
     implementation(project(":diseases"))
-    implementation(project(":analysisTracking"))
+    implementation(project(":analysis"))
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.github.bumptech.glide:glide:4.12.0")
-    //noinspection GradleDependency
+
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
-    //noinspection GradleDependency
+
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     // Kotlin
@@ -73,6 +73,12 @@ dependencies {
     //hilt
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
+    //Room
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    androidTestImplementation("androidx.room:room-testing:2.6.1")
+    kaptAndroidTest("androidx.room:room-compiler:2.6.1")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")

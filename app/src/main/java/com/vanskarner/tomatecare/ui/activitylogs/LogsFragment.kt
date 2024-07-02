@@ -67,7 +67,7 @@ internal class LogsFragment : BaseBindingFragment<FragmentLogsBinding>() {
             showDeleteDialog { viewModel.deleteSelectedItems() }
         }
         viewModel.restart.observe(viewLifecycleOwner) {
-            binding.svLogs.setQuery("",false)
+            binding.svLogs.setQuery("", false)
             binding.svLogs.isIconified = true
             hideAllCheckboxes()
         }
@@ -120,6 +120,7 @@ internal class LogsFragment : BaseBindingFragment<FragmentLogsBinding>() {
 
     private fun goToIdentificationFragment(id: Int) {
         val direction = LogsFragmentDirections.toIdentificationFragment(id)
+        direction.fromCapture = false
         findNavController().navigate(direction)
     }
 
@@ -130,6 +131,6 @@ internal class LogsFragment : BaseBindingFragment<FragmentLogsBinding>() {
 
 }
 
-enum class SelectionOptions {
+internal enum class SelectionOptions {
     Select, SelectAll, Cancel
 }

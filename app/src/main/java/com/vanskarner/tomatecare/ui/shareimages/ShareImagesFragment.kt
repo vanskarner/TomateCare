@@ -11,8 +11,10 @@ import com.vanskarner.tomatecare.databinding.FragmentShareImagesBinding
 import com.vanskarner.tomatecare.ui.performance.PerformanceFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
+@Suppress("unused")
 @AndroidEntryPoint
-class ShareImagesFragment : BaseBindingFragment<FragmentShareImagesBinding>() {
+internal class ShareImagesFragment : BaseBindingFragment<FragmentShareImagesBinding>() {
+
 
     private val viewModel: ShareImagesViewModel by viewModels()
 

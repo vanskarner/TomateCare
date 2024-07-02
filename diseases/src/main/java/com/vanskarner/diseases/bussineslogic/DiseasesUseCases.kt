@@ -8,6 +8,30 @@ internal class GetDiseasesUseCase(private val repository: DiseasesRepository) {
 
 internal class FindDiseaseUseCase(private val repository: DiseasesRepository) {
 
-    suspend fun execute(id:Int) = repository.find(id)
+    suspend fun execute(id: Int) = repository.find(id)
+
+}
+
+internal class GetNameByKeyCodeUseCase(private val repository: DiseasesRepository) {
+
+    suspend fun execute(keyCode: String) = repository.getNameByKeyCode(keyCode)
+
+}
+
+internal class GetNamesByKeyCodesUseCase(private val repository: DiseasesRepository) {
+
+    suspend fun execute(keyCodes: List<String>) = repository.getNamesByKeyCodes(keyCodes)
+
+}
+
+internal class FindDiseasesByKeyCodesUseCase(private val repository: DiseasesRepository) {
+
+    suspend fun execute(keyCodes: List<String>) = repository.findByKeyCodes(keyCodes)
+
+}
+
+internal class FindDiseaseByKeyCodeUseCase(private val repository: DiseasesRepository) {
+
+    suspend fun execute(keyCode: String) = repository.findByKeyCode(keyCode)
 
 }

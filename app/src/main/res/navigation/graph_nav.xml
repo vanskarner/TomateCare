@@ -20,9 +20,9 @@
         android:label="fragment_diseases"
         tools:layout="@layout/fragment_diseases" >
         <argument
-            android:name="IdSelected"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:name="keyCode"
+            app:argType="string"
+            android:defaultValue="" />
     </fragment>
     <fragment
         android:id="@+id/identificationFragment"
@@ -41,6 +41,10 @@
         <argument
             android:name="idLog"
             app:argType="integer" />
+        <argument
+            android:name="fromCapture"
+            app:argType="boolean"
+            android:defaultValue="true" />
     </fragment>
     <fragment
         android:id="@+id/logsFragment"

@@ -22,6 +22,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -71,7 +72,7 @@
                             android:id="@+id/imvPlant"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:imageBitmap="@{model.plantImage}"
+                            android:storedImage="@{model.imgPath}"
                             android:scaleType="fitXY"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -79,6 +80,16 @@
                             app:layout_constraintTop_toTopOf="parent"
                             tools:ignore="ContentDescription"
                             tools:src="@tools:sample/backgrounds/scenic" />
+
+                        <com.vanskarner.tomatecare.ui.common.OverlayView
+                            android:id="@+id/overlay"
+                            android:boundingBox="@{model.boundingBoxes}"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/tvDateCapture"
@@ -95,6 +106,7 @@
                             app:layout_constraintHorizontal_bias="1.0"
                             app:layout_constraintStart_toStartOf="parent"
                             tools:text="24 abril 2024" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </com.google.android.material.appbar.CollapsingToolbarLayout>

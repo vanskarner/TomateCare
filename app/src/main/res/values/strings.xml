@@ -29,8 +29,8 @@
     <string name="healthy">Saludable</string>
     <string name="sick">Enferma</string>
     <string name="total_time_spent">Tiempo total empleado:</string>
-    <string name="total_sheets_analyzed">Total de hojas analizadas:</string>
-    <string name="identified">identificadas:</string>
+    <string name="total_sheets_analyzed">Total de hojas analizadas: %s</string>
+    <string name="identified">identificadas: %s</string>
     <string name="recommendations">Recomendaciones</string>
     <string name="note">Nota</string>
     <string name="write_your_note_here">Escribe tu descripción aquí…</string>
@@ -57,9 +57,9 @@
     <string name="launch">Iniciar</string>
     <string name="results">Resultados</string>
     <string name="disease_classifier_inference_time">Tiempo de inferencia del clasificador de enfermedades</string>
-    <string name="description_classifier_time">Esta prueba utiliza un dataset muy pequeño de 100 imágenes para testear el tiempo de inferencia que toma predecir todas esas imágenes.</string>
-    <string name="testing_models">Tiempo de inferencia del detector de hojas y el clasificador</string>
-    <string name="description_test_models">Esta prueba utiliza una imagen de la planta del tomate para primero detectar las hojas presentes en la imagen (max. 10 hojas), luego se extrae cada hoja en una imagen separada para luego pasar cada imagen por el clasificador de enfermedades con la finalidad de medir el tiempo requerido que toma todo este proceso.</string>
+    <string name="description_classifier_time">Esta prueba utiliza un conjunto de 10 imágenes para testear el tiempo de inferencia que toma predecir todas esas imágenes y sacar un promedio.</string>
+    <string name="testing_models">Tiempo de inferencia del detector de hojas</string>
+    <string name="description_test_models">Esta prueba emplea una imagen de una planta para identificar y detectar las hojas presentes en ella, aproximadamente 17 hojas. El modelo por defecto es YoloV8n.</string>
     <string name="tests">Pruebas</string>
     <string name="description_share_images">Puedes compartir las imágenes producto de tus registros de actividad para ayudarnos a mejorar el modelo de clasificación de enfermedades. \n\nRecuerda que al compartir tus imágenes de plantas con nosotros, nos cedes el derecho de utilizarlas libremente para mejorar modelos de clasificación o crear datasets. Para más información, revisa el “Terminos y condiciones”.</string>
     <string name="agree">Estoy deacuerdo</string>
@@ -77,9 +77,26 @@
     <string name="apply">Aplicar</string>
     <string name="description_capture_error">No se encontró una planta</string>
     <string name="image_not_loaded">No se puede cargar la imagen</string>
+    <string name="updated_note">Nota actualizada</string>
     <string name="error_non_analyzable_image">La imagen no pudo ser analizada</string>
+    <string name="error_unknown">Algo salió mal…</string>
+    <string name="error_gpu_not_supported_device">El dispositivo no soporta el uso de GPU</string>
+    <string name="error_invalid_config">La configuracion aplicada es inválida</string>
     <string name="no_item_selected">No ha seleccionado ningun elemento</string>
     <string name="sick_format">Sick: %d</string>
-
+    <string name="error_temporary_image">No se pudo crear el archivo temporal para respaldo de imagen</string>
+    <string name="error_no_leaves">No se encontraron hojas en la imagen</string>
+    <string name="error_no_found">Elemento no encontrado</string>
+    <string name="error_invalid_model">El modelo ingresado es inválido</string>
+    <string name="error_disease_not_found">Enfermedad no encontrada</string>
+    <string name="title_image_for_test">Imagen usada para esta prueba</string>
     <string name="provider_authorities_camera">com.vanskarner.tomatecare.fileprovider</string>
+    <string name="finished_analysis">Análisis terminado</string>
+    <string name="other_image">Otra Imagen</string>
+    <string name="detection_inference">Inferencia de detección: %s ms</string>
+    <string name="classification_inference">Inferencia de classificación: %s ms</string>
+    <string name="detection_model">Modelo de detección: %s</string>
+    <string name="classification_model">Modelo de clasificación: %s</string>
+    <string name="used_threads">Hilos usados: %s</string>
+    <string name="processing_value">Procesamiento: %s</string>
 </resources>

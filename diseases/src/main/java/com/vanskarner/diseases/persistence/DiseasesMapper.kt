@@ -1,7 +1,7 @@
 package com.vanskarner.diseases.persistence
 
-import com.vanskarner.diseases.bussineslogic.DiseaseData
-import com.vanskarner.diseases.bussineslogic.DiseaseDetailData
+import com.vanskarner.diseases.DiseaseData
+import com.vanskarner.diseases.DiseaseDetailData
 
 internal fun DiseaseDTO.toData() = DiseaseData(id, name, imageBase64, symptoms)
 

@@ -49,4 +49,7 @@ abstract class BaseBindingFragment<T : ViewBinding> : Fragment() {
     protected fun showToast(msgId: Int) =
         Toast.makeText(requireContext(), msgId, Toast.LENGTH_SHORT).show()
 
+    protected fun showToast(msg: String) =
+        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+
 }

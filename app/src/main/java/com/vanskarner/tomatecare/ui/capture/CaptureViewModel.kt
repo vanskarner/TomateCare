@@ -1,65 +1,102 @@
 package com.vanskarner.tomatecare.ui.capture
 
-import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.vanskarner.analysis.AnalysisComponent
+import com.vanskarner.tomatecare.ui.common.BoundingBoxModel
+import com.vanskarner.tomatecare.ui.common.toModel
+import com.vanskarner.tomatecare.ui.errors.ErrorFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-internal class CaptureViewModel @Inject constructor(): ViewModel() {
+internal class CaptureViewModel @Inject constructor(
+    private val analysisComponent: AnalysisComponent,
+    private val errorFilter: ErrorFilter
+) : ViewModel() {
 
-    private val _settingModel = MutableLiveData<SettingModel>()
-    private val _loading = MutableLiveData<Boolean>()
-    private val _error = MutableLiveData<Unit>()
+    private val _setting = MutableLiveData<SettingModel>()
+    private val _startVisibility = MutableLiveData(true)
+    private val _loadingVisibility = MutableLiveData(false)
+    private val _analysisFinishedVisibility = MutableLiveData(false)
+    private val _defaultImage = MutableLiveData<Unit>()
+    private val _error = MutableLiveData<String>()
     private val _idLog = MutableLiveData<Int>()
-    private val _imageToAnalyze = MutableLiveData<Bitmap>()
+    private val _boundingBoxes = MutableLiveData<List<BoundingBoxModel>>()
 
-    val settingModel: LiveData<SettingModel> = _settingModel
-    val loading: LiveData<Boolean> = _loading
-    val error: LiveData<Unit> = _error
+    val setting: LiveData<SettingModel> = _setting
+    val startVisibility: LiveData<Boolean> = _startVisibility
+    val loadingVisibility: LiveData<Boolean> = _loadingVisibility
+    val analysisFinishedVisibility: LiveData<Boolean> = _analysisFinishedVisibility
+    val defaultImage: LiveData<Unit> = _defaultImage
+    val error: LiveData<String> = _error
     val idLog: LiveData<Int> = _idLog
-    val imageToAnalyze: LiveData<Bitmap> = _imageToAnalyze
+    val boundingBoxes: LiveData<List<BoundingBoxModel>> = _boundingBoxes
 
-    private var myModel = SettingModel(
-        0.3f,
-        3,
-        3,
-        listOf("CPU", "GPU"),
-        listOf(
-            "SqueezeNet",
-            "SqueezeNext",
-            "MobileNetV2",
-            "MobileNetV3Large",
-            "MobileNetV3Small"
-        ),
-        0.8f,
-        5,
-        5,
-        0,
-        1
-    )
+    private var settingModel = analysisComponent.getConfigParams().toModel()
+    private var analysisId = 0
 
     fun getSetting() {
-        _settingModel.value = myModel
+        _setting.value = settingModel
     }
 
     fun updateSetting(setting: SettingModel) {
-        this.myModel = setting
+        this.settingModel = setting
     }
 
-    fun analyzeImage(bitmap: Bitmap) {
+    fun analyzeImage(imgPath: String) {
+        showLoading()
         viewModelScope.launch {
-            _loading.value = true
-            _imageToAnalyze.value = bitmap
-            delay(3000)
-//            _error.value = Unit
-            _idLog.value = 12
+            val analysisResult = withContext(Dispatchers.IO) {
+                analysisComponent.analyzePlant(imgPath, settingModel.toData())
+            }
+            withContext(Dispatchers.Main) {
+                analysisResult
+                    .onSuccess {
+                        analysisId = it.id
+                        _boundingBoxes.value = it.listLeafBoxCoordinates.toModel()
+                        showAnalysisFinished()
+                    }
+                    .onFailure { showError(errorFilter.filter(it)) }
+            }
         }
+    }
+
+    fun nextScreen() {
+        _idLog.value = analysisId
+    }
+
+    fun showStart() {
+        _loadingVisibility.value = false
+        _analysisFinishedVisibility.value = false
+        _startVisibility.value = true
+        _defaultImage.value = Unit
+        _boundingBoxes.value = emptyList()
+    }
+
+    private fun showLoading() {
+        _startVisibility.value = false
+        _analysisFinishedVisibility.value = false
+        _loadingVisibility.value = true
+    }
+
+    private fun showAnalysisFinished() {
+        _loadingVisibility.value = false
+        _startVisibility.value = false
+        _analysisFinishedVisibility.value = true
+    }
+
+    private fun showError(msgError: String) {
+        _analysisFinishedVisibility.value = false
+        _loadingVisibility.value = false
+        _startVisibility.value = true
+        _defaultImage.value = Unit
+        _error.value = msgError
     }
 
 }

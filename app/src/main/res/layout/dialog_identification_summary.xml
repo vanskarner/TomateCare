@@ -43,26 +43,87 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
+                android:gravity="center"
                 android:orientation="horizontal">
 
-                <TextView
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:src="@drawable/chronometer_timer_svgrepo_com"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="4dp"
-                    android:gravity="center"
-                    android:text="@string/total_time_spent"
-                    app:drawableStartCompat="@drawable/chronometer_timer_svgrepo_com" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvIdentificationTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@{model.totalTimeSpent}"
-                    android:textStyle="bold"
-                    tools:text="25 ms" />
+                    <TextView
+                        android:id="@+id/tvInferenceDetection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.format(@string/detection_inference, model.detectionInference)}"
+                        tools:text="@string/detection_inference" />
+
+                    <TextView
+                        android:id="@+id/tvInferenceClassification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.format(@string/classification_inference, model.classificationInference)}"
+                        tools:text="@string/classification_inference" />
+                </LinearLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:src="@drawable/artificial_intelligence_svgrepo_com"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="4dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvDetectionModel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.format(@string/detection_model, model.detectionModel)}"
+                        tools:text="@string/detection_model" />
+
+                    <TextView
+                        android:id="@+id/tvClassificationModel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.format(@string/classification_model, model.classificationModel)}"
+                        tools:text="@string/classification_model" />
+
+                    <TextView
+                        android:id="@+id/tvUsedThreads"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.format(@string/used_threads, model.usedThreads)}"
+                        tools:text="@string/used_threads" />
+
+                    <TextView
+                        android:id="@+id/tvProcessing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.format(@string/processing_value, model.processing)}"
+                        tools:text="@string/processing_value" />
+                </LinearLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_margin="4dp"
@@ -74,19 +135,9 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="4dp"
                     android:gravity="center"
-                    android:text="@string/total_sheets_analyzed"
+                    android:text="@{String.format(@string/total_sheets_analyzed,model.totalLeavesAnalyzed)}"
                     app:drawableStartCompat="@drawable/leaf_green_svgrepo_com" />
-
-                <TextView
-                    android:id="@+id/tvTotalLeaves"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@{String.valueOf(model.analyzedLeaves)}"
-                    android:textStyle="bold"
-                    tools:text="10" />
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -96,7 +147,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="6dp"
+                    android:layout_marginEnd="4dp"
                     android:drawablePadding="4dp"
                     android:gravity="center"
                     android:text="@string/diseases"
@@ -107,16 +158,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/identified" />
-
-                <TextView
-                    android:id="@+id/tvTotalDiseases"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="@{String.valueOf(model.identifiedDiseases)}"
-                    android:textStyle="bold"
-                    tools:text="2" />
+                    android:text="@{String.format(@string/identified, model.identifiedDiseases)}"
+                    tools:text="@string/identified" />
 
             </LinearLayout>
 

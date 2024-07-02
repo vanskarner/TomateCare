@@ -48,13 +48,14 @@ internal class DiseasesFragment : BaseBindingFragment<FragmentDiseasesBinding>()
     }
 
     override fun setupViewModel() {
-        viewModel.startInfo(args.idSelected)
+        viewModel.startInfo(args.keyCode)
         viewModel.diseases.observe(viewLifecycleOwner) { showDiseases(it) }
         viewModel.diseaseDetail.observe(viewLifecycleOwner) { showDiseaseDetail(it) }
         viewModel.moreInfo.observe(viewLifecycleOwner) {
             binding.svDiseases.isIconified = false
             binding.svDiseases.setQuery(it, true)
         }
+        viewModel.error.observe(viewLifecycleOwner) { showToast(it) }
     }
 
     private fun showDiseases(list: List<DiseaseModel>) = diseaseAdapter.updateList(list)

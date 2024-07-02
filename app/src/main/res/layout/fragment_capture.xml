@@ -18,32 +18,30 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imvPhotoToAnalyze"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="#F3EDF7"
-            android:imageBitmap="@{viewModel.imageToAnalyze}"
-            android:scaleType="fitXY"
-            android:visibility="@{viewModel.loading? View.VISIBLE:View.GONE}"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription,ImageContrastCheck" />
-
-        <ImageView
             android:id="@+id/imvPlantCover"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="#F3EDF7"
             android:scaleType="fitXY"
             android:src="@drawable/plant_96"
-            android:visibility="@{viewModel.loading? View.GONE:View.VISIBLE}"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription,ImageContrastCheck" />
+
+        <com.vanskarner.tomatecare.ui.common.OverlayView
+            android:id="@+id/overlay"
+            android:boundingBox="@{viewModel.boundingBoxes}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:translationZ="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
             android:id="@+id/imvSettings"
@@ -53,7 +51,7 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/rounded_background"
             android:padding="4dp"
-            android:visibility="@{viewModel.loading? View.GONE:View.VISIBLE}"
+            android:visibility="@{viewModel.startVisibility? View.VISIBLE:View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/baseline_settings_24"
@@ -67,29 +65,34 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
+            <!-- Start-->
             <Button
                 android:id="@+id/btnPhotos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:text="@string/photos"
-                android:visibility="@{viewModel.loading? View.GONE:View.VISIBLE}"
+                android:visibility="@{viewModel.startVisibility? View.VISIBLE:View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
 
+            <!-- Start-->
             <TextView
                 android:id="@+id/tvTips"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginEnd="20dp"
                 android:text="@string/tips"
-                android:visibility="@{viewModel.loading? View.GONE:View.VISIBLE}"
+                android:visibility="@{viewModel.startVisibility? View.VISIBLE:View.GONE}"
                 app:drawableTopCompat="@drawable/baseline_question_mark_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
 
+            <!-- Start-->
             <ImageButton
                 android:id="@+id/btnCapture"
                 android:layout_width="wrap_content"
@@ -97,14 +100,16 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@android:color/transparent"
-                android:visibility="@{viewModel.loading? View.GONE:View.VISIBLE}"
+                android:visibility="@{viewModel.startVisibility? View.VISIBLE:View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tvTips"
                 app:layout_constraintStart_toEndOf="@+id/btnPhotos"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/camera_capture"
-                tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
+                tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck"
+                tools:visibility="visible" />
 
+            <!-- Analysis in progress-->
             <LinearLayout
                 android:id="@+id/clIdentification"
                 android:layout_width="wrap_content"
@@ -113,13 +118,13 @@
                 android:layout_marginBottom="24dp"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:visibility="@{viewModel.loading? View.VISIBLE:View.GONE}"
+                android:visibility="@{viewModel.loadingVisibility? View.VISIBLE:View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/camera_capture"
-                tools:visibility="visible">
+                tools:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -134,6 +139,53 @@
                     android:indeterminate="true" />
 
             </LinearLayout>
+
+            <!-- Finished Analysis-->
+            <LinearLayout
+                android:id="@+id/lyAnalysisContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="@{viewModel.analysisFinishedVisibility? View.VISIBLE:View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvAnalysis"
+                tools:visibility="gone">
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:onClick="@{() -> viewModel.showStart()}"
+                    android:text="@string/other_image" />
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:onClick="@{() -> viewModel.nextScreen()}"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="@string/next" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvAnalysis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/finished_analysis"
+                android:visibility="@{viewModel.analysisFinishedVisibility? View.VISIBLE:View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

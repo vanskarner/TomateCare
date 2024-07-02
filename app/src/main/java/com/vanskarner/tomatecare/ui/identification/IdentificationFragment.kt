@@ -1,5 +1,7 @@
 package com.vanskarner.tomatecare.ui.identification
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +10,7 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.vanskarner.tomatecare.ui.common.BaseBindingFragment
 import com.vanskarner.tomatecare.R
 import com.vanskarner.tomatecare.databinding.DialogIdentificationLeafBinding
@@ -15,6 +18,7 @@ import com.vanskarner.tomatecare.databinding.DialogIdentificationNoteBinding
 import com.vanskarner.tomatecare.databinding.DialogIdentificationRecommendationBinding
 import com.vanskarner.tomatecare.databinding.DialogIdentificationSummaryBinding
 import com.vanskarner.tomatecare.databinding.FragmentIdentificationBinding
+import com.vanskarner.tomatecare.ui.common.OverlayView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -23,8 +27,10 @@ internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificati
 
     @Inject
     lateinit var leafAdapter: LeafAdapter
+
     @Inject
     lateinit var recommendationsAdapter: RecommendationsAdapter
+    private val args: IdentificationFragmentArgs by navArgs()
     private val viewModel: IdentificationViewModel by viewModels()
 
     override fun inflateBinding(
@@ -34,35 +40,41 @@ internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificati
     ): FragmentIdentificationBinding = FragmentIdentificationBinding.inflate(layoutInflater)
 
     override fun setupView() {
-        binding.imvOnBack.setOnClickListener { goToCaptureFragment() }
+        binding.imvOnBack.setOnClickListener { chooseCaptureOrLogsFragment(args.fromCapture) }
         binding.rcvLeaves.adapter = leafAdapter
         binding.tvSummary.setOnClickListener { viewModel.getSummary() }
         binding.tvAddNote.setOnClickListener { viewModel.getNote() }
-        leafAdapter.setOnClickListener { viewModel.getLeafInfo() }
+        leafAdapter.setOnClickListener { viewModel.getLeafInfo(it) }
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
-            onBackPressed = { goToCaptureFragment() })
+            onBackPressed = { chooseCaptureOrLogsFragment(args.fromCapture) })
     }
 
     override fun setupViewModel() {
-        viewModel.exampleData()
+        viewModel.showAnalysis(args.idLog)
         viewModel.identification.observe(viewLifecycleOwner) {
             binding.model = it
-            showLeaves(it.leavesImage)
+            showLeaves(it.imgPath, it.leavesImage)
         }
         viewModel.note.observe(viewLifecycleOwner) {
             showAddNote(it) { text -> viewModel.saveNote(text) }
         }
         viewModel.summary.observe(viewLifecycleOwner) { showSummary(it) }
         viewModel.leafInfo.observe(viewLifecycleOwner) { showLeafInfoDialog(it) }
+        viewModel.error.observe(viewLifecycleOwner) { showToast(it) }
+        viewModel.updatedNote.observe(viewLifecycleOwner) { showToast(R.string.updated_note) }
     }
 
-    private fun goToCaptureFragment() {
-        val direction = IdentificationFragmentDirections.toCaptureFragment()
+    private fun chooseCaptureOrLogsFragment(fromCapture: Boolean) {
+        val direction = if (fromCapture) IdentificationFragmentDirections.toCaptureFragment()
+        else IdentificationFragmentDirections.toLogsFragment()
         findNavController().navigate(direction)
     }
 
-    private fun showLeaves(list: List<LeafModel>) = leafAdapter.updateList(list)
+    private fun showLeaves(imgPath: String, list: List<LeafModel>) {
+        val rootImage: Bitmap? = BitmapFactory.decodeFile(imgPath)
+        rootImage?.let { leafAdapter.updateList(it, list) }
+    }
 
     private fun showLeafInfoDialog(model: LeafInfoModel) {
         val bindingLeafInfo = DialogIdentificationLeafBinding.inflate(layoutInflater)
@@ -83,9 +95,12 @@ internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificati
         }
         bindingLeafInfo.tvDiseaseInfo.setOnClickListener {
             alertDialog.cancel()
-            goToDiseasesFragment()
+            goToDiseasesFragment(model.keyCode)
         }
+        val rootImage = BitmapFactory.decodeFile(model.rootImagePath)
+        val croppedImage = OverlayView.cropImageFromBoundingBox(rootImage, model.boundingBoxModel)
         bindingLeafInfo.model = model
+        bindingLeafInfo.croppedImage = croppedImage
         alertDialog.show()
     }
 
@@ -117,7 +132,7 @@ internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificati
         alertDialog.show()
     }
 
-    private fun showAddNote(note: String, accept: (text: String) -> Unit) {
+    private fun showAddNote(note: String, onAccept: (text: String) -> Unit) {
         val bindingNote = DialogIdentificationNoteBinding.inflate(layoutInflater)
         val builder = AlertDialog.Builder(requireContext())
         builder.setView(bindingNote.root)
@@ -127,16 +142,16 @@ internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificati
         bindingNote.edtNote.setSelection(bindingNote.edtNote.text.length)
         bindingNote.btnCancel.setOnClickListener { alertDialog.cancel() }
         bindingNote.btnSave.setOnClickListener {
-            val text = bindingNote.edtNote.toString()
-            accept.invoke(text)
+            val text = bindingNote.edtNote.text.toString()
+            onAccept.invoke(text)
             alertDialog.cancel()
         }
         alertDialog.show()
     }
 
-    private fun goToDiseasesFragment(){
+    private fun goToDiseasesFragment(keyCode: String) {
         val direction = IdentificationFragmentDirections.toDiseasesFragment()
-        direction.idSelected = 1
+        direction.keyCode = keyCode
         findNavController().navigate(direction)
     }
 

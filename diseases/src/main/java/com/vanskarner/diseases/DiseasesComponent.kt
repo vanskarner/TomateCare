@@ -1,11 +1,7 @@
 package com.vanskarner.diseases
 
-import com.vanskarner.diseases.bussineslogic.DiseaseData
-import com.vanskarner.diseases.bussineslogic.DiseaseDetailData
-import com.vanskarner.diseases.persistence.DiseasesPersistenceError
-
 /**
- * Proporciona informacion sobre las enfermedades que se identificaran
+ * Interface for retrieving information related to plant diseases.
  * @author Luis H. Olazo
  * @version 1.0.0
  */
@@ -25,8 +21,45 @@ interface DiseasesComponent {
      * @return [Result], encapsulates success or failure.
      * - [Result.onSuccess], returns the searched [DiseaseDetailData]
      * - [Result.onFailure], one of the following errors occurred:
-     * [DiseasesPersistenceError.NotFound]
+     * [DiseasesError.NotFound]
      */
-    suspend fun find(diseaseId:Int): Result<DiseaseDetailData>
+    suspend fun find(diseaseId: Int): Result<DiseaseDetailData>
+
+    /**
+     * Gets the name of the disease with the keyCode, if the code is
+     * invalid an empty string is returned
+     * @return [Result], encapsulates success or failure.
+     * - [Result.onSuccess], returns name
+     * - [Result.onFailure], does not generate any type of error
+     */
+    suspend fun getNameByKeyCode(keyCode: String): Result<String>
+
+    /**
+     * Gets the names of the diseases with the specified key codes, if there are
+     * invalid codes an empty string is returned instead.
+     * @return [Result], encapsulates success or failure.
+     * - [Result.onSuccess], returns list of names
+     * - [Result.onFailure], does not generate any type of error
+     */
+    suspend fun getNamesByKeyCodes(keyCodes: List<String>): Result<List<String>>
+
+    /**
+     * Gets the diseases with the specified key codes, if there are
+     * invalid codes an empty disease is returned instead.
+     * @return [Result], encapsulates success or failure.
+     * - [Result.onSuccess], returns diseases
+     * - [Result.onFailure], does not generate any type of error
+     */
+    suspend fun findByKeyCodes(keyCodes: List<String>): Result<List<DiseaseDetailData>>
+
+    /**
+     * Find the disease by its keyCode.
+     * @param keyCode disease identifier
+     * @return [Result], encapsulates success or failure.
+     * - [Result.onSuccess], returns the searched [DiseaseDetailData]
+     * - [Result.onFailure], one of the following errors occurred:
+     * [DiseasesError.NotFound]
+     */
+    suspend fun findByKeyCode(keyCode: String): Result<DiseaseDetailData>
 
 }

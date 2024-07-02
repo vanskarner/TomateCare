@@ -1,35 +1,59 @@
 package com.vanskarner.tomatecare.ui.identification
 
-import android.graphics.Bitmap
+import com.vanskarner.tomatecare.ui.common.BoundingBoxModel
 
 internal data class IdentificationDetailModel(
     val id: Int,
     val creationDate: String,
-    val plantImage: Bitmap,
-    val leavesImage: List<LeafModel>,
-    val description: String
+    val imgPath: String,
+    val boundingBoxes: List<BoundingBoxModel>,
+    val leavesImage: List<LeafModel>
 )
 
 internal data class LeafModel(
-    val image: Bitmap,
+    val keyCode:String,
+    val rootImagePath: String,
+    val boundingBoxModel: BoundingBoxModel,
     val isHealthy: Boolean,
     val diseases: String,
     val probability: Float
 )
 
 internal data class LeafInfoModel(
-    val image: Bitmap,
+    val keyCode:String,
+    val rootImagePath: String,
+    val boundingBoxModel: BoundingBoxModel,
     val isHealthy: Boolean,
     val prediction: String,
     val shortDescriptionDisease: String,
 )
 
 internal data class SummaryModel(
-    val totalTimeSpent: String,
-    val analyzedLeaves: Int,
-    val identifiedDiseases: Int,
+    val detectionInference: String,
+    val classificationInference: String,
+    val detectionModel: String,
+    val classificationModel: String,
+    val usedThreads: String,
+    val processing: String,
+    val totalLeavesAnalyzed:String,
+    val identifiedDiseases: String,
     val diseases: String,
     val recommendations: List<RecommendationModel>
-)
+) {
+    companion object {
+        fun empty() = SummaryModel(
+            detectionInference = "",
+            classificationInference = "",
+            detectionModel = "",
+            classificationModel = "",
+            usedThreads = "",
+            processing = "",
+            totalLeavesAnalyzed = "",
+            identifiedDiseases = "",
+            diseases = "",
+            recommendations = emptyList()
+        )
+    }
+}
 
 internal data class RecommendationModel(val diseaseName: String, val diseaseControl: String)
