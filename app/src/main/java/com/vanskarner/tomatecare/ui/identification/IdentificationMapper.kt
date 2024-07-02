@@ -39,12 +39,7 @@ internal fun AnalysisDetailData.toSummaryModel(recommendations: List<Recommendat
         usedThreads = threadsUsed,
         processing = processing,
         identifiedDiseases = "$numberDiseasesIdentified",
-        diseases = recommendations
-            .map { item -> item.diseaseName }
-            .mapIndexed { index, item ->
-                if (index % 2 == 1) "- $item\n"
-                else "- $item "
-            }.joinToString(""),
+        diseases = recommendations.joinToString(",") { item -> item.diseaseName },
         recommendations = recommendations
     )
 
