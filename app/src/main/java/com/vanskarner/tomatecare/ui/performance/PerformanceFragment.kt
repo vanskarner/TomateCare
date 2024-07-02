@@ -48,6 +48,16 @@ class PerformanceFragment : BaseBindingFragment<FragmentPerformanceTestBinding>(
         viewModel.error.observe(viewLifecycleOwner) { showToast(it) }
         viewModel.detectionImage.observe(viewLifecycleOwner) { showDialogTestImages(it) }
         viewModel.classificationImage.observe(viewLifecycleOwner) { showDialogTestImages(it) }
+        viewModel.loading.observe(viewLifecycleOwner) {
+            if (it) loadingAlertDialog.show()
+            else loadingAlertDialog.cancel()
+        }
+        viewModel.inferenceResults.observe(viewLifecycleOwner) { showInferenceResults(it) }
+    }
+
+    private fun showInferenceResults(inferencesInMs: Pair<String, String>) {
+        binding.tvTestTime1.text = inferencesInMs.first
+        binding.tvTestTime2.text = inferencesInMs.second
     }
 
     private fun showDialogTestImages(inputStream: InputStream) {

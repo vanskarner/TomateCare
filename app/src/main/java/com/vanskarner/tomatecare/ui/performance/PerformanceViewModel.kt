@@ -5,11 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vanskarner.analysis.AnalysisComponent
+import com.vanskarner.analysis.TestConfigData
 import com.vanskarner.tomatecare.ui.common.GenericItemModel
 import com.vanskarner.tomatecare.ui.common.GenericListModel
 import com.vanskarner.tomatecare.ui.errors.ErrorFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.InputStream
 import javax.inject.Inject
 
@@ -24,7 +27,8 @@ class PerformanceViewModel @Inject constructor(
     private val _error = MutableLiveData<String>()
     private val _detectionImage = MutableLiveData<InputStream>()
     private val _classificationImage = MutableLiveData<InputStream>()
-    private val maxThreads: Int by lazy { 5 }
+    private val _loading = MutableLiveData<Boolean>()
+    private val _inferenceResults = MutableLiveData<Pair<String, String>>()
 
     val threads: LiveData<Int> = _threads
     val processing: LiveData<GenericListModel> = _processing
@@ -32,24 +36,19 @@ class PerformanceViewModel @Inject constructor(
     val error: LiveData<String> = _error
     val detectionImage: LiveData<InputStream> = _detectionImage
     val classificationImage: LiveData<InputStream> = _classificationImage
+    val loading: LiveData<Boolean> = _loading
+    val inferenceResults: LiveData<Pair<String, String>> = _inferenceResults
+
+    private var maxThreads: Int = 0
 
     fun exampleData() {
-        _threads.value = 1
-        _processing.value = GenericListModel(
-            listOf(
-                GenericItemModel(1, "CPU"),
-                GenericItemModel(2, "GPU"),
-            )
-        )
-        _models.value = GenericListModel(
-            listOf(
-                GenericItemModel(1, "SqueezeNet"),
-                GenericItemModel(2, "SqueezeNext"),
-                GenericItemModel(3, "MobileNetV2"),
-                GenericItemModel(4, "MobileNetV3Large"),
-                GenericItemModel(5, "MobileNetV3Small"),
-            )
-        )
+        val config = analysisComponent.getConfigParams()
+        maxThreads = config.maxThreads
+        _threads.value = maxThreads
+        _processing.value = GenericListModel(config.processingList
+            .mapIndexed { index, value -> GenericItemModel(index, value) })
+        _models.value = GenericListModel(config.modelList
+            .mapIndexed { index, value -> GenericItemModel(index, value) })
     }
 
     fun showTestImageForDetection() {
@@ -75,8 +74,29 @@ class PerformanceViewModel @Inject constructor(
     }
 
     fun startTest(posProcessing: Int, posModels: Int) {
-        val selectedProcessing = _processing.value!!.list[posProcessing].id
-        val selectedModels = _models.value!!.list[posModels].id
+        _loading.value = true
+        val config = TestConfigData(
+            numberThreads = _threads.value ?: 0,
+            processing = _processing.value?.list?.get(posProcessing)?.description ?: "",
+            model = _models.value?.list?.get(posModels)?.description ?: ""
+        )
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO) { analysisComponent.performanceTest(config) }
+            withContext(Dispatchers.Main) {
+                result
+                    .onSuccess {
+                        _loading.value = false
+                        val detectionInference = it.first
+                        val averageClassificationInference = it.second / 10
+                        _inferenceResults.value =
+                            Pair("$detectionInference ms", "$averageClassificationInference ms")
+                    }
+                    .onFailure {
+                        _loading.value = false
+                        showError(it)
+                    }
+            }
+        }
     }
 
     fun decreaseThreads() {
