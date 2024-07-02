@@ -33,9 +33,10 @@ class PerformanceFragment : BaseBindingFragment<FragmentPerformanceTestBinding>(
             viewLifecycleOwner,
             onBackPressed = { goToStartFragment() })
         binding.btnStart.setOnClickListener {
-            val posProcessing = binding.spProcessing.selectedItemPosition
-            val posModels = binding.spModel.selectedItemPosition
-            viewModel.startTest(posProcessing, posModels)
+            viewModel.startTest(
+                posProcessing = binding.spProcessing.selectedItemPosition,
+                posModels = binding.spModel.selectedItemPosition
+            )
         }
         binding.btnLessThreads.setOnClickListener { viewModel.decreaseThreads() }
         binding.btnMoreThreads.setOnClickListener { viewModel.increaseThreads() }
@@ -44,7 +45,7 @@ class PerformanceFragment : BaseBindingFragment<FragmentPerformanceTestBinding>(
     }
 
     override fun setupViewModel() {
-        viewModel.exampleData()
+        viewModel.showConfigForTest()
         viewModel.error.observe(viewLifecycleOwner) { showToast(it) }
         viewModel.detectionImage.observe(viewLifecycleOwner) { showDialogTestImages(it) }
         viewModel.classificationImage.observe(viewLifecycleOwner) { showDialogTestImages(it) }

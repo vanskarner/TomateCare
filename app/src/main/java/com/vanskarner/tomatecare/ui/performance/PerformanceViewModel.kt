@@ -41,7 +41,7 @@ class PerformanceViewModel @Inject constructor(
 
     private var maxThreads: Int = 0
 
-    fun exampleData() {
+    fun showConfigForTest() {
         val config = analysisComponent.getConfigParams()
         maxThreads = config.maxThreads
         _threads.value = maxThreads
@@ -118,4 +118,5 @@ class PerformanceViewModel @Inject constructor(
     private fun showError(error: Throwable) {
         _error.value = errorFilter.filter(error)
     }
+
 }
