@@ -29,7 +29,7 @@
     <string name="healthy">Saludable</string>
     <string name="sick">Enferma</string>
     <string name="total_time_spent">Tiempo total empleado:</string>
-    <string name="total_sheets_analyzed">Total de hojas analizadas:</string>
+    <string name="total_sheets_analyzed">Total de hojas analizadas: %s</string>
     <string name="identified">identificadas: %s</string>
     <string name="recommendations">Recomendaciones</string>
     <string name="note">Nota</string>

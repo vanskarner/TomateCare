@@ -38,6 +38,7 @@ internal fun AnalysisDetailData.toSummaryModel(recommendations: List<Recommendat
         classificationModel = leafClassificationModel,
         usedThreads = threadsUsed,
         processing = processing,
+        totalLeavesAnalyzed = listLeafBoxCoordinates.size.toString(),
         identifiedDiseases = "$numberDiseasesIdentified",
         diseases = recommendations.joinToString(",") { item -> item.diseaseName },
         recommendations = recommendations

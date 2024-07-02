@@ -35,6 +35,7 @@ internal data class SummaryModel(
     val classificationModel: String,
     val usedThreads: String,
     val processing: String,
+    val totalLeavesAnalyzed:String,
     val identifiedDiseases: String,
     val diseases: String,
     val recommendations: List<RecommendationModel>
@@ -47,6 +48,7 @@ internal data class SummaryModel(
             classificationModel = "",
             usedThreads = "",
             processing = "",
+            totalLeavesAnalyzed = "",
             identifiedDiseases = "",
             diseases = "",
             recommendations = emptyList()

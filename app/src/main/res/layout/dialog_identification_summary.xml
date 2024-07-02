@@ -124,7 +124,20 @@
                         tools:text="@string/processing_value" />
                 </LinearLayout>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_margin="4dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="4dp"
+                    android:gravity="center"
+                    android:text="@{String.format(@string/total_sheets_analyzed,model.totalLeavesAnalyzed)}"
+                    app:drawableStartCompat="@drawable/leaf_green_svgrepo_com" />
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
