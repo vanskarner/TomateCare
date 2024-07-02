@@ -3,7 +3,7 @@ package com.vanskarner.analysis.bussineslogic
 import com.vanskarner.analysis.BoundingBoxData
 import com.vanskarner.analysis.ClassificationData
 
-interface ComputerVision {
+internal interface ComputerVision {
 
     suspend fun detectLeaves(imgPath: String): Result<Pair<Long, List<BoundingBoxData>>>
 

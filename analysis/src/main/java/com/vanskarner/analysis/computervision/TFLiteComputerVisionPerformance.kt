@@ -10,7 +10,8 @@ import org.tensorflow.lite.gpu.CompatibilityList
 import org.tensorflow.lite.gpu.GpuDelegate
 import java.io.InputStream
 
-class TFLiteComputerVisionPerformance(private val context: Context) : ComputerVisionPerformance {
+internal class TFLiteComputerVisionPerformance(private val context: Context) :
+    ComputerVisionPerformance {
 
     override suspend fun imageUsedForDetection(): InputStream {
         return context.assets.open("leaf_detection_test.jpg")

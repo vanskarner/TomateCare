@@ -130,6 +130,6 @@ internal class LogsFragment : BaseBindingFragment<FragmentLogsBinding>() {
 
 }
 
-enum class SelectionOptions {
+internal enum class SelectionOptions {
     Select, SelectAll, Cancel
 }

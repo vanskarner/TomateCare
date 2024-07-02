@@ -1,7 +1,7 @@
 package com.vanskarner.tomatecare.ui.diseases
 
-import com.vanskarner.diseases.bussineslogic.DiseaseData
-import com.vanskarner.diseases.bussineslogic.DiseaseDetailData
+import com.vanskarner.diseases.DiseaseData
+import com.vanskarner.diseases.DiseaseDetailData
 
 internal fun DiseaseData.toModel() = DiseaseModel(id, imageBase64, name, symptoms)
 

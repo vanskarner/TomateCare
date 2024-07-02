@@ -1,6 +1,7 @@
 package com.vanskarner.diseases.persistence
 
-import com.vanskarner.diseases.bussineslogic.DiseaseDetailData
+import com.vanskarner.diseases.DiseaseDetailData
+import com.vanskarner.diseases.DiseasesError
 import com.vanskarner.diseases.bussineslogic.DiseasesRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -42,7 +43,7 @@ class DefaultDiseasesRepositoryTest {
         assertTrue(detailDisease.symptoms.isNotEmpty())
     }
 
-    @Test(expected = DiseasesPersistenceError.NotFound::class)
+    @Test(expected = DiseasesError.NotFound::class)
     fun `find with invalid id should return NotFound`() = runTest {
         val invalidId = 0
         repository.find(invalidId).getOrThrow()
@@ -141,7 +142,7 @@ class DefaultDiseasesRepositoryTest {
         assertTrue(detailDisease.symptoms.isNotEmpty())
     }
 
-    @Test(expected = DiseasesPersistenceError.NotFound::class)
+    @Test(expected = DiseasesError.NotFound::class)
     fun `find findByKeyCode invalid id should return NotFound`() = runTest {
         val exampleKeyCode = "unknown"
         repository.findByKeyCode(exampleKeyCode).getOrThrow()

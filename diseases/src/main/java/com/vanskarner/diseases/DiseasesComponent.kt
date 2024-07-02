@@ -1,9 +1,5 @@
 package com.vanskarner.diseases
 
-import com.vanskarner.diseases.bussineslogic.DiseaseData
-import com.vanskarner.diseases.bussineslogic.DiseaseDetailData
-import com.vanskarner.diseases.persistence.DiseasesPersistenceError
-
 /**
  * Interface for retrieving information related to plant diseases.
  * @author Luis H. Olazo
@@ -25,7 +21,7 @@ interface DiseasesComponent {
      * @return [Result], encapsulates success or failure.
      * - [Result.onSuccess], returns the searched [DiseaseDetailData]
      * - [Result.onFailure], one of the following errors occurred:
-     * [DiseasesPersistenceError.NotFound]
+     * [DiseasesError.NotFound]
      */
     suspend fun find(diseaseId: Int): Result<DiseaseDetailData>
 
@@ -62,7 +58,7 @@ interface DiseasesComponent {
      * @return [Result], encapsulates success or failure.
      * - [Result.onSuccess], returns the searched [DiseaseDetailData]
      * - [Result.onFailure], one of the following errors occurred:
-     * [DiseasesPersistenceError.NotFound]
+     * [DiseasesError.NotFound]
      */
     suspend fun findByKeyCode(keyCode: String): Result<DiseaseDetailData>
 

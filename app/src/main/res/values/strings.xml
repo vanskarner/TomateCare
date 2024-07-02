@@ -59,7 +59,7 @@
     <string name="disease_classifier_inference_time">Tiempo de inferencia del clasificador de enfermedades</string>
     <string name="description_classifier_time">Esta prueba utiliza un conjunto de 10 imágenes para testear el tiempo de inferencia que toma predecir todas esas imágenes y sacar un promedio.</string>
     <string name="testing_models">Tiempo de inferencia del detector de hojas</string>
-    <string name="description_test_models">Esta prueba emplea una imagen de una planta para identificar y detectar las hojas presentes en ella, aproximadamente 17 hojas.</string>
+    <string name="description_test_models">Esta prueba emplea una imagen de una planta para identificar y detectar las hojas presentes en ella, aproximadamente 17 hojas. El modelo por defecto es YoloV8n.</string>
     <string name="tests">Pruebas</string>
     <string name="description_share_images">Puedes compartir las imágenes producto de tus registros de actividad para ayudarnos a mejorar el modelo de clasificación de enfermedades. \n\nRecuerda que al compartir tus imágenes de plantas con nosotros, nos cedes el derecho de utilizarlas libremente para mejorar modelos de clasificación o crear datasets. Para más información, revisa el “Terminos y condiciones”.</string>
     <string name="agree">Estoy deacuerdo</string>

@@ -51,10 +51,10 @@ android {
     correctErrorTypes = true
 }*/
 
-
+//noinspection GradleDependency,KaptUsageInsteadOfKsp
 dependencies {
 
-    //noinspection GradleDependency
+
     implementation(project(":diseases"))
     implementation(project(":analysis"))
     implementation("androidx.core:core-ktx:1.9.0")
@@ -62,9 +62,9 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.github.bumptech.glide:glide:4.12.0")
-    //noinspection GradleDependency
+
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
-    //noinspection GradleDependency
+
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     // Kotlin

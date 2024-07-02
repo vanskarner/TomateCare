@@ -36,6 +36,7 @@ android {
     }
 }
 
+//noinspection GradleDependency,KaptUsageInsteadOfKsp
 dependencies {
 
     implementation(project(":diseases"))
@@ -48,19 +49,10 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.44")
 
     //TFLite
-    implementation("org.tensorflow:tensorflow-lite-support:0.4.4")//0.1.0
-    implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
-    implementation("org.tensorflow:tensorflow-lite-gpu:2.16.1")//2.3.0
-    implementation("org.tensorflow:tensorflow-lite-gpu-api:2.16.1")
-
-/*    //TFLite - other way
-    implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
-    implementation("org.tensorflow:tensorflow-lite:2.16.1")
     implementation("org.tensorflow:tensorflow-lite-support:0.4.4")
-    implementation("org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.4.4")
+    implementation("org.tensorflow:tensorflow-lite-metadata:0.1.0")
+    implementation("org.tensorflow:tensorflow-lite-gpu:2.16.1")
     implementation("org.tensorflow:tensorflow-lite-gpu-api:2.16.1")
-    implementation("org.tensorflow:tensorflow-lite-api:2.16.1")
-    implementation("org.tensorflow:tensorflow-lite-gpu:2.16.1")*/
 
     //Room
     implementation("androidx.room:room-runtime:2.6.1")

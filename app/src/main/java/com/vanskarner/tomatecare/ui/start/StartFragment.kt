@@ -17,7 +17,7 @@ import com.vanskarner.tomatecare.databinding.FragmentStartBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class StartFragment : BaseBindingFragment<FragmentStartBinding>() {
+internal class StartFragment : BaseBindingFragment<FragmentStartBinding>() {
 
     private val viewModelActivity: MainViewModel by activityViewModels()
 

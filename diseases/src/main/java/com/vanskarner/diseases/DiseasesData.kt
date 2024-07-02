@@ -1,4 +1,4 @@
-package com.vanskarner.diseases.bussineslogic
+package com.vanskarner.diseases
 
 data class DiseaseData(
     val id: Int,

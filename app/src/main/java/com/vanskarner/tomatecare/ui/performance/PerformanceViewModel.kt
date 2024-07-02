@@ -17,7 +17,7 @@ import java.io.InputStream
 import javax.inject.Inject
 
 @HiltViewModel
-class PerformanceViewModel @Inject constructor(
+internal class PerformanceViewModel @Inject constructor(
     private val analysisComponent: AnalysisComponent,
     private val errorFilter: ErrorFilter
 ) : ViewModel() {

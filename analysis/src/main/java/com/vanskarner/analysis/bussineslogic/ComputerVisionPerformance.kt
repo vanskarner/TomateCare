@@ -2,7 +2,7 @@ package com.vanskarner.analysis.bussineslogic
 
 import java.io.InputStream
 
-interface ComputerVisionPerformance {
+internal interface ComputerVisionPerformance {
 
     suspend fun imageUsedForDetection():InputStream
 

@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.io.InputStream
 
 @AndroidEntryPoint
-class PerformanceFragment : BaseBindingFragment<FragmentPerformanceTestBinding>() {
+internal class PerformanceFragment : BaseBindingFragment<FragmentPerformanceTestBinding>() {
 
     private val viewModel: PerformanceViewModel by viewModels()
 

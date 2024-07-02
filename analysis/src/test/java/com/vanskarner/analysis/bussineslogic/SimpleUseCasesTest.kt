@@ -18,7 +18,7 @@ class SimpleUseCasesTest {
         val expectedMaxThreads = Runtime.getRuntime().availableProcessors()
         val actualConfig = useCase.execute()
 
-        assertEquals(8, actualConfig.maxResults)
+        assertEquals(12, actualConfig.maxResults)
         assertEquals(expectedMaxThreads, actualConfig.maxThreads)
         assertEquals(2, actualConfig.processingList.size)
         assertEquals(5, actualConfig.modelList.size)

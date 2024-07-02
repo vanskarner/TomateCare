@@ -1,5 +1,7 @@
 package com.vanskarner.diseases.bussineslogic
 
+import com.vanskarner.diseases.DiseaseData
+import com.vanskarner.diseases.DiseaseDetailData
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before

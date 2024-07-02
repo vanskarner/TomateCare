@@ -1,7 +1,8 @@
 package com.vanskarner.diseases.persistence
 
-import com.vanskarner.diseases.bussineslogic.DiseaseData
-import com.vanskarner.diseases.bussineslogic.DiseaseDetailData
+import com.vanskarner.diseases.DiseaseData
+import com.vanskarner.diseases.DiseaseDetailData
+import com.vanskarner.diseases.DiseasesError
 import com.vanskarner.diseases.bussineslogic.DiseasesRepository
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -17,7 +18,7 @@ internal class DefaultDiseasesRepository : DiseasesRepository {
         val listDTO = loadDiseasesFromJsonFile()
         val itemDTO = listDTO.diseases.find { it.id == id }
         return if (itemDTO != null) Result.success(itemDTO.toDetailData())
-        else Result.failure(DiseasesPersistenceError.NotFound)
+        else Result.failure(DiseasesError.NotFound)
     }
 
     override suspend fun getNameByKeyCode(keyCode: String): Result<String> {
@@ -47,7 +48,7 @@ internal class DefaultDiseasesRepository : DiseasesRepository {
         val listDTO = loadDiseasesFromJsonFile()
         val itemDTO = listDTO.diseases.find { it.keyCode == keyCode }
         return if (itemDTO != null) Result.success(itemDTO.toDetailData())
-        else Result.failure(DiseasesPersistenceError.NotFound)
+        else Result.failure(DiseasesError.NotFound)
     }
 
     private fun loadDiseasesFromJsonFile(): DiseasesDTO {

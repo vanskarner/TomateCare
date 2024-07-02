@@ -1,5 +1,8 @@
 package com.vanskarner.diseases.bussineslogic
 
+import com.vanskarner.diseases.DiseaseData
+import com.vanskarner.diseases.DiseaseDetailData
+
 class FakeDiseasesRepository(
     private val list: List<DiseaseData>,
     private val item: DiseaseDetailData,

@@ -1,7 +1,5 @@
 package com.vanskarner.diseases
 
-import com.vanskarner.diseases.bussineslogic.DiseaseData
-import com.vanskarner.diseases.bussineslogic.DiseaseDetailData
 import com.vanskarner.diseases.bussineslogic.FindDiseaseByKeyCodeUseCase
 import com.vanskarner.diseases.bussineslogic.FindDiseaseUseCase
 import com.vanskarner.diseases.bussineslogic.FindDiseasesByKeyCodesUseCase

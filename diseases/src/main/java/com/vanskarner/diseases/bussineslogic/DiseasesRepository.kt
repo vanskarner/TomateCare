@@ -1,5 +1,8 @@
 package com.vanskarner.diseases.bussineslogic
 
+import com.vanskarner.diseases.DiseaseData
+import com.vanskarner.diseases.DiseaseDetailData
+
 internal interface DiseasesRepository {
 
     suspend fun list(): Result<List<DiseaseData>>

@@ -63,7 +63,7 @@ class AnalyzePlantUseCaseTest {
         assertEquals(1, analysisDetailData.numberDiseasesIdentified)
         assertEquals(expectedLeafDetection.second, analysisDetailData.listLeafBoxCoordinates)
         assertEquals(expectedLeafClassification.second, analysisDetailData.classificationData)
-        assertEquals("YoloV8", analysisDetailData.leafDetectionModel)
+        assertEquals("YoloV8n", analysisDetailData.leafDetectionModel)
         assertEquals(validConfigData.model, analysisDetailData.leafClassificationModel)
         assertEquals(validConfigData.numberThreads.toString(), analysisDetailData.threadsUsed)
         assertEquals(validConfigData.processing, analysisDetailData.processing)
