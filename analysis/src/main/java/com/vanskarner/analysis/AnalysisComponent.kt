@@ -21,6 +21,10 @@ interface AnalysisComponent {
     /**
      * Performs a performance test of both the leaf detection model and the tomato disease
      * classification model. The default leaf detection model for this test is YOLOV8n.
+     * For the detection test an image is used and the resulting inference time is the total time
+     * taken to detect all the leaves present in the image.
+     * For the classification test, 10 images are used and the resulting inference time is the
+     * total time spent on the 10 images.
      * @param config test configuration parameters
      * @return [Result], encapsulates success or failure.
      * - [Result.onSuccess], returns the inference times, the first value is for detection
@@ -32,7 +36,9 @@ interface AnalysisComponent {
 
     /**
      * Get the images used for testing in InputStream format. The first value is used for
-     * detection and the second for classification.
+     * detection and the second for classification. For the classification test, the 10 images
+     * used for the test have been put together in a single image, where the images marked with a
+     * red x represent the diseases and the green check represents the healthy leaf.
      * @return [Result], encapsulates success or failure.
      * - [Result.onSuccess], returns Pair
      * - [Result.onFailure], not mapped
