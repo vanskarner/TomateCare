@@ -8,7 +8,7 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.vanskarner.tomatecare.databinding.DialogDetectionResourcesBinding
+import com.vanskarner.tomatecare.databinding.DialogTestResourcesBinding
 import com.vanskarner.tomatecare.ui.common.BaseBindingFragment
 import com.vanskarner.tomatecare.databinding.FragmentPerformanceTestBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,7 +62,7 @@ class PerformanceFragment : BaseBindingFragment<FragmentPerformanceTestBinding>(
     }
 
     private fun showDialogTestImages(inputStream: InputStream) {
-        val bindingTestResources = DialogDetectionResourcesBinding.inflate(layoutInflater)
+        val bindingTestResources = DialogTestResourcesBinding.inflate(layoutInflater)
         val builder = AlertDialog.Builder(requireContext())
         builder.setView(bindingTestResources.root)
         val alertDialog = builder.create()
