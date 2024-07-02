@@ -40,14 +40,14 @@ internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificati
     ): FragmentIdentificationBinding = FragmentIdentificationBinding.inflate(layoutInflater)
 
     override fun setupView() {
-        binding.imvOnBack.setOnClickListener { goToCaptureFragment() }
+        binding.imvOnBack.setOnClickListener { chooseCaptureOrLogsFragment(args.fromCapture) }
         binding.rcvLeaves.adapter = leafAdapter
         binding.tvSummary.setOnClickListener { viewModel.getSummary() }
         binding.tvAddNote.setOnClickListener { viewModel.getNote() }
         leafAdapter.setOnClickListener { viewModel.getLeafInfo(it) }
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
-            onBackPressed = { goToCaptureFragment() })
+            onBackPressed = { chooseCaptureOrLogsFragment(args.fromCapture) })
     }
 
     override fun setupViewModel() {
@@ -65,8 +65,9 @@ internal class IdentificationFragment : BaseBindingFragment<FragmentIdentificati
         viewModel.updatedNote.observe(viewLifecycleOwner) { showToast(R.string.updated_note) }
     }
 
-    private fun goToCaptureFragment() {
-        val direction = IdentificationFragmentDirections.toCaptureFragment()
+    private fun chooseCaptureOrLogsFragment(fromCapture: Boolean) {
+        val direction = if (fromCapture) IdentificationFragmentDirections.toCaptureFragment()
+        else IdentificationFragmentDirections.toLogsFragment()
         findNavController().navigate(direction)
     }
 

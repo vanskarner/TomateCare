@@ -135,6 +135,7 @@ internal class CaptureFragment : BaseBindingFragment<FragmentCaptureBinding>() {
 
     private fun goToIdentificationFragment(idLog: Int) {
         val navDirection = CaptureFragmentDirections.toIdentificationFragment(idLog)
+        navDirection.fromCapture = true
         findNavController().navigate(navDirection)
     }
 
