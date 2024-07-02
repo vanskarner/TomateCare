@@ -5,7 +5,7 @@ import com.vanskarner.diseases.bussineslogic.DiseaseDetailData
 import com.vanskarner.diseases.persistence.DiseasesPersistenceError
 
 /**
- * Proporciona informacion sobre las enfermedades que se identificaran
+ * Interface for retrieving information related to plant diseases.
  * @author Luis H. Olazo
  * @version 1.0.0
  */

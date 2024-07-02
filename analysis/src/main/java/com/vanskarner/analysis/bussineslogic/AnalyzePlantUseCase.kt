@@ -34,7 +34,7 @@ internal class AnalyzePlantUseCase(
                     .distinct().size,
                 listLeafBoxCoordinates = leafDetectionSelection.second,
                 classificationData = leafClassification.second,
-                leafDetectionModel = "YoloV8",
+                leafDetectionModel = "YoloV8n",
                 leafClassificationModel = validConfig.model,
                 threadsUsed = validConfig.numberThreads.toString(),
                 processing = validConfig.processing

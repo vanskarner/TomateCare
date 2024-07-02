@@ -6,14 +6,14 @@ import com.vanskarner.analysis.SetConfigData
 
 internal class GetConfigUseCase {
     companion object {
-        private const val MAX_RESULTS = 8
+        private const val MAX_RESULTS = 12
         private val PROCESSING_LIST = listOf("CPU", "GPU")
         private val MODEL_LIST = listOf(
-            "MobileNetV3Small",
-            "MobileNetV3Large",
-            "MobileNetV2",
-            "SqueezeNetMish",
             "NASNetMobile",
+            "SqueezeNetMish",
+            "MobileNetV2",
+            "MobileNetV3Large",
+            "MobileNetV3Small",
         )
     }
 
