@@ -38,3 +38,10 @@ The analysis and diseases components have their tests, however for the UI compon
 
 ## Discussions
 Refer to the discussions section [HERE](https://github.com/vanskarner/TomateCare/discussions)
+
+----
+<div align="center">
+  <img src="https://github.com/vanskarner/CleanMovie/assets/39975255/8597f70e-45a0-4700-bb37-e2ac3b864b7e" alt="CompanyIcon" width="50" height="50">
+  <p>© 2024 <a href='https://vanskarner.com/'>Vanskarner</a>. All rights reserved.</p>  
+  <p>Contact with us: contact@vanskarner.com</p>
+</div>
