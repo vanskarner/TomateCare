@@ -4,7 +4,7 @@ Just point and take a picture of the tomato plant to check its condition.
 Both the android application and the deep learning models have been developed by me, you can visit my profile in [kaggle](https://www.kaggle.com/luisolazo).
 
 <p align="center">
-  <img src="https://github.com/vanskarner/TomateCare/assets/39975255/98fb3c13-340e-45d0-93c2-466f0282a16c" alt="Leaf Disease Detection" style="display: block; margin: auto;">
+  <img src="https://github.com/vanskarner/TomateCare/assets/39975255/98fb3c13-340e-45d0-93c2-466f0282a16c" alt="Leaf Disease Detection" style="display: block; margin: auto;" width="300" height="500">
 </p>
 
 ## Development based on Clean Architecture
