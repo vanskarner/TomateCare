@@ -5,15 +5,13 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.test.platform.app.InstrumentationRegistry
 import com.vanskarner.analysis.LeafState
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.BeforeClass
 import org.junit.Test
 import org.tensorflow.lite.Interpreter
 
-@OptIn(ExperimentalCoroutinesApi::class)
-class NASNetMobileClassificationDataTest {
+class MobileNetV3LargeClassificationTest {
 
     companion object {
         private lateinit var appContext: Context
@@ -33,7 +31,7 @@ class NASNetMobileClassificationDataTest {
     @Test
     fun predictionUsingInterpreterWithBacterialSpot() = runTest {
         val image = loadImage("bacterial_spot.jpg")
-        val predictionResult = useNASNetMobile(
+        val predictionResult = useMobilenetV3Large(
             appContext, image,
             interpreterOptions
         )
@@ -56,7 +54,7 @@ class NASNetMobileClassificationDataTest {
     fun predictionUsingInterpreterWithEarlyBlight() = runTest {
         val image = loadImage("early_blight.jpg")
         val predictionResult =
-            useNASNetMobile(appContext, image, interpreterOptions)
+            useMobilenetV3Large(appContext, image, interpreterOptions)
         val result = predictionResult.getOrThrow()
         val inferenceTime = result.first
         val classification = result.second
@@ -76,7 +74,7 @@ class NASNetMobileClassificationDataTest {
     fun predictionUsingInterpreterWithHealthy() = runTest {
         val image = loadImage("healthy.jpg")
         val predictionResult =
-            useNASNetMobile(appContext, image, interpreterOptions)
+            useMobilenetV3Large(appContext, image, interpreterOptions)
         val result = predictionResult.getOrThrow()
         val inferenceTime = result.first
         val classification = result.second
@@ -96,7 +94,7 @@ class NASNetMobileClassificationDataTest {
     fun predictionUsingInterpreterWithLateBlight() = runTest {
         val image = loadImage("late_blight.jpg")
         val predictionResult =
-            useNASNetMobile(appContext, image, interpreterOptions)
+            useMobilenetV3Large(appContext, image, interpreterOptions)
         val result = predictionResult.getOrThrow()
         val inferenceTime = result.first
         val classification = result.second
@@ -116,7 +114,7 @@ class NASNetMobileClassificationDataTest {
     fun predictionUsingInterpreterWithLeafMold() = runTest {
         val image = loadImage("leaf_mold.jpg")
         val predictionResult =
-            useNASNetMobile(appContext, image, interpreterOptions)
+            useMobilenetV3Large(appContext, image, interpreterOptions)
         val result = predictionResult.getOrThrow()
         val inferenceTime = result.first
         val classification = result.second
@@ -136,7 +134,7 @@ class NASNetMobileClassificationDataTest {
     fun predictionUsingInterpreterWithMosaicVirus() = runTest {
         val image = loadImage("mosaic_virus.jpg")
         val predictionResult =
-            useNASNetMobile(appContext, image, interpreterOptions)
+            useMobilenetV3Large(appContext, image, interpreterOptions)
         val result = predictionResult.getOrThrow()
         val inferenceTime = result.first
         val classification = result.second
@@ -156,7 +154,7 @@ class NASNetMobileClassificationDataTest {
     fun predictionUsingInterpreterWithSeptoriaLeafSpot() = runTest {
         val image = loadImage("septoria_leaf_spot.jpg")
         val predictionResult =
-            useNASNetMobile(appContext, image, interpreterOptions)
+            useMobilenetV3Large(appContext, image, interpreterOptions)
         val result = predictionResult.getOrThrow()
         val inferenceTime = result.first
         val classification = result.second
@@ -176,7 +174,7 @@ class NASNetMobileClassificationDataTest {
     fun predictionUsingInterpreterWithTargetSpot() = runTest {
         val image = loadImage("target_spot.jpg")
         val predictionResult =
-            useNASNetMobile(appContext, image, interpreterOptions)
+            useMobilenetV3Large(appContext, image, interpreterOptions)
         val result = predictionResult.getOrThrow()
         val inferenceTime = result.first
         val classification = result.second
@@ -196,7 +194,7 @@ class NASNetMobileClassificationDataTest {
     fun predictionUsingInterpreterWithTwoSpottedSpiderMite() = runTest {
         val image = loadImage("twospotted_spider_mite.jpg")
         val predictionResult =
-            useNASNetMobile(appContext, image, interpreterOptions)
+            useMobilenetV3Large(appContext, image, interpreterOptions)
         val result = predictionResult.getOrThrow()
         val inferenceTime = result.first
         val classification = result.second
@@ -216,7 +214,7 @@ class NASNetMobileClassificationDataTest {
     fun predictionUsingInterpreterWithYellowLeafCurlVirus() = runTest {
         val image = loadImage("yellow_leaf_curl_virus.jpg")
         val predictionResult =
-            useNASNetMobile(appContext, image, interpreterOptions)
+            useMobilenetV3Large(appContext, image, interpreterOptions)
         val result = predictionResult.getOrThrow()
         val inferenceTime = result.first
         val classification = result.second
@@ -246,7 +244,7 @@ class NASNetMobileClassificationDataTest {
             loadImage("twospotted_spider_mite.jpg"),
             loadImage("yellow_leaf_curl_virus.jpg")
         )
-        val result = useNASNetMobile(appContext, imgList, interpreterOptions).getOrThrow()
+        val result = useMobilenetV3Large(appContext, imgList, interpreterOptions).getOrThrow()
         val inferenceTime = result.first
         val predictionResults = result.second
 
