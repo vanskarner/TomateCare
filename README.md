@@ -4,11 +4,11 @@ Just point and take a picture of the tomato plant to check its condition.
 Both the android application and the deep learning models have been developed by me, you can visit my profile in [kaggle](https://www.kaggle.com/luisolazo).
 
 <p align="center">
-  <img src="https://github.com/vanskarner/TomateCare/assets/39975255/98fb3c13-340e-45d0-93c2-466f0282a16c" alt="Leaf Disease Detection" style="display: block; margin: auto;" width="300" height="500">
+  <img src="https://github.com/user-attachments/assets/ef49fe29-5334-48ab-b0ce-ffad51a84f5c" alt="Leaf Disease Detection" style="display: block; margin: auto;" width="300" height="500">
 </p>
 
 ## Development based on Clean Architecture
-For the development of the application, I have used the practices described in [my other repository](https://github.com/vanskarner/CleanMovie), which addresses the updated clean architecture:
+For the development of the application, I have used the practices described in [my other repository](https://github.com/vanskarner/CleanMovie/wiki), which addresses the updated clean architecture:
 
 <p align="center">
   <img src="https://github.com/vanskarner/CleanMovie/assets/39975255/7d7c53a6-7c85-4456-a725-99814d3b1eb5" alt="CleanArchitectureCover_2017" style="display: block; margin: auto;" width="500" height="750">
